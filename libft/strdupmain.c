@@ -1,6 +1,7 @@
+#include "ft_strlen.c"
 #include "ft_strdup.c"
-#include<stdio.h>
-#include<string.h>
+#include <stdio.h>
+#include <string.h>
 
 int main()
 {

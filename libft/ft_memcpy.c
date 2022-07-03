@@ -9,7 +9,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n){
 		d = (char *) dest;
 		s = (const char *) src;
 		i = 0;
-		while (i < n || s[i] == '\0'){
+		while (i < n){
 			d[i] = s[i];
 			i++;
 		}

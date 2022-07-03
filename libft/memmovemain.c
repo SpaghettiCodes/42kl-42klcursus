@@ -1,6 +1,7 @@
 
 // Sample program to show that memmove() is better than
 // memcpy() when addresses overlap.
+#include "ft_strlen.c"
 #include <stdio.h>
 #include <string.h>
 #include "ft_memmove.c"

@@ -11,10 +11,9 @@ void	*ft_memmove(void *dest, const void *src, size_t n){
 		s = (const char *) src;
 		srclen = ft_strlen((char *) src);
 		if (n > srclen)
-			i = (int) srclen;
+			i = (int) srclen - 1;
 		else
-			i = (int) n;
-		d[i--] = '\0';
+			i = (int) n - 1;
 		while (i >= 0){
 			d[i] = s[i];
 			i--;

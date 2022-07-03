@@ -1,5 +1,4 @@
 #include "libft.h"
-#include <stdio.h>
 
 char *ft_itoaneg(unsigned int n){
 	char			*str;
@@ -14,8 +13,8 @@ char *ft_itoaneg(unsigned int n){
 	}
 	digits++;
 	str = (char *) malloc ((digits + 2) * sizeof(int));
-	str[0] = '-';
 	if (str) {
+		str[0] = '-';
 		str[digits] = '\0';
 		while (--digits != 0){
 			str[digits] = (n % 10) + '0';
@@ -50,13 +49,4 @@ char *ft_itoa(int n){
 		return (str);
 	}
 	return (0);
-}
-
-int main(){
-	for (int i = 0; i < 9999; i++)
-		printf(" %s -", ft_itoa(i));
-	for (int i = -9999; i < 0; i++)
-		printf(" %s -", ft_itoa(i));
-	printf("%s\n", ft_itoa(2147483647));
-	printf("%s\n", ft_itoa(-2147483648));
 }
