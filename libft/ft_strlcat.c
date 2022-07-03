@@ -1,7 +1,7 @@
 #include "libft.h"
 
 size_t	ft_strlcat(char *dest, const char *src, size_t size){
-	int		i;
+	size_t	i;
 	size_t	destlen;
 	size_t	srclen;
 	int		j;

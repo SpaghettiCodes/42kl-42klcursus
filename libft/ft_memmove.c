@@ -2,14 +2,14 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n){
 	int			i;
-	int			srclen;
+	size_t		srclen;
 	char		*d;
 	const char	*s;
 
 	if (n && dest && src){
 		d = (char *) dest;
 		s = (const char *) src;
-		srclen = ft_strlen((char *) src);
+		srclen = (size_t) ft_strlen((char *) src);
 		if (n > srclen)
 			i = (int) srclen - 1;
 		else

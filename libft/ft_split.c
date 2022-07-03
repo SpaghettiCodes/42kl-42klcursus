@@ -1,6 +1,6 @@
 #include "libft.h"
 
-char	**inputwords(char const *s, char c, char **splitted, int word){
+static char	**inputwords(char const *s, char c, char **splitted, int word){
 	int	i;
 	int	count_word;
 	int	letter;
@@ -11,19 +11,19 @@ char	**inputwords(char const *s, char c, char **splitted, int word){
 	i = -1;
 	start = 0;
 	while (count_word < word){
-		if ((s[++i] == c || (s[i+1] == '\0' && s[i] != c) && ++letter) && letter != 0){
+		if ((s[++i] == c || (s[i+1] == '\0' && s[i] != c && ++letter)) && letter != 0){
 			splitted[count_word++] = ft_substr(s, (start), letter);
 			start = i+1;
 			letter = 0;
-			continue;
+			continue ;
 		} else if (s[i] == c && letter == 0 && ++start)
-			continue;
+			continue ;
 		letter++;
 	}
 	return (splitted);
 }
 
-char **countletters(char const *s, char c, int word){
+static char **countletters(char const *s, char c, int word){
 	char	**out;
 	int		i;
 	int		letter;
@@ -46,7 +46,7 @@ char **countletters(char const *s, char c, int word){
 	return (out);
 }
 
-int	countwords(char const *s, char c){
+static int	countwords(char const *s, char c){
 	int	i;
 	int	word;
 
@@ -62,10 +62,9 @@ int	countwords(char const *s, char c){
 	return (word);
 }
 
-char **ft_split(char const *s, char c){
-	//i have ptsd LMAO
-	char **splitted;
-	int	word;
+char	**ft_split(char const *s, char c){
+	char	**splitted;
+	int		word;
 
 	if (s){
 		if (s[0] == '\0')

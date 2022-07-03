@@ -1,6 +1,6 @@
 #include "libft.h"
 
-char *ft_itoaneg(unsigned int n){
+static char *ft_itoaneg(unsigned int n){
 	char			*str;
 	int				digits;
 	unsigned int	n2;

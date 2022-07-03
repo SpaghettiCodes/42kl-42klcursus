@@ -15,6 +15,6 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char)){
 			return (mapped);
 		}
 	}
-	return 0;
+	return (0);
 }
 

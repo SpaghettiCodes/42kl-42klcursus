@@ -1,13 +1,13 @@
 #include "libft.h"
 
-int	ft_inset(char c, char const *set){
+static int	ft_inset(char c, char const *set){
 	int	i;
 
 	i = -1;
 	while (set[++i] != '\0')
 		if (set[i] == c)
-			return 1;
-	return 0;
+			return (1);
+	return (0);
 }
 char	*ft_strtrim(char const *s1, char const *set){
 	char	*trimmed;
@@ -34,5 +34,5 @@ char	*ft_strtrim(char const *s1, char const *set){
 				return (trimmed);
 		}
 	}
-	return 0;
+	return (0);
 }
