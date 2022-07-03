@@ -1,4 +1,5 @@
 #include "libft.h"
+#include "ft_bzero.c"
 
 void	*ft_calloc(size_t nitems, size_t size){
 	void	*result;

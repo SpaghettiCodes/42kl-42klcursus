@@ -5,7 +5,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len){
 	int	j;
 	int firstseen;
 
-	i = -1;
+	i = 0;
 	if (len) {
 		if (little[0] == '\0')
 			return ((char *) big);

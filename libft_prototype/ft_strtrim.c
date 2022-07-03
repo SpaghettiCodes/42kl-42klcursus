@@ -1,4 +1,6 @@
 #include "libft.h"
+#include "ft_substr.c"
+#include "ft_strdup.c"
 
 int	ft_inset(char c, char const *set){
 	int	i;
@@ -11,20 +13,20 @@ int	ft_inset(char c, char const *set){
 }
 char *ft_strtrim(char const *s1, char const *set){
 	char	*trimmed;
+	char	s1len;
 	int		begin;
 	int		size;
 	int		end;
 
-	if (s1) {
-		if (!set)
-			return (ft_strdup(s1));
+	if (s1 || set){
 		begin = -1;
-		if (s1){
-			size = ft_strlen((char *) s1);
-			end = size;
+		s1len = ft_strlen((char *) s1);
+		if (s1len){
+			end = s1len;
+			size = s1len;
 			while (ft_inset(s1[++begin], set) == 1)
 				size--;
-			if (begin != end){
+			if (begin != s1len){
 				while (ft_inset(s1[--end], set) == 1)
 					size--;
 				trimmed = ft_substr(s1, begin, size);

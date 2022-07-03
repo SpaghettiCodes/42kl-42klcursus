@@ -1,4 +1,4 @@
-#include "libft.h"
+#include "ft_strlcpy.c"
 
 char *ft_strjoin(char const *s1, char const *s2){
 	char	*joined;

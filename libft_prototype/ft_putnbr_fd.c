@@ -1,4 +1,5 @@
 #include "libft.h"
+#include "ft_putchar_fd.c"
 
 void	ft_putnbr_fd(int n, int fd){
 	if (n == -2147483648){
