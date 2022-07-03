@@ -1,6 +1,6 @@
 #include "libft.h"
 
-char **inputwords(char const *s, char c, char **splitted, int word){
+char	**inputwords(char const *s, char c, char **splitted, int word){
 	int	i;
 	int	count_word;
 	int	letter;

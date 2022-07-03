@@ -1,8 +1,8 @@
 #include "libft.h"
 
-int ft_lstsize(t_list *lst){
-	int	i;
-	t_list *current;
+int	ft_lstsize(t_list *lst){
+	int		i;
+	t_list	*current;
 
 	if (!lst)
 		return 0;

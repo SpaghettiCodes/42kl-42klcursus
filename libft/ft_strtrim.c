@@ -9,7 +9,7 @@ int	ft_inset(char c, char const *set){
 			return 1;
 	return 0;
 }
-char *ft_strtrim(char const *s1, char const *set){
+char	*ft_strtrim(char const *s1, char const *set){
 	char	*trimmed;
 	int		begin;
 	int		size;

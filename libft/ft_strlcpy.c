@@ -1,7 +1,7 @@
 #include "libft.h"
 
 size_t	ft_strlcpy(char * dst, const char * src, size_t dstsize){
-	int	srclen;
+	int		srclen;
 	size_t	z;
 
 	srclen = 0;

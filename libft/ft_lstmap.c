@@ -1,9 +1,9 @@
 #include "libft.h"
 
-t_list *ft_lstdupfunc(t_list *src, void *(*f)(void *)){
-	t_list *dest;
-	t_list *curt_dest;
-	t_list *curt_src;
+t_list	*ft_lstdupfunc(t_list *src, void *(*f)(void *)){
+	t_list	*dest;
+	t_list	*curt_dest;
+	t_list	*curt_src;
 
 	if (src){
 		dest = (t_list *) malloc (sizeof(t_list));
