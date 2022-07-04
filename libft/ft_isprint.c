@@ -1,16 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/04 12:11:14 by cshi-xia          #+#    #+#             */
+/*   Updated: 2022/07/04 12:11:15 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_isprint(int arg){
-	if (arg == 32) // whitespace
-		return (64);
-	if ((arg >= 33 && arg <= 47) || (arg >= 123 && arg <= 126)
-		|| (arg >= 58 && arg <= 64) || (arg >= 91 && arg <= 96)) // symbols
-		return (16);
-	if (arg >= 65 && arg <= 90) // big letter
-		return (1);
-	if (arg >= 97 && arg <= 122) // small letter
-		return (2);
-	if (arg >= 48 && arg <= 57) // numbers
-		return (4);
-	return (0);
+	return (arg >= 32 && arg <= 126);
 }

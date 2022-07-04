@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/04 12:13:14 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:13:15 by cshi-xia         ###   ########.fr       */
+/*   Created: 2022/07/04 12:12:09 by cshi-xia          #+#    #+#             */
+/*   Updated: 2022/07/04 12:12:10 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len){
-	char	*substr;
+int	ft_lstsize(t_list *lst){
 	int		i;
+	t_list	*current;
 
-	if (s && start < (unsigned int) ft_strlen((char *) s)){
-		if (!len)
-			return (ft_strdup(""));
-		substr = (char *) malloc ((len + 1) * sizeof(char));
-		if (substr){
-			i = -1;
-			while (++i < (int) len && s[start]){
-				substr[i] = s[start];
-				start++;
-			}
-			substr[i] = '\0';
-			return (substr);
-		}
+	if (!lst)
+		return 0;
+	i = 0;
+	current = lst;
+	while (current){
+		i++;
+		current = current->next;
 	}
-	return (0);
+	return (i);
 }
