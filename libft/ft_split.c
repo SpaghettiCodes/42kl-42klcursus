@@ -67,13 +67,18 @@ char	**ft_split(char const *s, char c){
 	int		word;
 
 	if (s){
-		if (s[0] == '\0')
-			return (0);
-		word = countwords(s, c);
-		splitted = (char **) malloc ((word + 1) * sizeof(char *));
-		splitted = countletters(s, c, word);
-		inputwords(s, c, splitted, word);
-		splitted[word] = 0;
+		if (s[0] == '\0'){
+			splitted = (char **) malloc ((2) * sizeof(char *));
+			splitted[0] = ft_strdup("");
+			splitted[1] = 0;
+		} else {
+			word = countwords(s, c);
+			splitted = (char **) malloc ((word + 1) * sizeof(char *));
+			splitted = countletters(s, c, word);
+			inputwords(s, c, splitted, word);
+			splitted[word] = 0;
+		}
+		return (splitted);
 	}
-	return (splitted);
+	return (0);
 }
