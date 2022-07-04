@@ -12,7 +12,8 @@
 
 #include "libft.h"
 
-static char	**inputwords(char const *s, char c, char **splitted, int word){
+static char	**inputwords(char const *s, char c, char **splitted, int word)
+{
 	int	i;
 	int	count_word;
 	int	letter;
@@ -22,20 +23,25 @@ static char	**inputwords(char const *s, char c, char **splitted, int word){
 	letter = 0;
 	i = -1;
 	start = 0;
-	while (count_word < word){
-		if ((s[++i] == c || (s[i+1] == '\0' && s[i] != c && ++letter)) && letter != 0){
+	while (count_word < word)
+	{
+		if ((s[++i] == c || (s[i+1] == '\0' &&
+				s[i] != c && ++letter)) && letter != 0)
+		{
 			splitted[count_word++] = ft_substr(s, (start), letter);
 			start = i+1;
 			letter = 0;
 			continue ;
-		} else if (s[i] == c && letter == 0 && ++start)
+		}
+		else if (s[i] == c && letter == 0 && ++start)
 			continue ;
 		letter++;
 	}
 	return (splitted);
 }
 
-static char **countletters(char const *s, char c, int word){
+static char **countletters(char const *s, char c, int word)
+{
 	char	**out;
 	int		i;
 	int		letter;
@@ -45,20 +51,23 @@ static char **countletters(char const *s, char c, int word){
 	out = (char **) malloc ((word + 1) * sizeof(char *));
 	word = 0;
 	while (1) {
-		if ((s[++i] == c || (s[i] == '\0' && s[i-1] != c)) && letter != 0){
+		if ((s[++i] == c || (s[i] == '\0' && s[i-1] != c)) && letter != 0)
+		{
 			out[word++] = ((char *) malloc ((letter + 1) * sizeof(char *)));
 			letter = 0;
 			if (s[i] == '\0')
 				break;
 			continue;
-		} else if (s[i] == c && letter == 0)
+		}
+		else if (s[i] == c && letter == 0)
 			continue;
 		letter++;
 	}
 	return (out);
 }
 
-static int	countwords(char const *s, char c){
+static int	countwords(char const *s, char c)
+{
 	int	i;
 	int	word;
 
@@ -67,7 +76,8 @@ static int	countwords(char const *s, char c){
 		word = 1;
 	else
 		word = 0;
-	while (s[++i]){
+	while (s[++i])
+	{
 		if (s[i] != c && s[i-1] == c)
 			word++;
 	}
@@ -78,19 +88,21 @@ char	**ft_split(char const *s, char c){
 	char	**splitted;
 	int		word;
 
-	if (s){
-		if (s[0] == '\0'){
-			splitted = (char **) malloc ((2) * sizeof(char *));
-			splitted[0] = ft_strdup("");
-			splitted[1] = 0;
-		} else {
-			word = countwords(s, c);
-			splitted = (char **) malloc ((word + 1) * sizeof(char *));
-			splitted = countletters(s, c, word);
-			inputwords(s, c, splitted, word);
-			splitted[word] = 0;
-		}
-		return (splitted);
+	if (!s)
+		return (0);
+	if (s[0] == '\0')
+	{
+		splitted = (char **) malloc ((2) * sizeof(char *));
+		splitted[0] = ft_strdup("");
+		splitted[1] = 0;
 	}
-	return (0);
+	else
+	{
+		word = countwords(s, c);
+		splitted = (char **) malloc ((word + 1) * sizeof(char *));
+		splitted = countletters(s, c, word);
+		inputwords(s, c, splitted, word);
+		splitted[word] = 0;
+	}
+	return (splitted);
 }
