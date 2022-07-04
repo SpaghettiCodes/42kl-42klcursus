@@ -6,22 +6,25 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:07 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:12:08 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:41:24 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static t_list	*ft_lstdupfunc(t_list *src, void *(*f)(void *)){
+static t_list	*ft_lstdupfunc(t_list *src, void *(*f)(void *))
+{
 	t_list	*dest;
 	t_list	*curt_dest;
 	t_list	*curt_src;
 
-	if (src){
+	if (src)
+	{
 		dest = (t_list *) malloc (sizeof(t_list));
 		curt_dest = dest;
 		curt_src = src;
-		while (curt_src){
+		while (curt_src)
+		{
 			curt_dest->content = f(curt_src->content);
 			if (curt_src->next)
 				curt_dest->next = (t_list *) malloc (sizeof(t_list));
@@ -32,10 +35,11 @@ static t_list	*ft_lstdupfunc(t_list *src, void *(*f)(void *)){
 		}
 		return (dest);
 	}
-	return 0;
+	return (0);
 }
 
-t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *)){
-	(void) (del);
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	(void)(del);
 	return (ft_lstdupfunc(lst, f));
 }

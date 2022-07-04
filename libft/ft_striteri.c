@@ -6,16 +6,19 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:50 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:12:51 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:35:17 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char*)){
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
 	int	i;
 
 	i = -1;
+	if (!s || !f)
+		return ;
 	while (s[++i] != '\0')
 		f(i, &s[i]);
 }

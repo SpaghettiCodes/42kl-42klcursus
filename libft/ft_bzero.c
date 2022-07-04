@@ -6,12 +6,13 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:10:57 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:10:58 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:42:34 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *str, size_t n){
+void	ft_bzero(void *str, size_t n)
+{
 	ft_memset(str, 0, n);
 }

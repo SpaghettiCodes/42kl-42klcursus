@@ -6,13 +6,14 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:13:23 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:13:24 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:20:45 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int ch){
+int	ft_toupper(int ch)
+{
 	if (ch >= 'a' && ch <= 'z')
 		return (ch - 32);
 	return (ch);

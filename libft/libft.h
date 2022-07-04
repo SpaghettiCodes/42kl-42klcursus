@@ -6,19 +6,16 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:13:26 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:13:27 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:19:50 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT
-# define LIBFT
+#ifndef LIBFT_H
+# define LIBFT_H
 
-// include files
 # include <stddef.h> // for size_t
 # include <stdlib.h> // for malloc
 # include <unistd.h> // for write
-
-// random stuff
 int		ft_atoi(const char *str);
 void	ft_bzero(void *str, size_t n);
 void	*ft_calloc(size_t nitems, size_t size);
@@ -30,26 +27,23 @@ int		ft_isprint(int arg);
 int		ft_tolower(int ch);
 int		ft_toupper(int ch);
 
-// memory management
 void	*ft_memchr(const void *str, int c, size_t n);
 int		ft_memcmp(const void *str1, const void *str2, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *dest, int c, size_t count);
 
-// file thingy
 void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
 
-// string manipulation
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *s);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
-size_t	ft_strlcpy(char * dst, const char * src, size_t dstsize);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
@@ -59,12 +53,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_strlen(char *arg);
 char	**ft_split(char const *s, char c);
 
-// s_list
-typedef struct	s_list
+typedef struct s_list
 {
-	void *content;
-	struct s_list *next;
-} t_list;
+	void			*content;
+	struct s_list	*next;
+}	t_list;
 
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);

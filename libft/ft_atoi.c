@@ -6,17 +6,19 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:10:53 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:10:54 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:42:47 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_isspace(char c){
+static int	ft_isspace(char c)
+{
 	return ((c == 32) || (c >= 9 && c <= 13));
 }
 
-int	ft_atoi(const char *str){
+int	ft_atoi(const char *str)
+{
 	int	result;
 	int	negative;
 	int	i;
@@ -30,7 +32,8 @@ int	ft_atoi(const char *str){
 		negative = -1;
 	if (str[i] == '+')
 		i++;
-	while (str[i] >= '0' && str[i] <= '9'){
+	while (str[i] >= '0' && str[i] <= '9')
+	{
 		result = (result * 10) + (str[i] - '0');
 		i++;
 	}

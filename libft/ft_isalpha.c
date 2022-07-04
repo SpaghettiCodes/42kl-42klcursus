@@ -6,12 +6,13 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:11:08 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:11:09 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:46:47 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int arg){
-	return ((arg >= 'A' && arg <= 'Z') || (arg >= 'a' && arg <= 'z')) ; // not an alphabet
+int	ft_isalpha(int arg)
+{
+	return (((arg >= 'A' && arg <= 'Z') || (arg >= 'a' && arg <= 'z')));
 }

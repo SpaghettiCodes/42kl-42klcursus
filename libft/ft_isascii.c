@@ -6,12 +6,13 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:11:10 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:11:11 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:42:23 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isascii(int arg){
+int	ft_isascii(int arg)
+{
 	return (arg >= 0 && arg <= 127);
 }

@@ -6,13 +6,14 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:13:00 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:13:01 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:35:38 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlen(char *arg){
+int	ft_strlen(char *arg)
+{
 	int	i;
 
 	i = 0;

@@ -6,13 +6,14 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:10:40 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:10:41 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:36:37 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd){
+void	ft_putstr_fd(char *s, int fd)
+{
 	int	i;
 
 	i = -1;
