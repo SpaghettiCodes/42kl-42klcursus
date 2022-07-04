@@ -68,16 +68,16 @@ NAME = libft.a
 
 all : ${NAME}
 
+$(NAME)	: ${SRCS_O}
+		@ar rcs ${NAME} ${SRCS_O}
+		@echo "libft.a generated"
+
 .c.o :
 		@gcc ${CFLAG} -c -I./ $< -o ${<:.c=.o}
 
 bonus : fclean ${SRCSB_O}
 	@ar r ${NAME} ${SRCSB_O}
 	@echo "libft.a with bonus generated"
-
-${NAME}	: ${SRCS_O}
-		@ar rcs ${NAME} ${SRCS_O}
-		@echo "libft.a generated"
 
 clean :
 		@rm -rf $(wildcard *.o)
