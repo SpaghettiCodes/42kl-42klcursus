@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:43 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:12:44 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/05 09:35:53 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static char	**inputwords(char const *s, char c, char **splitted, int word)
 	start = 0;
 	while (count_word < word)
 	{
-		if ((s[++i] == c || (s[i+1] == '\0' &&
-				s[i] != c && ++letter)) && letter != 0)
+		if ((s[++i] == c || (s[i + 1] == '\0'
+					&& s[i] != c && ++letter)) && letter != 0)
 		{
 			splitted[count_word++] = ft_substr(s, (start), letter);
-			start = i+1;
+			start = i + 1;
 			letter = 0;
 			continue ;
 		}
@@ -40,7 +40,7 @@ static char	**inputwords(char const *s, char c, char **splitted, int word)
 	return (splitted);
 }
 
-static char **countletters(char const *s, char c, int word)
+static char	**countletters(char const *s, char c, int word)
 {
 	char	**out;
 	int		i;
@@ -50,17 +50,18 @@ static char **countletters(char const *s, char c, int word)
 	letter = 0;
 	out = (char **) malloc ((word + 1) * sizeof(char *));
 	word = 0;
-	while (1) {
-		if ((s[++i] == c || (s[i] == '\0' && s[i-1] != c)) && letter != 0)
+	while (1)
+	{
+		if ((s[++i] == c || (s[i] == '\0' && s[i - 1] != c)) && letter != 0)
 		{
 			out[word++] = ((char *) malloc ((letter + 1) * sizeof(char *)));
 			letter = 0;
 			if (s[i] == '\0')
-				break;
-			continue;
+				break ;
+			continue ;
 		}
 		else if (s[i] == c && letter == 0)
-			continue;
+			continue ;
 		letter++;
 	}
 	return (out);
@@ -78,13 +79,14 @@ static int	countwords(char const *s, char c)
 		word = 0;
 	while (s[++i])
 	{
-		if (s[i] != c && s[i-1] == c)
+		if (s[i] != c && s[i - 1] == c)
 			word++;
 	}
 	return (word);
 }
 
-char	**ft_split(char const *s, char c){
+char	**ft_split(char const *s, char c)
+{
 	char	**splitted;
 	int		word;
 
