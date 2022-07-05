@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:13:26 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:19:50 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/05 10:47:45 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h> // for malloc
 # include <unistd.h> // for write
 int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
 void	ft_bzero(void *str, size_t n);
 void	*ft_calloc(size_t nitems, size_t size);
 int		ft_isalnum(int arg);

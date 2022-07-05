@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:31:29 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:31:49 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/05 12:25:26 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 		return (srclen + size);
 	j = 0;
 	i = destlen;
-	while (i < (size - 1) || src[j] == '\0')
+	while (i < (size - 1) && src[j] != '\0')
 	{
 		dest[i] = src[j];
 		j++;
