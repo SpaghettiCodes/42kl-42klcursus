@@ -1,41 +1,82 @@
 #include "ft_printf.h"
-#include "le_flag_functions.c"
-#include <stdarg.h>
+//               No switches?
+// ⠀⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝
+// ⠸⡸⠜⠕⠕⠁⢁⢇⢏⢽⢺⣪⡳⡝⣎⣏⢯⢞⡿⣟⣷⣳⢯⡷⣽⢽⢯⣳⣫⠇
+// ⠀⠀⢀⢀⢄⢬⢪⡪⡎⣆⡈⠚⠜⠕⠇⠗⠝⢕⢯⢫⣞⣯⣿⣻⡽⣏⢗⣗⠏⠀
+// ⠀⠪⡪⡪⣪⢪⢺⢸⢢⢓⢆⢤⢀⠀⠀⠀⠀⠈⢊⢞⡾⣿⡯⣏⢮⠷⠁⠀⠀
+// ⠀⠀⠀⠈⠊⠆⡃⠕⢕⢇⢇⢇⢇⢇⢏⢎⢎⢆⢄⠀⢑⣽⣿⢝⠲⠉⠀⠀⠀⠀
+// ⠀⠀⠀⠀⠀⡿⠂⠠⠀⡇⢇⠕⢈⣀⠀⠁⠡⠣⡣⡫⣂⣿⠯⢪⠰⠂⠀⠀⠀⠀
+// ⠀⠀⠀⠀⡦⡙⡂⢀⢤⢣⠣⡈⣾⡃⠠⠄⠀⡄⢱⣌⣶⢏⢊⠂⠀⠀⠀⠀⠀⠀
+// ⠀⠀⠀⠀⢝⡲⣜⡮⡏⢎⢌⢂⠙⠢⠐⢀⢘⢵⣽⣿⡿⠁⠁⠀⠀⠀⠀⠀⠀⠀
+// ⠀⠀⠀⠀⠨⣺⡺⡕⡕⡱⡑⡆⡕⡅⡕⡜⡼⢽⡻⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+// ⠀⠀⠀⠀⣼⣳⣫⣾⣵⣗⡵⡱⡡⢣⢑⢕⢜⢕⡝⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+// ⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+// ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+// ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
-int	ft_printf(const char *str, ...)
+int ft_intcase(int i, va_list ptr)
 {
-	//figure out how the fuck do you use va_start
+	if (i == 4 || i == 5)
+		return (ft_count_int(va_arg(ptr, int)));
+	else if (i == 6)
+		return (ft_count_uint(va_arg(ptr, unsigned int), 10, 'U'));
+	else if (i == 7)
+		return (ft_count_uint(va_arg(ptr, unsigned int), 16, 'x'));
+	else if (i == 8)
+		return (ft_count_uint(va_arg(ptr, unsigned int), 16, 'X'));
 }
 
-#include <stdio.h>
-int main()
+int	ft_case(int i, va_list ptr)
 {
-	char letter = 'a';
-	char *string = "pizza hut";
-	int	number = 9;
-	unsigned int number2 = 123;
-	int number3 = 12312312;
-	int number4 = -12312;
-	unsigned int number5 = -12312;
-	printf("Letter = %c\n", letter);
-	printf("String = %s\n", string);
-	printf("Number = %d\n", number);
-	printf("Unsigned Int Number = %u\n", number2);
-	printf("hexadecimal = %x\n%X\n", number3, number3);
-	printf("does it handle negatives?\nIn int = %x\nIn Unsigned int = %x\nNo, %%x accepts unsigned ints\n", number4, number5);
-	printf("Not enough variables: \"%s\", \"%d\", \"%c\", will leave empty spaces\n", string, letter);
-	printf("%d\n", printf("Printf returns number of bytes written: "));
-	printf("%d\n", printf("Printf returns number of bytes written %c: ", letter));
-	printf("%d\n", printf("Printf returns number of bytes written %d: ", number2));
-	printf("%%d and %%i do the same shit %d, %i\n", number3, number3);
-	printf("and %%p is confusing %p\n", &number3);
-	printf("Flags:\n\n");
-	printf("what %-8d what\n", number);
-	printf("what %08d what\n", number);
-	printf("flag 0 pads the number to the right with 0s, flag - pads the number to the left with spaces\n");
-	printf("not specifying does nothing (i think)\n");
-	printf("what % d what\n", number);
-	printf("flag (space) adds a space before the number\n");
-	printf("what %.12d what\n", number3);
-	printf(". flag is apparantly same with 0?\n");
+	if (i >= 4 && i <= 8)
+		return (ft_intcase(i, ptr));
+	else if (i == 0)
+		return (ft_put_char(va_arg(ptr, int)));
+	else if (i == 1)
+		return (ft_put_line(va_arg(ptr, char *)));
+	else if (i == 2)
+		return (ft_put_percent());
+	else
+		return (-1);
+}
+
+int ft_convertion(char c, va_list ptr)
+{
+	char	*flags;
+	int		i;
+
+	flags = "cs%pdiuxX";
+	i = -1;
+	while (flags[++i])
+		if (flags[i] == c)
+			return (ft_case(i, ptr));
+	return (-1);
+}
+
+int ft_printf(const char *str, ...)
+{
+	int	i;
+	int	printed;
+	int	check;
+	va_list ptr;
+
+	i = -1;
+	printed = 0;
+	va_start(ptr, str);
+	while (str[++i])
+	{
+		if (str[i] != '%' && ++printed)
+			write(1, &str[i], 1);
+		else
+		{
+			check = ft_convertion(str[i+1], ptr);
+			if (str[i+1] != '%')
+				va_arg(ptr, void *);
+			if (check == -1)
+				break;
+			printed += check;
+			i++;
+		}
+	}
+	return (printed);
 }
