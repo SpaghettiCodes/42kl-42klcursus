@@ -3,68 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:43 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/05 09:35:53 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:30:33 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**inputwords(char const *s, char c, char **splitted, int word)
+static char	**freeeverything(char **splitted)
 {
 	int	i;
-	int	count_word;
-	int	letter;
-	int	start;
 
-	count_word = 0;
-	letter = 0;
 	i = -1;
-	start = 0;
-	while (count_word < word)
-	{
-		if ((s[++i] == c || (s[i + 1] == '\0'
-					&& s[i] != c && ++letter)) && letter != 0)
-		{
-			splitted[count_word++] = ft_substr(s, (start), letter);
-			start = i + 1;
-			letter = 0;
-			continue ;
-		}
-		else if (s[i] == c && letter == 0 && ++start)
-			continue ;
-		letter++;
-	}
-	return (splitted);
+	while (splitted[++i])
+		free(splitted[i]);
+	free(splitted);
+	return (0);
 }
 
-static char	**countletters(char const *s, char c, int word)
+static char	**inputwords(char const *s, char c, char **splitted, int count_word)
 {
-	char	**out;
-	int		i;
-	int		letter;
+	int	i;
+	int	j;
+	int	start;
+	int	let;
 
+	let = 0;
 	i = -1;
-	letter = 0;
-	out = (char **) malloc ((word + 1) * sizeof(char *));
-	word = 0;
-	while (1)
+	start = 0;
+	j = 0;
+	while (j < count_word)
 	{
-		if ((s[++i] == c || (s[i] == '\0' && s[i - 1] != c)) && letter != 0)
+		if ((s[++i] == c || (s[i + 1] == '\0' && s[i] != c && ++let)) && let)
 		{
-			out[word++] = ((char *) malloc ((letter + 1) * sizeof(char *)));
-			letter = 0;
-			if (s[i] == '\0')
-				break ;
+			splitted[j] = ft_substr(s, start, let);
+			if (!splitted[j++])
+				return (freeeverything(splitted));
+			start = i + 1;
+			let = 0;
 			continue ;
 		}
-		else if (s[i] == c && letter == 0)
+		else if (s[i] == c && let == 0 && ++start)
 			continue ;
-		letter++;
+		let++;
 	}
-	return (out);
+	return (splitted);
 }
 
 static int	countwords(char const *s, char c)
@@ -85,26 +70,42 @@ static int	countwords(char const *s, char c)
 	return (word);
 }
 
+static char	**ft_singlevalues(char const *s, int word)
+{
+	char	**splitted;
+
+	if (word == 1)
+	{
+		splitted = (char **) malloc ((2) * sizeof(char *));
+		splitted[0] = ft_strdup((char *) s);
+		splitted[1] = 0;
+	}
+	else
+	{
+		splitted = (char **) malloc (1 * sizeof(char *));
+		splitted[0] = 0;
+	}
+	return (splitted);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**splitted;
 	int		word;
 
+	splitted = NULL;
 	if (!s)
 		return (0);
 	if (s[0] == '\0')
-	{
-		splitted = (char **) malloc ((2) * sizeof(char *));
-		splitted[0] = ft_strdup("");
-		splitted[1] = 0;
-	}
-	else
-	{
-		word = countwords(s, c);
-		splitted = (char **) malloc ((word + 1) * sizeof(char *));
-		splitted = countletters(s, c, word);
-		inputwords(s, c, splitted, word);
-		splitted[word] = 0;
-	}
+		return (ft_singlevalues(s, 0));
+	word = countwords(s, c);
+	if (c == '\0')
+		return (ft_singlevalues(s, 1));
+	splitted = (char **) malloc ((word + 1) * sizeof(char *));
+	if (!splitted)
+		return (0);
+	splitted[word] = 0;
+	if (!inputwords(s, c, splitted, word))
+		return (freeeverything(splitted));
 	return (splitted);
 }

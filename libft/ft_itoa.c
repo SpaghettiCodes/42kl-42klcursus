@@ -6,11 +6,12 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:11:17 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/05 10:45:39 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 15:25:55 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static char	*ft_itoaneg(unsigned int n)
 {
@@ -26,7 +27,7 @@ static char	*ft_itoaneg(unsigned int n)
 		digits++;
 	}
 	digits++;
-	str = (char *) malloc ((digits + 2) * sizeof(int));
+	str = (char *) malloc ((digits + 1) * sizeof(char));
 	if (!str)
 		return (0);
 	str[0] = '-';
@@ -55,7 +56,7 @@ char	*ft_itoa(int n)
 		digits++;
 	}
 	digits++;
-	str = (char *) malloc ((digits + 1) * sizeof(int));
+	str = (char *) malloc ((digits + 1) * sizeof(char));
 	if (!str)
 		return (0);
 	str[digits] = '\0';

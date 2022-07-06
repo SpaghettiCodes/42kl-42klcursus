@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:13:26 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/05 10:47:45 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 11:05:24 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-int		ft_strlen(char *arg);
+int		ft_strlen(const char *arg);
 char	**ft_split(char const *s, char c);
 
 typedef struct s_list

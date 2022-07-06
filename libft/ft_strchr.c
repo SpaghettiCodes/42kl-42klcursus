@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:46 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/05 12:17:35 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 15:12:32 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ char	*ft_strchr(const char *str, int c)
 {
 	int	i;
 
-	if (!str)
-		return (0);
 	i = 0;
 	while (str[i] != '\0')
 	{

@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:31:29 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/05 12:25:26 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 11:06:00 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 	int		j;
 
 	destlen = ft_strlen(dest);
-	srclen = ft_strlen((char *) src);
+	srclen = ft_strlen(src);
 	if (size == 0 || (destlen > size))
 		return (srclen + size);
 	j = 0;

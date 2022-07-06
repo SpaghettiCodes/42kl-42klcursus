@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:13:02 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:30:05 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 11:08:45 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	if (!s)
 		return (0);
-	slen = ft_strlen((char *) s);
+	slen = ft_strlen(s);
 	mapped = (char *) malloc ((slen + 1) * sizeof(char));
 	if (!mapped)
 		return (0);

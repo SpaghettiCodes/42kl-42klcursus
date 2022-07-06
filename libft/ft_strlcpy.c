@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:58 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:31:17 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 15:13:06 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	size_t	z;
 
 	srclen = 0;
-	if (!src || !dst)
-		return (0);
 	while (src[srclen] != '\0')
 		srclen++;
 	if (dstsize)

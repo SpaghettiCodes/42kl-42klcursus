@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:11:00 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:47:05 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 14:58:52 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	*ft_calloc(size_t nitems, size_t size)
 {
 	void	*result;
 
-	if (!nitems || !size)
-		return (0);
 	result = malloc (nitems * size);
 	if (!result)
 		return (0);

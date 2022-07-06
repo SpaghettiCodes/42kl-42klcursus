@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:21 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/05 12:02:08 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:00:11 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	s = (char *)src;
 	d = (char *)dest;
 	i = 0;
+	if (!dest && !src)
+		return (0);
 	if (d > s)
+	{
 		while (n-- > 0)
 			d[n] = s[n];
+	}
 	else
 	{
 		while (i < n)

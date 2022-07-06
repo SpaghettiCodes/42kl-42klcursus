@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cshi-xia <cshi-xia@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:13:12 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/04 12:25:18 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/06 11:09:02 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!set)
 		return (ft_strdup(s1));
 	begin = -1;
-	size = ft_strlen((char *) s1);
+	size = ft_strlen(s1);
 	end = size;
 	while (ft_inset(s1[++begin], set) == 1)
 		size--;
