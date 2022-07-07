@@ -15,26 +15,32 @@
 // ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 // ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
-int ft_intcase(properties *flag, va_list ptr)
+int ft_intcase(char *i, va_list ptr)
 {
-	if (flag->type == 'd' || flag->type == 'i')
-		return (ft_int_handler(flag, va_arg(ptr, int)));
-	else if (flag->type == 'u')
-		return (ft_uint_handler(flag, va_arg(ptr, unsigned int)));
-	else if (flag->type == 'x' || flag->type == 'X')
-		return (ft_base16_handler(flag, va_arg(ptr, unsigned int)));
+	if (*i == 'd' || *i == 'i')
+		return (ft_count_int(va_arg(ptr, int)));
+	else if (*i == 'u')
+		return (ft_count_uint(va_arg(ptr, unsigned int), 10, 'U'));
+	else if (*i == 'x')
+		return (ft_count_uint(va_arg(ptr, unsigned int), 16, 'x'));
+	else if (*i == 'X')
+		return (ft_count_uint(va_arg(ptr, unsigned int), 16, 'X'));
 	else
 		return (-1);
 }
 
-int	ft_charcase(properties *flag, va_list ptr)
+int	ft_charcase(char *i, va_list ptr)
 {
-	if (flag->type == 'c' || flag->type == 's')
-		return (ft_char_handler(flag, ptr));
-	else if (flag->type == 'p')
+	if (*i == 'c')
+		return (ft_put_char(va_arg(ptr, int)));
+	else if (*i == 's')
+		return (ft_put_line(va_arg(ptr, char *)));
+	else if (*i == '%')
+		return (ft_put_percent());
+	else if (*i == 'p')
 		return (ft_count_ptraddr(va_arg(ptr, void *)));
 	else
-		return (ft_intcase(flag, ptr));
+		return (ft_intcase(i, ptr));
 }
 
 int ft_convertion(char *c, va_list ptr)

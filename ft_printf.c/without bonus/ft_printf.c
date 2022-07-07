@@ -6,9 +6,8 @@ int ft_printf(const char *str, ...)
 {
 	int	i;
 	int	printed;
-	int	initial;
+	int	check;
 	va_list ptr;
-	properties *flag;
 
 	i = -1;
 	printed = 0;
@@ -19,12 +18,15 @@ int ft_printf(const char *str, ...)
 			printed += ft_put_char(str[i]);
 		else
 		{
-			flag = ft_initialize_flag();
-			initial = i;
-			i += format_handler(flag, &str[i], ptr, &printed);
-			free(flag);
-			if (i == initial)
+			check = ft_convertion(&str[i+1], ptr);
+			if (check == -1)
+			{
 				printed += ft_put_char('%');
+				continue;
+			}
+			va_arg(ptr, void *);
+			printed += check;
+			i++;
 		}
 	}
 	return (printed);

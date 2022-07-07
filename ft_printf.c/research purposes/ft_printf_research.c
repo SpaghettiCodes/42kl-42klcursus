@@ -51,6 +51,11 @@ int main()
 	// [..]
 	// printf("# converts it from digit to whatever is specified (if its to hexadecimal , a 0x is added in the fornt)\n");
 	// overall syntax of a conversion specification is : %[$][flags][width][.precision][length modifier]conversion
-	char *a = "aa";
-	printf("%p\n", a);
+	double z = 1;
+	number = 12;
+
+	char *test = "ia";
+	// printf("test% 50+dtest\n", number);
+	printf("test% -12stest with -\n", test);
+	printf("test% 12stest no -\n", test);
 }
