@@ -7,7 +7,6 @@ int	ft_put_null()
 }
 int	ft_put_char(int a)
 {
-	(unsigned char)a;
 	write(1, &a, 1);
 	return (1);
 }

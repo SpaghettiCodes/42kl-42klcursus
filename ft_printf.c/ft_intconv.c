@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-int		ft_count_uint(unsigned int nbr, int base, char format)
+int		ft_count_uint(unsigned int nbr, unsigned int base, char format)
 {
 	int				digit;
 	unsigned int	n;

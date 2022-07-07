@@ -44,9 +44,13 @@ int main()
 	// printf("%d %#x %#u\n", nbr, nbr, nbr);
 	// printf("what % .30i what \n", nbr);
 	// printf("%%(space) gets overriden by everything (i think) %%0 overides %%+, %%- overides %%0 and %%+ and %%. overides %%-\n");
+	// [..]
+	// If the 0 and - flags both appear, the 0 flag is ignored.
+	// If a precision is given with a numeric conversion (d, i, o, u, x, and X)
+	// the 0 flag is ignored.
+	// [..]
 	// printf("# converts it from digit to whatever is specified (if its to hexadecimal , a 0x is added in the fornt)\n");
-
-
+	// overall syntax of a conversion specification is : %[$][flags][width][.precision][length modifier]conversion
 	char *a = "aa";
 	printf("%p\n", a);
 }

@@ -40,7 +40,7 @@ static char	**inputwords(char const *s, char c, char **splitted, int count_word)
 		{
 			splitted[j] = ft_substr(s, start, let);
 			if (!splitted[j++])
-				return (freeeverything(splitted));
+				return (0);
 			start = i + 1;
 			let = 0;
 			continue ;
@@ -70,21 +70,12 @@ static int	countwords(char const *s, char c)
 	return (word);
 }
 
-static char	**ft_singlevalues(char const *s, int word)
+static char	**ft_singlevalues(char const *s)
 {
 	char	**splitted;
 
-	if (word == 1)
-	{
-		splitted = (char **) malloc ((2) * sizeof(char *));
-		splitted[0] = ft_strdup((char *) s);
-		splitted[1] = 0;
-	}
-	else
-	{
-		splitted = (char **) malloc (1 * sizeof(char *));
-		splitted[0] = 0;
-	}
+	splitted = (char **) malloc (1 * sizeof(char *));
+	splitted[0] = 0;
 	return (splitted);
 }
 
@@ -97,10 +88,8 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (0);
 	if (s[0] == '\0')
-		return (ft_singlevalues(s, 0));
+		return (ft_singlevalues(s));
 	word = countwords(s, c);
-	if (c == '\0')
-		return (ft_singlevalues(s, 1));
 	splitted = (char **) malloc ((word + 1) * sizeof(char *));
 	if (!splitted)
 		return (0);
