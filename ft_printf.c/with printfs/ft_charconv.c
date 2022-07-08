@@ -2,18 +2,16 @@
 
 int	ft_char_handler(properties *flag, va_list ptr)
 {
-	int	printed;
+	int		printed;
 
 	printed = 0;
 
 	if (flag->type == 's')
-		printed += ft_put_line(va_arg(ptr, char *), flag);
+		printed += ft_put_line(va_arg(ptr, char *), flag->preci);
 	else if (flag->type == 'c')
-	{
-		if (flag->l_aligned != 1 && flag->width != -1)
-			printed += ft_width_handler(flag, 's', 1);
 		printed += ft_put_char(va_arg(ptr, int));
-	}
+	else
+		return (ft_int_handler(flag, ptr));
 	if (flag->l_aligned)
 		printed += ft_print_l_aligned(flag, 's', printed);
 	return (printed);
@@ -60,20 +58,16 @@ int	ft_strlen(char *a)
 	return (i);
 }
 
-int	ft_put_line(char *a, properties *flag)
+int	ft_put_line(char *a, int preci)
 {
 	int	i;
-	int	printed;
 
-	printed = 0;
-	if (flag->l_aligned != 1 && flag->width != -1)
-		printed += ft_width_handler(flag, 's' , ft_strlen(a));
 	i = -1;
-	if (flag->preci == -1)
-		flag->preci = ft_strlen(a);
+	if (preci == -1)
+		preci = ft_strlen(a);
 	if (!a)
 		return (ft_put_null());
-	while (a[++i] && i < flag->preci)
-		printed += ft_put_char(a[i]);
-	return (printed);
+	while (a[++i] && i < preci)
+		write(1, &a[i], 1);
+	return (i);
 }

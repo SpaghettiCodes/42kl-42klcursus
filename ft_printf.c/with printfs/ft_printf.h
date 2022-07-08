@@ -35,22 +35,19 @@ int			ft_char_handler(properties *flag, va_list ptr);
 int			ft_int_handler(properties* flag, va_list ptr);
 int			ft_uint_handler(properties* flag, va_list ptr);
 int			ft_base16_handler(properties* flag, va_list ptr);
-int			ft_ptr_handler(properties* flag, va_list ptr);
 
 // flag handlers
 properties	*ft_initialize_flag();
 void		ft_reset_flag(properties *flag);
 int			print_flag(properties *flag, va_list ptr, int *printed);
 int			ft_print_l_aligned(properties *flag, int type, int printed);
-int			ft_width_handler(properties* flag, char format, int printed);
-int			ft_place_preci(properties *flag, va_list ptr, int digits);
-int			ft_base16_putprefix(properties* flag);
+
 
 // %c
 int			ft_put_char(int a);
 
 // %s
-int	ft_put_line(char *a, properties *flag);
+int			ft_put_line(char *a, int preci);
 
 // %p
 void		ft_put_ptraddr(uintptr_t n, char *base16);
@@ -70,10 +67,9 @@ int			ft_put_percent();
 // count bytes placed (for integers)
 int			ft_count_int(int n);
 int			ft_count_uint(unsigned int nbr, int base);
-int			ft_count_ptraddr(uintptr_t ptraddr);
+int			ft_count_ptraddr(void *ptr);
 
 // atoi
 int			ft_atoi(const char *str);
-int			ft_jankyatoi(char c);
 
 #endif

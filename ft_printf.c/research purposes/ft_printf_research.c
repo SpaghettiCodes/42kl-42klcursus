@@ -56,6 +56,8 @@ int main()
 
 	char *test = "ia";
 	// printf("test% 50+dtest\n", number);
-	printf("test% -12stest with -\n", test);
+	printf("test%.-12dtest with -\n", number);
 	printf("test% 12stest no -\n", test);
+	printf("test%#012xtest",number);
+
 }

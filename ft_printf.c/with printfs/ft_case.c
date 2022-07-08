@@ -32,9 +32,7 @@ int	ft_charcase(properties *flag, va_list ptr)
 	if (flag->type == 'c' || flag->type == 's')
 		return (ft_char_handler(flag, ptr));
 	else if (flag->type == 'p')
-		return (ft_ptr_handler(flag, ptr));
-	else if (flag->type == '%')
-		return (ft_put_char('%'));
+		return (ft_count_ptraddr(va_arg(ptr, void *)));
 	else
 		return (ft_intcase(flag, ptr));
 }

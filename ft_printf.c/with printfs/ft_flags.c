@@ -37,23 +37,37 @@ int	print_flag(properties *flag, va_list ptr, int *printed)
 int	format_handler(properties *flag, char *c, va_list ptr, int *printed)
 {
 	int	i;
+	int	initial;
 
-	i = 1;
+	i = 0;
+	initial = *printed;
+	printf("\ninitial = %d\n", initial);
+	printf("\ni = %d (%c)\n", initial, c[i]);
+	i++;
+	printf("\ni = %d (%c)\n", initial, c[i]);
 	while (check_flag(flag, c[i]))
+	{
 		i++;
+	}
+	printf("\ni = %d (%c)\n", initial, c[i]);
 	if (check_width(flag, c[i]) > 0)
 	{
+		printf("\ncheck_width = %d\n" , check_width(flag, c[i]));
 		flag->width = ft_atoi(&c[i]);
-		while(ft_jankyatoi(c[i]))
+		printf("\nflag->width: %d\n", flag->width);
+		while(c[i] >= '0' && c[i] <= '9')
 			i++;
 	}
-	if (c[i] == '.' && ++i)
+	printf("\ni = %d (%c)\n", initial, c[i]);
+	if (c[i] == '.')
 	{
+		i++;
 		flag->preci = ft_atoi(&c[i]);
-		while(ft_jankyatoi(c[i]))
+		while(c[i] >= '0' && c[i] <= '9')
 			i++;
 	}
-	if(checktype(flag, c[i]))
+	printf("\ni = %d (%c)\n", initial, c[i]);
+	if(checktype(flag, c[i]));
 		if(print_flag(flag, ptr, printed))
 			return (i);
 	return (0);
@@ -78,12 +92,17 @@ int	check_flag(properties *flag, char c)
 			flag->place_space_front = 1;
 	}
 	else if (c == '0')
+	{
 		flag->place_zero = 1;
+	}
 	else if (c == '#')
+	{
 		flag->prefix = 1;
+	}
 	else
 		return (0);
 	return (1);
+	//not sure
 }
 
 int	check_width(properties *flag, char c)
@@ -99,7 +118,9 @@ int	check_width(properties *flag, char c)
 			flag->place_space = 1;
 	}
 	else
+	{
 		return (0);
+	}
 	return (1);
 }
 
