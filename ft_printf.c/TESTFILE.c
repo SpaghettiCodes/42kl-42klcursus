@@ -319,6 +319,52 @@ int main()
 	printf("\n                     Diff in values                     \n");
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
+	printf("UNSIGNED INT: \n");
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test 13                             |\n");
+	printf("------------------------------------------------------------\n");
+	unsigned int u_number = 12312312;
+	cmp1 = ft_printf("%u\n", u_number);
+	cmp2 = printf("%u\n", u_number);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test 14                             |\n");
+	printf("------------------------------------------------------------\n");
+	u_number = 12312312;
+	cmp1 = ft_printf("%12uend\n", u_number);
+	cmp2 = printf("%12uend\n", u_number);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test 15                             |\n");
+	printf("------------------------------------------------------------\n");
+	u_number = 12312312;
+	cmp1 = ft_printf("%12.4uend\n", u_number);
+	cmp2 = printf("%12.4uend\n", u_number);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test 16                             |\n");
+	printf("------------------------------------------------------------\n");
+	u_number = 12312312;
+	cmp1 = ft_printf("%4.12uend\n", u_number);
+	cmp2 = printf("%4.12uend\n", u_number);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test 16                             |\n");
+	printf("------------------------------------------------------------\n");
+	u_number = 12312312;
+	cmp1 = ft_printf("% -020.10uend\n", u_number);
+	cmp2 = printf("% -020.10uend\n", u_number);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
 	// printf("THE * FIELD THINGY: \n");
 	// printf("------------------------------------------------------------\n");
 	// printf("|                      Test 13                             |\n");
@@ -350,7 +396,7 @@ int main()
 
 	printf("POINTERS:\n");
 	printf("------------------------------------------------------------\n");
-	printf("|                      Test --                             |\n");
+	printf("|                      Test p1                             |\n");
 	printf("------------------------------------------------------------\n");
 	cmp1 = ft_printf("%p\n", test);
 	cmp2 = printf("%p\n", test);
@@ -358,12 +404,101 @@ int main()
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
 	printf("------------------------------------------------------------\n");
-	printf("|                      Test --                             |\n");
+	printf("|                      Test p2                             |\n");
 	printf("------------------------------------------------------------\n");
 	cmp1 = ft_printf("%#x\n", test);
 	cmp2 = printf("%#x\n", test);
 	printf("\n                     Diff in values                     \n");
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test p3                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%20p\n", test);
+	cmp2 = printf("%20p\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test p4                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%12p\n", test);
+	cmp2 = printf("%12p\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+
+	printf("------------------------------------------------------------\n");
+	printf("|                     Test p4.1                            |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%4p\n", test);
+	cmp2 = printf("%4p\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test p5                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%.12p\n", test);
+	cmp2 = printf("%.12p\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test p6                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%.4p\n", test);
+	cmp2 = printf("%.4p\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test p7                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%.30p\n", test);
+	cmp2 = printf("%.30p\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 	// remaining work = pointers, and i think only pointers WOOO
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test p8                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%-12pend\n", test);
+	cmp2 = printf("%-12pend\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                      Test p9                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%17.23pend\n", test);
+	cmp2 = printf("%17.23pend\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                     Test p10                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%+17.23pend\n", test);
+	cmp2 = printf("%+17.23pend\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                     Test p11                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%#pend\n", test);
+	cmp2 = printf("%#pend\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+	printf("------------------------------------------------------------\n");
+	printf("|                     Test p12                             |\n");
+	printf("------------------------------------------------------------\n");
+	cmp1 = ft_printf("%#.16pend\n", test);
+	cmp2 = printf("%#.16pend\n", test);
+	printf("\n                     Diff in values                     \n");
+	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 }
 

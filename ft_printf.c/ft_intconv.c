@@ -18,10 +18,10 @@ int		ft_width_handler(properties* flag, char format, int printed)
 			printed = flag->preci;
 		while (i < (flag->width - printed) && ++i)
 		{
-			if (flag->place_space)
-				ft_put_char(' ');
-			else if (flag->place_zero)
+			if (flag->place_zero)
 				ft_put_char('0');
+			else if (flag->place_space)
+				ft_put_char(' ');
 		}
 	}
 	return (i);
@@ -69,10 +69,9 @@ int		ft_uint_handler(properties* flag, va_list ptr)
 	printed += ft_count_uint(nbr, 10);
 	if (flag->place_space_front)
 		printed += ft_put_char(' ');
-	if (flag->sign)
-		printed += ft_put_char('+');
 	if (flag->l_aligned != 1 && flag->width != -1)
 		printed += ft_width_handler(flag, 'd', printed);
+	printed += ft_place_preci(flag, ptr, ft_count_uint(nbr, 10));
 	ft_put_unsigned_int(nbr);
 	if (flag->l_aligned)
 		printed += ft_print_l_aligned(flag, 'd', printed);
@@ -81,7 +80,12 @@ int		ft_uint_handler(properties* flag, va_list ptr)
 
 int		ft_base16_putprefix(properties* flag)
 {
-	if (flag->type == 'x')
+	if (flag->type == 'p')
+	{
+		write(1, "0x", 2);
+		return (4);
+	}
+	else if (flag->type == 'x')
 		write(1, "0x", 2);
 	else if (flag->type == 'X')
 		write(1, "0X", 2);
@@ -90,9 +94,9 @@ int		ft_base16_putprefix(properties* flag)
 
 int		ft_base16_handler(properties* flag, va_list ptr)
 {
-	int printed;
-	int	nbr;
-	char *base;
+	int		printed;
+	int		nbr;
+	char	*base;
 
 	printed = 0;
 	nbr = va_arg(ptr, unsigned int);
@@ -103,6 +107,7 @@ int		ft_base16_handler(properties* flag, va_list ptr)
 		printed += ft_put_char(' ');
 	if (flag->l_aligned != 1 && flag->width != -1)
 		printed += ft_width_handler(flag, 'd', printed);
+	printed += ft_place_preci(flag, ptr, ft_count_uint(nbr, 16));
 	if (flag->type == 'x')
 		base = "0123456789abcdef";
 	else
@@ -113,7 +118,7 @@ int		ft_base16_handler(properties* flag, va_list ptr)
 	return (printed);
 }
 
-int		ft_count_uint(unsigned int nbr, int base)
+int	ft_count_uint(unsigned int nbr, int base)
 {
 	int				digit;
 	unsigned int	n;
@@ -126,7 +131,7 @@ int		ft_count_uint(unsigned int nbr, int base)
 	return (digit);
 }
 
-int		ft_count_int(int nbr)
+int	ft_count_int(int nbr)
 {
 	int	digit;
 	int	n;
