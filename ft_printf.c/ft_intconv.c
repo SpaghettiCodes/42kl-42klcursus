@@ -80,12 +80,7 @@ int		ft_uint_handler(properties* flag, va_list ptr)
 
 int		ft_base16_putprefix(properties* flag)
 {
-	if (flag->type == 'p')
-	{
-		write(1, "0x", 2);
-		return (4);
-	}
-	else if (flag->type == 'x')
+	if (flag->type == 'x')
 		write(1, "0x", 2);
 	else if (flag->type == 'X')
 		write(1, "0X", 2);

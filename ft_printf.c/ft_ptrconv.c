@@ -1,12 +1,38 @@
 #include "ft_printf.h"
 
+int		ft_put_ptrprefix(properties *flag)
+{
+	if (flag->prefix)
+		write(1, "0x", 2);
+	else if (flag->width != -1)
+		return (0);
+	else
+		write(1, "0000", 4);
+	return (2);
+}
+
+int		ft_ptrwidth_handler(properties* flag, int printed)
+{
+	int	i;
+
+	i = 0;
+	while (i < (flag->width - printed) && ++i)
+	{
+		if (flag->place_zero)
+			ft_put_char('z');
+		else if (flag->place_space)
+			ft_put_char('s');
+	}
+	return (i);
+}
+
 int		ft_place_preci_ptr(properties *flag, va_list ptr, int digits)
 {
 	int	i;
 
 	i = 0;
 	while (i < (flag->preci - digits) && ++i)
-			ft_put_char('0');
+			ft_put_char('p');
 	return (i);
 }
 
@@ -16,16 +42,13 @@ int		ft_ptr_handler(properties* flag, va_list ptr)
 	char	*base;
 	uintptr_t	ptraddr;
 
-	printed = 0;
 	ptraddr = (uintptr_t)va_arg(ptr, void *);
-	printed += ft_count_ptraddr(ptraddr);
+	printed = ft_count_ptraddr(ptraddr);
+	printed += ft_put_ptrprefix(flag);
 	if (flag->width != -1)
-		printed += ft_width_handler(flag, 'd', printed);
-	if (flag->prefix)
-		ft_base16_putprefix(flag);
-	printed += ft_place_preci_ptr(flag, ptr, printed);
-	if (flag->type == 'p')
-		base = "0123456789abcdef";
+		printed += ft_ptrwidth_handler(flag, printed);
+	printed += ft_place_preci_ptr(flag, ptr, ft_count_ptraddr(ptraddr));
+	base = "0123456789abcdef";
 	ft_put_ptraddr(ptraddr, base);
 	return (printed);
 }

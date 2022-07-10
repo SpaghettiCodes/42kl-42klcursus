@@ -462,14 +462,6 @@ int main()
 	// remaining work = pointers, and i think only pointers WOOO
 
 	printf("------------------------------------------------------------\n");
-	printf("|                      Test p8                             |\n");
-	printf("------------------------------------------------------------\n");
-	cmp1 = ft_printf("%-12pend\n", test);
-	cmp2 = printf("%-12pend\n", test);
-	printf("\n                     Diff in values                     \n");
-	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
-
-	printf("------------------------------------------------------------\n");
 	printf("|                      Test p9                             |\n");
 	printf("------------------------------------------------------------\n");
 	cmp1 = ft_printf("%17.23pend\n", test);
@@ -480,8 +472,8 @@ int main()
 	printf("------------------------------------------------------------\n");
 	printf("|                     Test p10                             |\n");
 	printf("------------------------------------------------------------\n");
-	cmp1 = ft_printf("%+17.23pend\n", test);
-	cmp2 = printf("%+17.23pend\n", test);
+	cmp1 = ft_printf("%23pend\n", test);
+	cmp2 = printf("%23pend\n", test);
 	printf("\n                     Diff in values                     \n");
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
