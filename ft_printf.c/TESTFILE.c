@@ -310,7 +310,7 @@ int main()
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
 	printf("------------------------------------------------------------\n");
-	printf("|                     Test 12.4                            |\n");
+	printf("|                     Test 12.7                            |\n");
 	printf("------------------------------------------------------------\n");
 	test = "0123456789";
 	cmp1 = ft_printf("%.0   + -5swend\n", test);
@@ -357,7 +357,7 @@ int main()
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
 	printf("------------------------------------------------------------\n");
-	printf("|                      Test 16                             |\n");
+	printf("|                      Test 17                             |\n");
 	printf("------------------------------------------------------------\n");
 	u_number = 12312312;
 	cmp1 = ft_printf("% -020.10uend\n", u_number);

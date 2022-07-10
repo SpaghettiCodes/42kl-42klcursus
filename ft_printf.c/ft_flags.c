@@ -53,10 +53,9 @@ int	format_handler(properties *flag, char *c, va_list ptr, int *printed)
 		while(ft_jankyatoi(c[i]))
 			i++;
 	}
-	if(checktype(flag, c[i]))
-		if(print_flag(flag, ptr, printed))
-			return (i);
-	return (0);
+	checktype(flag, c[i]);
+	print_flag(flag, ptr, printed);
+	return (i);
 }
 
 // follows THIS FUCKING ORDER

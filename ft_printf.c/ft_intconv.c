@@ -48,8 +48,10 @@ int		ft_int_handler(properties* flag, va_list ptr)
 	if (flag->place_space_front)
 		printed += ft_put_char(' ');
 	if (flag->sign)
+	{
 		if (nbr > 0)
 			printed += ft_put_char('+');
+	}
 	if (flag->l_aligned != 1 && flag->width != -1)
 		printed += ft_width_handler(flag, 'd', (printed));
 	printed += ft_place_preci(flag, ptr, ft_count_int(nbr));
@@ -66,9 +68,7 @@ int		ft_uint_handler(properties* flag, va_list ptr)
 
 	printed = 0;
 	nbr = va_arg(ptr, unsigned int);
-	printed += ft_count_uint(nbr, 10);
-	if (flag->place_space_front)
-		printed += ft_put_char(' ');
+	printed = ft_count_uint(nbr, 10);
 	if (flag->l_aligned != 1 && flag->width != -1)
 		printed += ft_width_handler(flag, 'd', printed);
 	printed += ft_place_preci(flag, ptr, ft_count_uint(nbr, 10));

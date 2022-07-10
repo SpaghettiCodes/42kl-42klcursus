@@ -12,11 +12,6 @@
 
 #include "ft_printf.h"
 
-int	ft_jankyatoi(char c)
-{
-	return ((c <= '9' && c >= '0') || c == '+' || c == '-' || c == ' ');
-}
-
 int	ft_atoi(const char *str)
 {
 	int	result;
@@ -26,10 +21,9 @@ int	ft_atoi(const char *str)
 
 	i = 0;
 	result = 0;
-	while (ft_jankyatoi(str[i]))
+	while (str[i] <= '9' && str[i] >= '0')
 	{
-		if (str[i] <= '9' && str[i] >= '0')
-			result = (result * 10) + (str[i] - '0');
+		result = (result * 10) + (str[i] - '0');
 		i++;
 	}
 	return (result);

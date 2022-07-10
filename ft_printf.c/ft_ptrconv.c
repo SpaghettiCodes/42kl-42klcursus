@@ -2,12 +2,7 @@
 
 int		ft_put_ptrprefix(properties *flag)
 {
-	if (flag->prefix)
-		write(1, "0x", 2);
-	else if (flag->width != -1)
-		return (0);
-	else
-		write(1, "0000", 4);
+	write(1, "0x", 2);
 	return (2);
 }
 
