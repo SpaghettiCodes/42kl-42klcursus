@@ -1,83 +1,65 @@
 #include "get_next_line.h"
 
-fd_list *fd_initialize(int fd)
+int	has_sep(char *content)
 {
-	fd_list	*list;
+	int	i;
 
-	list = (fd_list *) malloc (sizeof(fd_list));
+	i = -1;
+	while (content[++i])
+		if (content[i] == '\n')
+			return (1);
 
-	list->fd = fd;
-	list->next = NULL;
-	list->contents = NULL;
-	list->readuntil = 0;
-	return (list);
+	return (0);
 }
 
-fd_list	*fd_search_and_add(int fd, fd_list *list)
+char	*lineextractor(char *content)
 {
-	fd_list	*current;
+	char		*line;
+	static int	lastsaw;
+	int			i;
+	int			len;
 
-	current = list;
-	while (1)
-	{
-		if (current->fd == fd)
-			return (current);
-		if (!current->next)
-			break ;
-		current = current->next;
-	}
-	current->next = fd_initialize(fd);
-	return (current->next);
-}
-
-int	fd_fill_content(int fd, fd_list *list, char *buff)
-{
-	int		check;
-
-	while (1)
-	{
-		check = read(fd, buff, BUFF_SIZE);
-		if (!check || check == -1)
-			return (0);
-		buff[check] = 0;
-		list->contents = str_join(list->contents, buff);
-	}
-	free(buff);
-}
-
-char *fd_search_line(fd_list *list)
-{
-	char	*line;
-	int		i;
-
-	if (list->contents[list->readuntil] == '\0')
+	if (!content || content[lastsaw] == '\0')
 		return (0);
-	i = list->readuntil;
-	while (list->contents[i] && list->contents[i] != '\n')
+	i = lastsaw;
+	len = 0;
+	while (content[i] && content[i] != '\n')
+	{
 		i++;
-	line = str_substr(list->contents, list->readuntil, ((i - list->readuntil) + 1));
-	list->readuntil = ++i;
+		len++;
+	}
+	if (content[i] == '\n')
+	{
+		i++;
+		len++;
+	}
+	line = str_substr(content, lastsaw, len);
+	lastsaw = i;
 	return (line);
 }
 
 char *get_next_line(int fd)
 {
-	static fd_list	*list;
-	fd_list			*current;
+	static char		*content;
 	char			*buff;
 	char			*line;
+	int				check;
 
-	if (!fd || !BUFF_SIZE)
+	if (!fd || BUFF_SIZE <= 0)
 		return (0);
-	if (!list)
-	{
-		list = fd_initialize(fd);
-		current = list;
-	}
-	else
-		current = fd_search_and_add(fd, list);
 	buff = (char *) malloc (BUFF_SIZE + 1);
-	fd_fill_content(fd, current, buff);
-	line = fd_search_line(current);
+	while (1)
+	{
+		check = read(fd, buff, BUFF_SIZE);
+		if (!check)
+			break ;
+		if (check == -1)
+			break ;
+		buff[check] = 0;
+		content = str_join(content, buff);
+		if (has_sep(content))
+			break ;
+	}
+	line = lineextractor(content);
 	return (line);
 }
