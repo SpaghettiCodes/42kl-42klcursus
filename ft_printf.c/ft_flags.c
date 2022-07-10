@@ -44,13 +44,13 @@ int	format_handler(properties *flag, char *c, va_list ptr, int *printed)
 	if (check_width(flag, c[i]) > 0)
 	{
 		flag->width = ft_atoi(&c[i]);
-		while(ft_jankyatoi(c[i]))
+		while((c[i] >= '0' &&  c[i] <= '9') || c[i] == '-' || c[i] == '+' || c[i] == ' ')
 			i++;
 	}
 	if (c[i] == '.' && ++i)
 	{
 		flag->preci = ft_atoi(&c[i]);
-		while(ft_jankyatoi(c[i]))
+		while((c[i] >= '0' &&  c[i] <= '9') || c[i] == '-' || c[i] == '+' || c[i] == ' ')
 			i++;
 	}
 	checktype(flag, c[i]);
