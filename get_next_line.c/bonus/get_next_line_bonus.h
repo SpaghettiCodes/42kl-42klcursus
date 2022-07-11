@@ -3,12 +3,14 @@
 
 # include <stdlib.h>
 # include <fcntl.h>
+# include <unistd.h>
 
-#define BUFF_SIZE 12
+# define BUFF_SIZE 42
 
 typedef struct List{
 	int fd;
 	int	readuntil;
+	int	checkuntil;
 	char *contents;
 	struct List* next;
 } fd_list;
@@ -20,10 +22,12 @@ fd_list		*fd_initialize(int fd);
 fd_list		*fd_search_and_add(int fd, fd_list *list);
 int			fd_fill_content(int fd, fd_list *list, char *buff);
 char		*fd_search_line(fd_list *list);
+void		fd_search_and_destroy(int fd, fd_list **list);
 
 // str utils
 char		*str_substr(char *str, int start, int len);
 int			str_len(char *str);
 char		*str_join(char *str1, char *str2);
+int			has_sep(fd_list *list);
 
 #endif

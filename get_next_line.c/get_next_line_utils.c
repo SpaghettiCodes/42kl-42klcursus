@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/11 16:47:16 by cshi-xia          #+#    #+#             */
+/*   Updated: 2022/07/11 17:05:05 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*str_substr(char *str, int start, int len)
@@ -19,17 +31,17 @@ char	*str_substr(char *str, int start, int len)
 
 int	str_len(char *str)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (!str)
 		return (0);
-	while(str[len])
+	while (str[len])
 		len++;
 	return (len);
 }
 
-char *str_join(char *str1, char *str2)
+char	*str_join(char *str1, char *str2)
 {
 	char	*strjoined;
 	int		i;
@@ -37,7 +49,8 @@ char *str_join(char *str1, char *str2)
 
 	i = 0;
 	j = 0;
-	strjoined = (char *) malloc ((str_len(str1) + str_len(str2) + 1) * sizeof(char));
+	strjoined = (char *) malloc ((str_len(str1)
+				+ str_len(str2) + 1) * sizeof(char));
 	while (str1 && str1[i])
 	{
 		strjoined[i] = str1[i];

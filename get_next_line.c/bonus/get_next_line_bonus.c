@@ -8,6 +8,7 @@ fd_list *fd_initialize(int fd)
 
 	list->fd = fd;
 	list->next = NULL;
+	list->checkuntil = 0;
 	list->contents = NULL;
 	list->readuntil = 0;
 	return (list);
@@ -49,6 +50,11 @@ int	fd_fill_content(int fd, fd_list *list, char *buff)
 		}
 		buff[check] = 0;
 		list->contents = str_join(list->contents, buff);
+		if (has_sep(list))
+		{
+			free(buff);
+			return (1);
+		}
 	}
 }
 
@@ -84,7 +90,7 @@ char *get_next_line(int fd)
 	char			*buff;
 	char			*line;
 
-	if (!fd || BUFF_SIZE <= 0)
+	if (BUFF_SIZE <= 0)
 		return (0);
 	if (!list)
 	{
@@ -95,7 +101,12 @@ char *get_next_line(int fd)
 		current = fd_search_and_add(fd, list);
 	buff = (char *) malloc (BUFF_SIZE + 1);
 	if (fd_fill_content(fd, current, buff) == -1)
+	{
+		fd_search_and_destroy(fd, &list);
 		return (0);
+	}
 	line = fd_search_line(current);
+	if (!line)
+		fd_search_and_destroy(fd, &list);
 	return (line);
 }

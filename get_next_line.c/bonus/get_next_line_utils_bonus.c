@@ -53,3 +53,49 @@ char *str_join(char *str1, char *str2)
 	free(str1);
 	return (strjoined);
 }
+
+void	fd_search_and_destroy(int fd, fd_list **list)
+{
+	fd_list	*current;
+	fd_list	*prev;
+	fd_list	*temp;
+
+	current = *list;
+	prev = NULL;
+	while (current)
+	{
+		if (current->fd == fd)
+			break ;
+		prev = current;
+		current = current->next;
+	}
+    if (!current)
+        return ;
+	temp = current->next;
+	if (current->contents)
+		free(current->contents);
+	free(current);
+	current = temp;
+	if (prev)
+		prev->next = current;
+    else
+        *list = current;
+}
+
+int	has_sep(fd_list *list)
+{
+	int			i;
+
+	i = list->checkuntil;
+	while (list->contents[i])
+	{
+		i++;
+		if (list->contents[i] == '\n')
+		{
+			list->checkuntil = i;
+			return (1);
+		}
+	}
+	list->checkuntil = i;
+	return (0);
+}
