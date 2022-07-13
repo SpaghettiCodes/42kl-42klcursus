@@ -54,11 +54,11 @@ char *str_join(char *str1, char *str2)
 	return (strjoined);
 }
 
-void	fd_search_and_destroy(int fd, fd_list **list)
+void	fd_search_and_destroy(int fd, t_fd_list **list)
 {
-	fd_list	*current;
-	fd_list	*prev;
-	fd_list	*temp;
+	t_fd_list	*current;
+	t_fd_list	*prev;
+	t_fd_list	*temp;
 
 	current = *list;
 	prev = NULL;
@@ -82,7 +82,7 @@ void	fd_search_and_destroy(int fd, fd_list **list)
         *list = current;
 }
 
-int	has_sep(fd_list *list)
+int	has_sep(t_fd_list *list)
 {
 	int			i;
 

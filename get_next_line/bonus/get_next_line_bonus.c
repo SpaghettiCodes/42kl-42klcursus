@@ -1,10 +1,10 @@
 #include "get_next_line_bonus.h"
 
-fd_list *fd_initialize(int fd)
+t_fd_list *fd_initialize(int fd)
 {
-	fd_list	*list;
+	t_fd_list	*list;
 
-	list = (fd_list *) malloc (sizeof(fd_list));
+	list = (t_fd_list *) malloc (sizeof(t_fd_list));
 
 	list->fd = fd;
 	list->next = NULL;
@@ -14,9 +14,9 @@ fd_list *fd_initialize(int fd)
 	return (list);
 }
 
-fd_list	*fd_search_and_add(int fd, fd_list *list)
+t_fd_list	*fd_search_and_add(int fd, t_fd_list *list)
 {
-	fd_list	*current;
+	t_fd_list	*current;
 
 	current = list;
 	while (1)
@@ -31,7 +31,7 @@ fd_list	*fd_search_and_add(int fd, fd_list *list)
 	return (current->next);
 }
 
-int	fd_fill_content(int fd, fd_list *list, char *buff)
+int	fd_fill_content(int fd, t_fd_list *list, char *buff)
 {
 	int		check;
 
@@ -58,7 +58,7 @@ int	fd_fill_content(int fd, fd_list *list, char *buff)
 	}
 }
 
-char *fd_search_line(fd_list *list)
+char *fd_search_line(t_fd_list *list)
 {
 	char	*line;
 	int		i;
@@ -85,8 +85,8 @@ char *fd_search_line(fd_list *list)
 
 char *get_next_line(int fd)
 {
-	static fd_list	*list;
-	fd_list			*current;
+	static t_fd_list	*list;
+	t_fd_list			*current;
 	char			*buff;
 	char			*line;
 
