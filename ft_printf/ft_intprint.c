@@ -7,7 +7,7 @@ int	ft_count_uint(unsigned int nbr, int base)
 
 	digit = 0;
 	n = nbr;
-	while (n >= base && ++digit)
+	while (n >= (unsigned int)base && ++digit)
 		n /= base;
 	digit++;
 	return (digit);
@@ -20,7 +20,7 @@ int	ft_count_int(int nbr)
 
 	n = nbr;
 	if (n < 0)
-		return (ft_count_uint((unsigned int)(n * -1), 10) + 1);
+		return (ft_count_uint((unsigned int)(n * -1), 10));
 	digit = 0;
 	while (n >= 10 && ++digit)
 		n /= 10;
@@ -39,13 +39,12 @@ void	ft_put_int(int n)
 {
 	if (n == -2147483648)
 	{
-		write(1, "-2", 2);
+		write(1, "2", 1);
 		ft_put_int(147483648);
 		return ;
 	}
 	if (n < 0)
 	{
-		write(1, "-", 1);
 		ft_put_int(n * -1);
 		return ;
 	}

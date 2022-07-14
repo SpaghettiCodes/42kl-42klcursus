@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:10:53 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/05 11:04:00 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:22:53 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	ft_atoi(const char *str)
 {
 	int	result;
-	int	negative;
 	int	i;
-	int	overflowed;
 
 	i = 0;
 	result = 0;

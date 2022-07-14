@@ -11,18 +11,15 @@ int	met_percent(const char *str, va_list ptr, int *printed)
 	initial = i;
 	i += format_handler(flag, (char *)&str[i], ptr, printed); // note: you will be at the conversion letter after this
 	free(flag);
-	if (i == initial)
-		*printed = *printed + ft_put_char('%');
 	return (i);
 }
 
 int ft_printf(const char *str, ...)
 {
 	int	i;
+	int	check;
 	int	printed;
-	int	initial;
 	va_list ptr;
-	properties *flag;
 
 	i = -1;
 	printed = 0;
@@ -33,9 +30,13 @@ int ft_printf(const char *str, ...)
 			printed += ft_put_char(str[i]);
 		else
 		{
-			i += met_percent(&str[i], ptr, &printed);
-			if (str[i] != '%')
-				va_arg(ptr, void *);
+			check = met_percent(&str[i], ptr, &printed);
+			if (check == -1)
+			{
+				printed += ft_put_char(str[i]);
+				continue ;
+			}
+			i += check;
 		}
 	}
 	return (printed);

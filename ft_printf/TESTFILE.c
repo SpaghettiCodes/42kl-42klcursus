@@ -129,14 +129,14 @@ int main()
 	printf("\n                     Diff in values                     \n");
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
-	printf("------------------------------------------------------------\n");
-	printf("|                        Test 7                            |\n");
-	printf("------------------------------------------------------------\n");
-	string = "abcdefg";
-	cmp1 = ft_printf("%-0+12.10send\n", string);
-	cmp2 = printf("%-0+12.10send\n", string);
-	printf("\n                     Diff in values                     \n");
-	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+	// printf("------------------------------------------------------------\n");
+	// printf("|                        Test 7                            |\n");
+	// printf("------------------------------------------------------------\n");
+	// string = "abcdefg";
+	// cmp1 = ft_printf("%-0+12.10send\n", string);
+	// cmp2 = printf("%-0+12.10send\n", string);
+	// printf("\n                     Diff in values                     \n");
+	// printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
 	printf("------------------------------------------------------------\n");
 	printf("|                        Test 8                            |\n");
@@ -147,14 +147,14 @@ int main()
 	printf("\n                     Diff in values                     \n");
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
-	printf("------------------------------------------------------------\n");
-	printf("|                        Test 9                            |\n");
-	printf("------------------------------------------------------------\n");
+	// printf("------------------------------------------------------------\n");
+	// printf("|                        Test 9                            |\n");
+	// printf("------------------------------------------------------------\n");
 	char *test = "abcdefghijklmnopqrstuvwxyz";
-	cmp1 = ft_printf("%023send\n", test);
-	cmp2 = printf("%023send\n", test);
-	printf("\n                     Diff in values                     \n");
-	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+	// cmp1 = ft_printf("%023send\n", test);
+	// cmp2 = printf("%023send\n", test);
+	// printf("\n                     Diff in values                     \n");
+	// printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
 	printf("------------------------------------------------------------\n");
 	printf("|                       Test 9.1                           |\n");
@@ -196,22 +196,22 @@ int main()
 	printf("\n                     Diff in values                     \n");
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
-	printf("------------------------------------------------------------\n");
-	printf("|                      Test 10                             |\n");
-	printf("------------------------------------------------------------\n");
-	cmp1 = ft_printf("%#-+ 08.3send\n", test);
-	cmp2 = printf("%#-+ 08.3send\n", test);
-	printf("\n                     Diff in values                     \n");
-	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+	// printf("------------------------------------------------------------\n");
+	// printf("|                      Test 10                             |\n");
+	// printf("------------------------------------------------------------\n");
+	// cmp1 = ft_printf("%#-+ 08.3send\n", test);
+	// cmp2 = printf("%#-+ 08.3send\n", test);
+	// printf("\n                     Diff in values                     \n");
+	// printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
-	printf("------------------------------------------------------------\n");
-	printf("|                      Test 11                             |\n");
-	printf("------------------------------------------------------------\n");
+	// printf("------------------------------------------------------------\n");
+	// printf("|                      Test 11                             |\n");
+	// printf("------------------------------------------------------------\n");
 	int	hexa = 0x1230adef;
-	cmp1 = ft_printf("%#-+ 08.3Xend\n", hexa);
-	cmp2 = printf("%#-+ 08.3Xend\n", hexa);
-	printf("\n                     Diff in values                     \n");
-	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+	// cmp1 = ft_printf("%#-+ 08.3Xend\n", hexa);
+	// cmp2 = printf("%#-+ 08.3Xend\n", hexa);
+	// printf("\n                     Diff in values                     \n");
+	// printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
 
 	printf("\nI FORGOT TO TEST %% FLAGS IN BASICS: \n");
 	printf("------------------------------------------------------------\n");

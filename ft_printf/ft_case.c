@@ -15,31 +15,39 @@
 // ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 // ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
-int ft_intcase(properties *flag, va_list ptr)
+int	ft_case(properties *flag, va_list ptr)
 {
-	if (flag->type == 'd' || flag->type == 'i')
+	if (flag->type == 'c' || flag->type == 's')
+		return (ft_char_handler(flag, ptr));
+	else if (flag->type == 'p')
+		return (ft_ptr_handler(flag, ptr));
+	else if (flag->type == 'd' || flag->type == 'i')
 		return (ft_int_handler(flag, ptr));
 	else if (flag->type == 'u')
 		return (ft_uint_handler(flag, ptr));
 	else if (flag->type == 'x' || flag->type == 'X')
 		return (ft_base16_handler(flag, ptr));
 	else
-		return (-1);
-}
-
-int	ft_charcase(properties *flag, va_list ptr)
-{
-	if (flag->type == 'c' || flag->type == 's')
-		return (ft_char_handler(flag, ptr));
-	else if (flag->type == 'p')
-		return (ft_ptr_handler(flag, ptr));
-	else if (flag->type == '%')
-		return (ft_put_char('%'));
-	else
-		return (ft_intcase(flag, ptr));
+		return (ft_none_handler(flag));
 }
 
 int ft_convertion(properties *flag, va_list ptr)
 {
-	return (ft_charcase(flag,ptr));
+	if (flag->width == -2)
+	{
+		flag->width = va_arg(ptr, int);
+		if (flag->width < 0)
+		{
+			flag->l_aligned = 1;
+			flag->place_space = 1;
+			flag->width *= -1;
+		}
+	}
+	if (flag->preci == -2)
+	{
+		flag->preci = va_arg(ptr, int);
+		if (flag->preci < 0)
+			flag->preci = -1;
+	}
+	return (ft_case(flag,ptr));
 }

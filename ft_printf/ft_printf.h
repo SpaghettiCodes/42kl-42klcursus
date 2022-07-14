@@ -25,7 +25,6 @@ int			ft_intcase(properties *flag, va_list ptr);
 int			ft_charcase(properties *flag, va_list ptr);
 int			ft_convertion(properties *flag, va_list ptr);
 int			format_handler(properties *flag, char *c, va_list ptr, int *printed);
-int			check_flag(properties *flag, char c);
 int			check_width(properties *flag, char c);
 int			checktype(properties *flag, char c);
 
@@ -36,21 +35,25 @@ int			ft_int_handler(properties* flag, va_list ptr);
 int			ft_uint_handler(properties* flag, va_list ptr);
 int			ft_base16_handler(properties* flag, va_list ptr);
 int			ft_ptr_handler(properties* flag, va_list ptr);
+int			ft_none_handler(properties *flag);
+int			ft_char_width_handler(properties* flag, int printed);
+int			ft_int_width_handler(properties* flag, int printed);
 
 // flag handlers
 properties	*ft_initialize_flag();
 void		ft_reset_flag(properties *flag);
 int			print_flag(properties *flag, va_list ptr, int *printed);
 int			ft_print_l_aligned(properties *flag, int type, int printed);
-int			ft_width_handler(properties* flag, char format, int printed);
-int			ft_place_preci(properties *flag, va_list ptr, int digits);
+int			ft_place_preci(properties *flag, int digits);
 int			ft_base16_putprefix(properties* flag);
+int			check_flag(properties *flag, char c);
+int			check_width(properties *flag, char c);
 
 // %c
 int			ft_put_char(int a);
 
 // %s
-int	ft_put_line(char *a, properties *flag);
+int			ft_put_line(char *a, properties *flag);
 
 // %p
 void		ft_put_ptraddr(uintptr_t n, char *base16);
@@ -74,6 +77,5 @@ int			ft_count_ptraddr(uintptr_t ptraddr);
 
 // atoi
 int			ft_atoi(const char *str);
-int			ft_jankyatoi(char c);
 
 #endif

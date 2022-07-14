@@ -24,12 +24,9 @@ properties	*ft_initialize_flag()
 
 int	print_flag(properties *flag, va_list ptr, int *printed)
 {
-	int	initial;
 	int	added;
 
 	added = ft_convertion(flag, ptr);
-	if (added == -1)
-		return (0);
 	*printed = *printed + added;
 	return (1);
 }
@@ -41,19 +38,33 @@ int	format_handler(properties *flag, char *c, va_list ptr, int *printed)
 	i = 1;
 	while (check_flag(flag, c[i]))
 		i++;
-	if (check_width(flag, c[i]) > 0)
+	if (check_width(flag, c[i]) != 0)
 	{
-		flag->width = ft_atoi(&c[i]);
-		while((c[i] >= '0' &&  c[i] <= '9') || c[i] == '-' || c[i] == '+' || c[i] == ' ')
+		if (flag->width == -1)
+		{
+			flag->width = ft_atoi(&c[i]);
+			while((c[i] >= '0' &&  c[i] <= '9'))
+				i++;
+		}
+		else if (flag->width == -2 && c[i] == '*')
 			i++;
 	}
 	if (c[i] == '.' && ++i)
 	{
-		flag->preci = ft_atoi(&c[i]);
-		while((c[i] >= '0' &&  c[i] <= '9') || c[i] == '-' || c[i] == '+' || c[i] == ' ')
-			i++;
+		flag->place_space = 1;
+		flag->place_zero = 0;
+		if (c[i] == '*' && ++i)
+			flag->preci = -2;
+		else
+		{
+			flag->preci = ft_atoi(&c[i]);
+			while ((c[i] >= '0' &&  c[i] <= '9'))
+				i++;
+		}
 	}
-	checktype(flag, c[i]);
+	flag->type = c[i];
+	if (flag->type == '\0')
+		return (-1);
 	print_flag(flag, ptr, printed);
 	return (i);
 }
@@ -87,32 +98,14 @@ int	check_flag(properties *flag, char c)
 
 int	check_width(properties *flag, char c)
 {
-	if (c == '*')
-	{
-		flag->width = -2;
-		return (-1);
-	}
-	else if (c >= '0' && c <= '9')
+	if ((c >= '0' && c <= '9') || c == '*')
 	{
 		if (!flag->place_zero)
 			flag->place_space = 1;
+		if (c == '*')
+			flag->width = -2;
 	}
 	else
 		return (0);
 	return (1);
 }
-
-int	checktype(properties *flag, char c)
-{
-	char *conversion;
-	int		i;
-
-	conversion = "cspdiuxX%";
-	i = -1;
-	while (conversion[++i] != c)
-		if (conversion[i] == '\0')
-			return (0);
-	flag->type = conversion[i];
-	return (1);
-}
-
