@@ -35,67 +35,79 @@ int	has_sep(char *content)
 char	*lineextractor(char *content)
 {
 	char		*line;
-	static int	lastsaw;
-	int			i;
 	int			len;
 
-	if (!content || content[lastsaw] == '\0')
+	if (!content || content[0] == '\0')
 		return (0);
-	i = lastsaw;
 	len = 0;
-	while (content[i] && content[i] != '\n')
-	{
-		i++;
+	while (content[len] && content[len] != '\n')
 		len++;
-	}
-	if (content[i] == '\n')
-	{
-		i++;
+	if (content[len] == '\n')
 		len++;
-	}
-	line = str_substr(content, lastsaw, len);
-	lastsaw = i;
+	line = str_substr(content, 0, len);
 	return (line);
 }
 
-char	*buff_to_content(char *buff, int fd)
+char	*skip(char *content)
+{
+	int		i;
+	int		j;
+	char	*skip;
+
+	if (!content || content[0] == '\0')
+		return (0);
+	i = 0;
+	while (content[i] && content[i] != '\n')
+		i++;
+	if (content[i] == '\n')
+		i++;
+	skip = (char *) malloc (str_len(&content[i]) + 1);
+	j = 0;
+	while (content[i])
+		skip[j++] = content[i++];
+	skip[j] = 0;
+	free(content);
+	return (skip);
+}
+
+char	*buff_to_content(char *buff, int fd, char *content)
 {
 	int			check;
-	static char	*content;
 
 	while (1)
 	{
-		check = read(fd, buff, BUFF_SIZE);
+		check = read(fd, buff, BUFFER_SIZE);
 		if (!check)
 			break ;
 		if (check == -1)
-		{
-			free(buff);
-			return (0);
-		}
+			break ;
 		buff[check] = 0;
 		content = str_join(content, buff);
 		if (has_sep(content))
 			break ;
 	}
 	free(buff);
-	return (content);
+	return (content) ;
 }
 
 char	*get_next_line(int fd)
 {
-	char	*content;
-	char	*buff;
-	char	*line;
+	static char	*content;
+	char		*buff;
+	char		*line;
 
-	if (BUFF_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (0);
-	buff = (char *) malloc (BUFF_SIZE + 1);
-	content = buff_to_content(buff, fd);
+	buff = (char *) malloc (BUFFER_SIZE + 1);
+	content = buff_to_content(buff, fd, content);
 	if (!content)
 		return (0);
 	line = lineextractor(content);
 	if (!line)
+	{
 		free(content);
+		return (line);
+	}
+	content = skip(content);
 	return (line);
 }

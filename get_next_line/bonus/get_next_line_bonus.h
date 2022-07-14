@@ -5,7 +5,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 
-# define BUFF_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_List{
 	int fd;

@@ -37,7 +37,7 @@ int	fd_fill_content(int fd, t_fd_list *list, char *buff)
 
 	while (1)
 	{
-		check = read(fd, buff, BUFF_SIZE);
+		check = read(fd, buff, BUFFER_SIZE);
 		if (!check)
 		{
 			free(buff);
@@ -87,10 +87,10 @@ char *get_next_line(int fd)
 {
 	static t_fd_list	*list;
 	t_fd_list			*current;
-	char			*buff;
-	char			*line;
+	char				*buff;
+	char				*line;
 
-	if (BUFF_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (0);
 	if (!list)
 	{
@@ -99,7 +99,7 @@ char *get_next_line(int fd)
 	}
 	else
 		current = fd_search_and_add(fd, list);
-	buff = (char *) malloc (BUFF_SIZE + 1);
+	buff = (char *) malloc (BUFFER_SIZE + 1);
 	if (fd_fill_content(fd, current, buff) == -1)
 	{
 		fd_search_and_destroy(fd, &list);

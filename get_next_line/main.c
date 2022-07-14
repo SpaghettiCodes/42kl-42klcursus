@@ -71,13 +71,14 @@ void	ft_putstr(char *str)
 	}
 }
 
-int main()
+int main(int argc, char **argv)
 {
 	int fd;
 	int	i;
 	char *test;
+	(void)argc;
 	i = 0;
-	fd = open("42_with_nl", O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
 	while (1)
 	{
 		test = get_next_line(fd);
@@ -87,7 +88,7 @@ int main()
 			break;
 		}
 		ft_putstr("from file 1:\n");
-		ft_putstr_non_printable(test); 
+		ft_putstr_non_printable(test);
 		printf("\n");
 		i++;
 	}
