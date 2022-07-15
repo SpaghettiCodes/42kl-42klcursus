@@ -1,6 +1,6 @@
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
-void	ft_reset_flag(properties *flag)
+void	ft_reset_flag(t_properties *flag)
 {
 	flag->type = '\0';
 	flag->prefix = 0;
@@ -13,25 +13,40 @@ void	ft_reset_flag(properties *flag)
 	flag->preci = -1;
 }
 
-properties	*ft_initialize_flag()
+t_properties	*ft_initialize_flag()
 {
-	properties *flag;
+	t_properties *flag;
 
-	flag = (properties *) malloc (sizeof(properties));
+	flag = (t_properties *) malloc (sizeof(t_properties));
 	ft_reset_flag(flag);
 	return (flag);
 }
 
-int	print_flag(properties *flag, va_list ptr, int *printed)
+int	print_flag(t_properties *flag, va_list ptr, int *printed)
 {
-	int	added;
-
-	added = ft_convertion(flag, ptr);
-	*printed = *printed + added;
+	*printed = *printed + ft_convertion(flag, ptr);
 	return (1);
 }
 
-int	format_handler(properties *flag, char *c, va_list ptr, int *printed)
+int	check_preci(t_properties *flag, char *format)
+{
+	int	i;
+
+	i = 0;
+	flag->place_space = 1;
+	flag->place_zero = 0;
+	if (format[i] == '*' && ++i)
+		flag->preci = -2;
+	else
+	{
+		flag->preci = ft_atoi(&format[i]);
+		while ((format[i] >= '0' && format[i] <= '9'))
+			i++;
+	}
+	return (i);
+}
+
+int	format_handler(t_properties *flag, char *c, va_list ptr, int *printed)
 {
 	int	i;
 
@@ -40,28 +55,17 @@ int	format_handler(properties *flag, char *c, va_list ptr, int *printed)
 		i++;
 	if (check_width(flag, c[i]) != 0)
 	{
-		if (flag->width == -1)
+		if (flag->width == -2)
+			i++;
+		else
 		{
 			flag->width = ft_atoi(&c[i]);
 			while((c[i] >= '0' &&  c[i] <= '9'))
 				i++;
 		}
-		else if (flag->width == -2 && c[i] == '*')
-			i++;
 	}
 	if (c[i] == '.' && ++i)
-	{
-		flag->place_space = 1;
-		flag->place_zero = 0;
-		if (c[i] == '*' && ++i)
-			flag->preci = -2;
-		else
-		{
-			flag->preci = ft_atoi(&c[i]);
-			while ((c[i] >= '0' &&  c[i] <= '9'))
-				i++;
-		}
-	}
+		i += check_preci(flag, &c[i]);
 	flag->type = c[i];
 	if (flag->type == '\0')
 		return (-1);
@@ -69,8 +73,7 @@ int	format_handler(properties *flag, char *c, va_list ptr, int *printed)
 	return (i);
 }
 
-// follows THIS FUCKING ORDER
-int	check_flag(properties *flag, char c)
+int	check_flag(t_properties *flag, char c)
 {
 	if (c == '-')
 	{
@@ -96,7 +99,7 @@ int	check_flag(properties *flag, char c)
 	return (1);
 }
 
-int	check_width(properties *flag, char c)
+int	check_width(t_properties *flag, char c)
 {
 	if ((c >= '0' && c <= '9') || c == '*')
 	{

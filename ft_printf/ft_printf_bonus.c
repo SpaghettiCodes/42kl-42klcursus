@@ -1,10 +1,10 @@
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 int	met_percent(const char *str, va_list ptr, int *printed)
 {
-	properties *flag;
-	int			i;
-	int			initial;
+	t_properties	*flag;
+	int				i;
+	int				initial;
 
 	i = 0;
 	flag = ft_initialize_flag();
@@ -16,9 +16,9 @@ int	met_percent(const char *str, va_list ptr, int *printed)
 
 int ft_printf(const char *str, ...)
 {
-	int	i;
-	int	check;
-	int	printed;
+	int		i;
+	int		check;
+	int		printed;
 	va_list ptr;
 
 	i = -1;
@@ -39,5 +39,6 @@ int ft_printf(const char *str, ...)
 			i += check;
 		}
 	}
+	va_end(ptr);
 	return (printed);
 }

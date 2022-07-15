@@ -1,4 +1,4 @@
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 //               No switches?
 // ⠀⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝
@@ -15,7 +15,7 @@
 // ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 // ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
-int	ft_case(properties *flag, va_list ptr)
+int	ft_case(t_properties *flag, va_list ptr)
 {
 	if (flag->type == 'c' || flag->type == 's')
 		return (ft_char_handler(flag, ptr));
@@ -31,7 +31,7 @@ int	ft_case(properties *flag, va_list ptr)
 		return (ft_none_handler(flag));
 }
 
-int ft_convertion(properties *flag, va_list ptr)
+int ft_convertion(t_properties *flag, va_list ptr)
 {
 	if (flag->width == -2)
 	{

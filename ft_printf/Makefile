@@ -4,9 +4,11 @@ SRCS =  ft_printf.c		\
 		ft_intconv.c	\
 		ft_ptrconv.c	\
 
-SRCSB = ${SRCS}
+SRCSB = $(wildcard *_bonus.c)
 
 SRCS_H = ft_printf.h
+
+SRCSB_H = ft_printf_bonus.h
 
 SRCS_O = ${SRCS:.c=.o}
 
@@ -27,14 +29,14 @@ $(NAME)	: ${SRCS_O}
 
 bonus : fclean ${SRCSB_O}
 	@ar r ${NAME} ${SRCSB_O}
-	@echo "libft.a with bonus generated"
+	@echo "libftprintf.a with bonus generated"
 
 clean :
-		@del -rf $(wildcard *.o)
+		@rm -rf $(wildcard *.o)
 		@echo "cleaned"
 
 fclean : clean
-		@del -rf ${NAME}
+		@rm -rf ${NAME}
 		@echo "deleted everything"
 
 re : fclean all

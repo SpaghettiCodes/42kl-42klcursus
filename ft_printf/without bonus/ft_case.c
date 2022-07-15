@@ -13,11 +13,20 @@
 ** ⠀⠀⠀⠀⣼⣳⣫⣾⣵⣗⡵⡱⡡⢣⢑⢕⢜⢕⡝⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ** ⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ** ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-** ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  */
+** ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+*/
 
-int ft_intcase(char *i, va_list ptr)
+int	ft_case(char *i, va_list ptr)
 {
-	if (*i == 'd' || *i == 'i')
+	if (*i == 'c')
+		return (ft_put_char(va_arg(ptr, int)));
+	else if (*i == 's')
+		return (ft_put_line(va_arg(ptr, char *)));
+	else if (*i == '%')
+		return (ft_put_percent());
+	else if (*i == 'p')
+		return (ft_count_ptraddr(va_arg(ptr, void *)));
+	else if (*i == 'd' || *i == 'i')
 		return (ft_count_int(va_arg(ptr, int)));
 	else if (*i == 'u')
 		return (ft_count_uint(va_arg(ptr, unsigned int), 10, 'U'));
@@ -29,21 +38,7 @@ int ft_intcase(char *i, va_list ptr)
 		return (-1);
 }
 
-int	ft_charcase(char *i, va_list ptr)
-{
-	if (*i == 'c')
-		return (ft_put_char(va_arg(ptr, int)));
-	else if (*i == 's')
-		return (ft_put_line(va_arg(ptr, char *)));
-	else if (*i == '%')
-		return (ft_put_percent());
-	else if (*i == 'p')
-		return (ft_count_ptraddr(va_arg(ptr, void *)));
-	else
-		return (ft_intcase(i, ptr));
-}
-
 int ft_convertion(char *c, va_list ptr)
 {
-	return (ft_flagcase(c,ptr));
+	return (ft_case(c,ptr));
 }
