@@ -1,6 +1,18 @@
-#include "ft_printf_bonus.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_charhandler.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/17 16:28:24 by cshi-xia          #+#    #+#             */
+/*   Updated: 2022/07/17 18:49:46 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int		ft_char_width_handler(t_properties* flag, int printed)
+#include "ft_printf.h"
+
+int	ft_char_width_handler(t_properties *flag, int printed)
 {
 	int	i;
 
@@ -59,13 +71,13 @@ int	ft_str_print(char *a, t_properties *flag)
 	if (flag->l_aligned != 1 && flag->width != -1)
 		printed += ft_char_width_handler(flag, printed);
 	if (!a)
+		ft_put_null(flag);
+	else
 	{
-		printed += ft_put_null(flag);
-		return (printed);
+		i = -1;
+		while (a[++i] && i < flag->preci)
+			ft_put_char(a[i]);
 	}
-	i = -1;
-	while (a[++i] && i < flag->preci)
-		ft_put_char(a[i]);
 	if (flag->l_aligned && flag->width != -1)
 		printed += ft_print_l_aligned(flag, printed);
 	return (printed);

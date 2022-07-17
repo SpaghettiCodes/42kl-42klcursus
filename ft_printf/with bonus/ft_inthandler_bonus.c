@@ -38,14 +38,16 @@ int		ft_int_handler(t_properties* flag, va_list ptr)
 	nbr = va_arg(ptr, int);
 	if (flag->preci == 0 && nbr == 0)
 		return (ft_int_null(flag));
-	printed = ft_count_int(nbr) + (nbr < 0);
+	printed = ft_count_int(nbr);
 	if (flag->preci > ft_count_int(nbr))
 		printed = flag->preci;
+	if (nbr < 0)
+		printed++;
 	if (flag->place_space_front && nbr >= 0)
 		printed += ft_put_char(' ');
 	if (flag->sign && nbr >= 0)
 		printed += ft_put_char('+');
-	if (nbr < 0 && flag->place_zero)
+	if (nbr < 0 && !flag->place_space)
 		ft_put_char('-');
 	if (flag->l_aligned != 1 && flag->width != -1)
 		printed += ft_int_width_handler(flag, (printed));
@@ -82,7 +84,6 @@ int		ft_base16_handler(t_properties* flag, va_list ptr)
 {
 	int		printed;
 	int		nbr;
-	char	*base;
 
 	printed = 0;
 	nbr = va_arg(ptr, unsigned int);
