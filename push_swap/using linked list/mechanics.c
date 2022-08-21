@@ -40,24 +40,15 @@ void	shift_left (t_stack **dest)
 	t_stack *before_last;
 	t_stack *head;
 
-	last = (*dest);
 	head = (*dest);
+
+	last = (*dest);
 	while (last->next)
 		last = last->next;
 
 	last->next = head;
 	*dest = head->next;
 	head->next = NULL;
-}
-
-void	reverserotate(t_stack *tab)
-{
-	shift_right(&tab);
-}
-
-void	rotate(t_stack *tab)
-{
-	shift_left(&tab);
 }
 
 void	push(t_stack **src, t_stack **dest)
