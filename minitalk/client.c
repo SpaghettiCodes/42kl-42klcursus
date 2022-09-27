@@ -24,11 +24,6 @@ char *convtobits(char *str)
 	return (ret);
 }
 
-int	ft_bitconv(bits)
-{
-	
-}
-
 int main(int among, char **us)
 {
 	int pid;
@@ -41,4 +36,5 @@ int main(int among, char **us)
 	pid = ft_atoi(us[1]);
 	send = us[2];
 	bitsnbytes = ft_convtobits(us[1]);
+	senddasignal(pid, bitsnbytes);
 }

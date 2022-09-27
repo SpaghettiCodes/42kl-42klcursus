@@ -1,6 +1,22 @@
 #include "endmysuffering.h"
 
+int	ft_bitconv(char *bits)
+{
+	int	bitcount;
+	int ret;
+	bitcount = 9;
 
+	ret = 0;
+	while (--bitcount >= 0)
+	{
+		if (bits[bitcount] == '0')
+			ret = (ret * 2) + 0;
+		else if (bits[bitcount] == '1')
+			ret = (ret * 2) + 1;
+	}
+	printf("%c", ret);
+	return (1);
+}
 
 int	what(int signal)
 {
