@@ -16,19 +16,14 @@
 int	has_sep(char *content)
 {
 	int			i;
-	static int	lastsaw;
 
-	i = lastsaw;
+	i = 0;
 	while (content[i])
 	{
 		i++;
 		if (content[i] == '\n')
-		{
-			lastsaw = i;
 			return (1);
-		}
 	}
-	lastsaw = i;
 	return (0);
 }
 
@@ -84,7 +79,10 @@ char	*buff_to_content(char *buff, int fd, char *content)
 		buff[check] = 0;
 		content = str_join(content, buff);
 		if (has_sep(content))
+		{
+			printf("has sep");
 			break ;
+		}
 	}
 	free(buff);
 	return (content) ;

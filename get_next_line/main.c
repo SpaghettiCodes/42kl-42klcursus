@@ -71,28 +71,46 @@ void	ft_putstr(char *str)
 	}
 }
 
-int main(int argc, char **argv)
+// int main(int argc, char **argv)
+// {
+// 	int fd;
+// 	int	i;
+// 	char *test;
+// 	(void)argc;
+// 	i = 0;
+// 	fd = open(argv[1], O_RDONLY);
+// 	while (1)
+// 	{
+// 		test = get_next_line(fd);
+// 		if (!test)
+// 		{
+// 			printf("from file 1: \n%s\n",test);
+// 			break;
+// 		}
+// 		ft_putstr("from file 1:\n");
+// 		ft_putstr_non_printable(test);
+// 		printf("\n");
+// 		i++;
+// 	}
+// 	// char *test =  get_next_line(0);
+// 	// printf("%s\n", test);
+// }
+
+int main()
 {
-	int fd;
-	int	i;
 	char *test;
-	(void)argc;
-	i = 0;
-	fd = open(argv[1], O_RDONLY);
+	int i;
 	while (1)
 	{
-		test = get_next_line(fd);
+		test = get_next_line(0);
 		if (!test)
 		{
-			printf("from file 1: \n%s\n",test);
+			printf("from input: \n%s\n",test);
 			break;
 		}
-		ft_putstr("from file 1:\n");
+		ft_putstr("from input:\n");
 		ft_putstr_non_printable(test);
 		printf("\n");
 		i++;
 	}
-	// char *test =  get_next_line(0);
-	// printf("%s\n", test);
 }
-

@@ -492,5 +492,8 @@ int main()
 	cmp2 = printf("%#.16pend\n", test);
 	printf("\n                     Diff in values                     \n");
 	printf("             My Funct = %d | Sys funct = %d            \n", cmp1, cmp2);
+
+
+	ft_printf("MOTHHHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFUAWKDHOIAWHDIOAWBOIDBAWBDAWIIOWAD");
 }
 
