@@ -6,7 +6,7 @@
 #    By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/17 16:29:12 by cshi-xia          #+#    #+#              #
-#    Updated: 2022/07/17 18:49:22 by cshi-xia         ###   ########.fr        #
+#    Updated: 2022/07/17 18:55:58 by cshi-xia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,5 +38,7 @@ clean :
 fclean : clean
 		@rm -rf ${NAME}
 		@echo "deleted everything"
+
+bonus : re
 
 re : fclean all
