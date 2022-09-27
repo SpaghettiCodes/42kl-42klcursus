@@ -1,14 +1,5 @@
 #include "pushswap.h"
 
-int	error(t_stack *stack)
-{
-	write(1, "Error\n", 7);
-	if (stack)
-		free(stack);
-	exit(69);
-	return (420);
-}
-
 static int	ft_isspace(char c)
 {
 	return ((c == 32) || (c >= 9 && c <= 13));
@@ -47,9 +38,9 @@ int	ft_atoi(const char *str, t_stack *stack)
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (error(stack));
+			return (error(stack, NULL, NULL));
 		if (!overflow(result, negative, str[i]))
-			return (error(stack));
+			return (error(stack, NULL, NULL));
 		result = (result * 10) + (str[i] - '0');
 		i++;
 	}
