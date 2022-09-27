@@ -1,6 +1,8 @@
 #ifndef ENDMYSUFFERING_H
 # define ENDMYSUFFERING_H
 
+# define BIT1 SIGUSR1
+# define BIT0 SIGUSR2
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>

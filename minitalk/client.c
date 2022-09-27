@@ -32,12 +32,13 @@ int	senddasignal(int pid, char *bitsnbyte)
 	while (bitsnbyte[++i])
 	{
 		if (bitsnbyte[i] == '0')
-			kill(pid, SIGUSR1);
+			kill(pid, BIT0);
 		if (bitsnbyte[i] == '1')
-			kill(pid, SIGUSR2);
-		else
-			return (0);
+			kill(pid, BIT1);
+		printf("sent signal!\n");
+		usleep(100);
 	}
+	printf("done!\n");
 	return (1);
 }
 
@@ -50,8 +51,17 @@ int main(int among, char **us)
 	if (among != 3)
 		return (1);
 
+	printf("atoi\n");
 	pid = ft_atoi(us[1]);
+	printf("out of atoi\n");
+
+	printf("pid = %d\n", pid);
+
 	send = us[2];
-	bitsnbytes = ft_convtobits(us[1]);
+	bitsnbytes = convtobits(us[2]);
+	printf("bits to send = %s\n", bitsnbytes);
 	senddasignal(pid, bitsnbytes);
+
+	while(1)
+		pause();
 }
