@@ -1,10 +1,10 @@
 #ifndef ENDMYSUFFERING_H
-#define ENDMYSUFFERING_H
+# define ENDMYSUFFERING_H
 
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
+# include <signal.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
 
 int ft_print(char *str);
 int ft_num(int num);

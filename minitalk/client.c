@@ -24,6 +24,23 @@ char *convtobits(char *str)
 	return (ret);
 }
 
+int	senddasignal(int pid, char *bitsnbyte)
+{
+	int	i;
+	i = -1;
+
+	while (bitsnbyte[++i])
+	{
+		if (bitsnbyte[i] == '0')
+			kill(pid, SIGUSR1);
+		if (bitsnbyte[i] == '1')
+			kill(pid, SIGUSR2);
+		else
+			return (0);
+	}
+	return (1);
+}
+
 int main(int among, char **us)
 {
 	int pid;
