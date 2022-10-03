@@ -33,7 +33,8 @@ char *ft_append(char *src, char *dest)
 		i++;
 	}
 	ret[i] = 0;
-	free(dest);
+	if (dest)
+		free(dest);
 	return (ret);
 }
 
@@ -61,6 +62,7 @@ int ft_atoi(char *nbr)
 {
 	int ret;
 
+	printf("in atoi\n");
 	while (*nbr == ' ')
 		nbr++;
 	ret = 0;
@@ -69,5 +71,6 @@ int ft_atoi(char *nbr)
 		ret = (ret * 10) + (*nbr - '0');
 		nbr++;
 	}
+	printf("nbr returned: %d\n", ret);
 	return (ret);
 }
