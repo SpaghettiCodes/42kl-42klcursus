@@ -1,2 +1,0 @@
-
-		printarr(a, 4);

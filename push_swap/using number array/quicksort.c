@@ -1,3 +1,5 @@
+#include "push_swap.h"
+
 void	q_swap(int *a, int *b)
 {
 	int temp;
@@ -55,3 +57,5 @@ int	*int_dup(int *a, int size_a)
 	q_sort(dup, 0, (size_a - 1));
 	return (dup);
 }
+
+// we will not do this first lmao

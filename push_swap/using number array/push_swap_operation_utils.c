@@ -1,3 +1,5 @@
+#include "push_swap.h"
+
 void	swap(int *num1, int *num2)
 {
 	int temp;
@@ -19,7 +21,7 @@ void	shift_right(int *dest, int size_dest)
 	return ;
 }
 
-void	shift_left (int *dest, int size_dest)
+void	shift_left(int *dest, int size_dest)
 {
 	int		i;
 
@@ -46,9 +48,9 @@ void	push(int *src, int *size_src, int *dest, int *size_dest)
 	if (!size_src)
 		return ;
 	*size_dest = *size_dest + 1;
-	shift_right(dest, size_dest);
+	shift_right(dest, *size_dest);
 	swap(&dest[0], &src[0]);
-	shift_left(src, size_src);
+	shift_left(src, *size_src);
 	*size_src = *size_src - 1;
 	return ;
 }

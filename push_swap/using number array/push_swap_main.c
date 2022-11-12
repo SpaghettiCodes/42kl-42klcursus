@@ -1,116 +1,134 @@
-#include "pushswap.h"
+#include "push_swap.h"
 
-int	error(t_stack *stack)
+int	error(t_pushswap *stack)
 {
-	write(1, "Error\n", 7);
 	if (stack)
-		deleteall(stack);
+	{
+		if (stack->stack_a)
+			free(stack->stack_a);
+		if (stack->stack_b)
+			free(stack->stack_b);
+	}
+	write(1, "Error\n", 7);
 	exit(69);
 	return (420);
 }
 
-static int	ft_isspace(char c)
-{
-	return ((c == 32) || (c >= 9 && c <= 13));
-}
-
-static int	overflow(int result, int neg, char nextnum)
-{
-	if (result <= 214748364)
-	{
-		if (result == 214748364)
-		{
-			if ((nextnum <= '7' && neg == 1) || (nextnum <= '8' && neg == -1))
-				return (1);
-		}
-		else
-			return (1);
-	}
-	return (0);
-}
-
-int	ft_atoi(const char *str, t_stack *stack)
-{
-	int	result;
-	int	negative;
-	int	i;
-
-	i = 0;
-	result = 0;
-	negative = 1;
-	while (ft_isspace(str[i]))
-		i++;
-	if (str[i] == '-' && ++i)
-		negative = -1;
-	else if (str[i] == '+')
-		i++;
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (error(stack));
-		if (!overflow(result, negative, str[i]))
-			return (error(stack));
-		result = (result * 10) + (str[i] - '0');
-		i++;
-	}
-	return (result * negative);
-}
-
-int	fill(int *a, char **av, int ac)
+int	fill(t_pushswap *stack, char **av, int ac)
 {
 	int	i;
+	int j;
 
 	i = -1;
+	j = 0;
 	ac--;
 	while (++i < ac)
-		a[i] = ft_atoi(av[i], a);
+		stack->stack_a[i] = ft_atoi(av[++j], stack);
 	return (1);
 }
 
-int	checkdup(int *a, int size_a)
+int	checkdup(t_pushswap *stack)
 {
 	int	i;
 	int	j;
 
 	i = -1;
-	while (++i < size_a)
+	while (++i < stack->a_size)
 	{
 		j = i;
-		while (++j < size_a)
+		while (++j < stack->a_size)
 		{
-			if (a[i] == a[j])
-				return (error(a));
+			if (stack->stack_a[i] == stack->stack_a[j])
+			{
+				printf("found error\n");
+				return (error(stack));
+			}
 		}
 	}
 	return (1);
 }
 
-int	pushswap(int *a, int size_a, int b, int size_b)
+void solve(t_pushswap *stack)
 {
-	int	*dup;
-	int	dupsize;
+	if (stack->a_size == 2)
+		solve_two(stack);
+	else if (stack->a_size == 3)
+		solve_three(stack);
+	// else if (stack->a_size < 100)
+	// 	solve_small_big(stack);
+	else 
+		solve_very_big(stack);
+}
 
-	dupsize = size_a;
-	dup = int_dup(a, size_a);
+//testing purposes
+
+void printstack(t_pushswap *stacks)
+{
+	printf("Stack A: ");
+	for (int i = 0; i < stacks->a_size; i++)
+	{
+		printf("%d ", stacks->stack_a[i]);
+	}
+	printf("\n");
+
+	printf("Stack B: ");
+	if (stacks->b_size == 0)
+		printf("EMPTY!");
+	else
+	{
+		for (int i = 0; i < stacks->b_size; i++)
+		{
+			printf("%d ", stacks->stack_b[i]);
+		}
+	}
+	printf("\n");
+}
+
+void ft_bzero(int *array, int size)
+{
+	int i;
+	
+	i = -1; 
+	while (++i < size)
+		array[i] = 0;
 }
 
 int	main(int ac, char **av)
 {
-	int	*a;
-	int	*b;
-	int	size_a;
-	int	size_b;
+	t_pushswap pushswap; 
 
-	if (ac == 1)
-		return ;
-	a = (int *) malloc (sizeof(ac - 1));
-	size_a = ac - 1;
-	fill(a, av, ac);
-	checkdup(a, size_a);
-	b = (int *) malloc (sizeof(ac - 1));
-	size_b = 0;
-	pushswap(a, size_a, b, size_b); // this would be the sorting algo
-	free(a);
-	free(b);
+	if (ac <= 1)
+		return (error(NULL));
+	pushswap.stack_a = (int *) malloc ((ac - 1) * sizeof(int));
+	pushswap.total_size = ac - 1;
+	pushswap.a_size = ac - 1;
+	pushswap.stack_b = (int *) malloc ((ac - 1) * sizeof(int));
+	ft_bzero(pushswap.stack_b, ac - 1);
+	pushswap.b_size = 0;
+	fill(&pushswap, av, ac);
+	checkdup(&pushswap);
+
+	pushswap.sorted = int_dup(pushswap.stack_a, pushswap.a_size);
+
+	printf("Sorted Array: ");
+	for(int i = 0; i < pushswap.a_size; i++)
+		printf("%d ", pushswap.sorted[i]);
+	printf("\n");
+
+	solve(&pushswap); // this would be the sorting algo
+	printstack(&pushswap);
+
+	if (pushswap.stack_a)
+	{
+		printf("freeing a\n");
+		free(pushswap.stack_a);
+	}
+	if (pushswap.stack_b)
+	{
+		printf("freeing b\n");
+		free(pushswap.stack_b);
+	}
+	
+	printf("freed all\n");
 	return (1);
 }
