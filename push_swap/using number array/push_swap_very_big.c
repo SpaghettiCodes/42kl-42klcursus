@@ -138,25 +138,25 @@ int	get_largest_loc(t_pushswap *stack)
 	return (largest);
 }
 
-void	go_to_last_stack(t_pushswap *stack, int	last_stack_smallest_loc)
+void	go_to_last_chunk(t_pushswap *stack, int last_stack_smallest_loc)
 {
 	int	moves;
 	int	last_stack_smallest_val;
 	int	largest_val_loc;
-	int	l_s_smallest_loc_a;
+	int	l_ch_smallest_loc;
 
 	last_stack_smallest_val = stack->sorted[last_stack_smallest_loc];
-	l_s_smallest_loc_a = get_loc(stack, last_stack_smallest_val);
+	l_ch_smallest_loc = get_loc(stack, last_stack_smallest_val);
 	largest_val_loc = get_largest_loc(stack);
 	if (last_stack_smallest_loc >= stack->total_size)
 		return ;
 	largest_val_loc = (stack->a_size - largest_val_loc - 1);
-	if (largest_val_loc > l_s_smallest_loc_a)
+	if (largest_val_loc > l_ch_smallest_loc)
 	{	
-		if (l_s_smallest_loc_a < stack->a_size / 2)
-			moves = l_s_smallest_loc_a;
+		if (l_ch_smallest_loc < stack->a_size / 2)
+			moves = l_ch_smallest_loc;
 		else
-			moves = ((stack->a_size - l_s_smallest_loc_a) * -1);
+			moves = ((stack->a_size - l_ch_smallest_loc) * -1);
 	}
 	else
 	{
@@ -315,7 +315,7 @@ void	solve_chunk(t_pushswap *stack, int count)
 		else
 		{
 			push_to_b(stack, start, end, chunk_size);
-			go_to_last_stack(stack, end + 1);
+			go_to_last_chunk(stack, end + 1);
 			push_to_a(stack, start, end);
 		}
 		count--;
