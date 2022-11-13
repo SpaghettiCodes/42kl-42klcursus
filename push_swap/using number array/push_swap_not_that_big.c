@@ -76,7 +76,6 @@ int moves(int larger_than, int smallest_loc, int stack_size)
 }
 
 // this is probably the faster way to push B to A
-// now need to figure out a faster way to push A to B [ current its just keep pushing, not optimised :( ]
 
 void	search_and_add(t_pushswap *stack)
 {
@@ -88,7 +87,7 @@ void	search_and_add(t_pushswap *stack)
 	action(stack, to_place);
 }
 
-// as the name suggest, this algo works good for 4 <= x <= 50, but terribly for anything above that
+// as the name suggest, this algo works good for 4 <= x < 100, but terribly for anything above that
 void	solve_small_big(t_pushswap *stack)
 {
 	int smlest_val_loc;

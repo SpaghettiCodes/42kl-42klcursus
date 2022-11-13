@@ -43,21 +43,21 @@ void	push(int *src, int *size_src, int *dest, int *size_dest);
 int		*int_dup(int *a, int size_a);
 
 // solve
+void	solve(t_pushswap *stack);
 int		solve_two(t_pushswap *stack);
 int		solve_three(t_pushswap *stack);
-void		solve_small_big(t_pushswap *stack);
-void		solve_very_big(t_pushswap *stack);
+void	solve_small_big(t_pushswap *stack);
+void	solve_very_big(t_pushswap *stack);
 int		smallest_loc(int *stack, int stack_size);
 
 // error
 int		error(t_pushswap *stack);
-
 // printstack for debug
-void		printstack(t_pushswap *stacks);
+void	printstack(t_pushswap *stacks);
 
-// solving smaller stacks
-void		shift_to_correct(t_pushswap *stack, int larger, int toplace);
-void		action(t_pushswap *stack, int toplace);
+// solving stacks
+void	shift_to_correct(t_pushswap *stack, int larger, int toplace);
+void	action(t_pushswap *stack, int toplace);
 int		larger_than(int *stack, int reference, int stack_size);
 int		moves(int larger_than, int smallest_loc, int stack_size);
 void	search_and_add(t_pushswap *stack);

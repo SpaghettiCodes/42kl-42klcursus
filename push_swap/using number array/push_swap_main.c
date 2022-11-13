@@ -48,18 +48,6 @@ int	checkdup(t_pushswap *stack)
 	return (1);
 }
 
-void solve(t_pushswap *stack)
-{
-	if (stack->a_size == 2)
-		solve_two(stack);
-	else if (stack->a_size == 3)
-		solve_three(stack);
-	// else if (stack->a_size < 100)
-	// 	solve_small_big(stack);
-	else 
-		solve_very_big(stack);
-}
-
 //testing purposes
 
 void printstack(t_pushswap *stacks)
@@ -93,6 +81,17 @@ void ft_bzero(int *array, int size)
 		array[i] = 0;
 }
 
+int	is_solved(t_pushswap *stack)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (stack->a_size - 1))
+		if (stack->stack_a[i] > stack->stack_a[i+1])
+			return (0);
+	return (1);
+}
+
 int	main(int ac, char **av)
 {
 	t_pushswap pushswap; 
@@ -110,25 +109,16 @@ int	main(int ac, char **av)
 
 	pushswap.sorted = int_dup(pushswap.stack_a, pushswap.a_size);
 
-	printf("Sorted Array: ");
-	for(int i = 0; i < pushswap.a_size; i++)
-		printf("%d ", pushswap.sorted[i]);
-	printf("\n");
-
-	solve(&pushswap); // this would be the sorting algo
+	if (!is_solved(&pushswap))
+		solve(&pushswap); // this would be the sorting algo
 	printstack(&pushswap);
 
 	if (pushswap.stack_a)
-	{
-		printf("freeing a\n");
 		free(pushswap.stack_a);
-	}
 	if (pushswap.stack_b)
-	{
-		printf("freeing b\n");
 		free(pushswap.stack_b);
-	}
-	
-	printf("freed all\n");
+	if (pushswap.sorted)
+		free(pushswap.sorted);
+
 	return (1);
 }

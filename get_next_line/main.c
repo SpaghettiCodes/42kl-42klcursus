@@ -25,25 +25,27 @@
 
 #include <stdio.h>
 
-// int main()
-// {
-// 	int fd;
-// 	int fd2;
-// 	char *test;
-// 	int	i;
-// 	char *test2;
-// 	fd = open("test.txt", O_RDONLY);
-// 	fd2 = open("test2.txt", O_RDONLY);
-// 	i = 0;
-// 	while (i < 10)
-// 	{
-// 		test = get_next_line(fd);
-// 		test2 = get_next_line(fd2);
-// 		printf("from file 1: %s\n",test);
-// 		printf("from file 2: %s\n",test2);
-// 		i++;
-// 	}
-// }
+int main()
+{
+	int fd;
+	int fd2;
+	char *test;
+	int	i;
+	char *test2;
+	fd = open("test.txt", O_RDONLY);
+	fd2 = open("test2.txt", O_RDONLY);
+	i = 0;
+	while (i < 8)
+	{
+		test = get_next_line(fd);
+		test2 = get_next_line(fd2);
+		printf("from file 1: %s\n",test);
+		printf("from file 2: %s\n",test2);
+		free(test);
+		free(test2);
+		i++;
+	}
+}
 
 void	ft_putstr_non_printable(char *str)
 {
@@ -96,21 +98,21 @@ void	ft_putstr(char *str)
 // 	// printf("%s\n", test);
 // }
 
-int main()
-{
-	char *test;
-	int i;
-	while (1)
-	{
-		test = get_next_line(0);
-		if (!test)
-		{
-			printf("from input: \n%s\n",test);
-			break;
-		}
-		ft_putstr("from input:\n");
-		ft_putstr_non_printable(test);
-		printf("\n");
-		i++;
-	}
-}
+// int main()
+// {
+// 	char *test;
+// 	int i;
+// 	while (1)
+// 	{
+// 		test = get_next_line(0);
+// 		if (!test)
+// 		{
+// 			printf("from input: \n%s\n",test);
+// 			break;
+// 		}
+// 		ft_putstr("from input:\n");
+// 		ft_putstr_non_printable(test);
+// 		printf("\n");
+// 		i++;
+// 	}
+// }

@@ -90,22 +90,22 @@ char	*buff_to_content(char *buff, int fd, char *content)
 
 char	*get_next_line(int fd)
 {
-	static char	*content;
+	static char	*content[1024];
 	char		*buff;
 	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (0);
 	buff = (char *) malloc (BUFFER_SIZE + 1);
-	content = buff_to_content(buff, fd, content);
-	if (!content)
+	content[fd] = buff_to_content(buff, fd, content[fd]);
+	if (!content[fd])
 		return (0);
-	line = lineextractor(content);
+	line = lineextractor(content[fd]);
 	if (!line)
 	{
-		free(content);
+		free(content[fd]);
 		return (line);
 	}
-	content = skip(content);
+	content[fd] = skip(content[fd]);
 	return (line);
 }

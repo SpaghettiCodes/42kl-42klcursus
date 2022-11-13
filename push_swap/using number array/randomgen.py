@@ -7,7 +7,7 @@ def generate(n):
     for i in range (0, n):
         repeated = 0
         while not repeated:
-            add = random.randint(1, n)
+            add = random.randint(0, n)
             randomlist.append(add)
             checkset = set(randomlist)
             if len(randomlist) == len(checkset):
