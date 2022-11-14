@@ -1,6 +1,5 @@
 #include "push_swap.h"
 
-
 int	count_instruct(t_instructions *instruct)
 {
 	t_instructions *current; 
