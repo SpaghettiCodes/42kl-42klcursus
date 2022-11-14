@@ -1,14 +1,23 @@
 #include "push_swap.h"
 
+void	freeall(t_pushswap *pushswap)
+{
+	if (pushswap->instructions)
+		del_all(&pushswap->instructions);
+	if (pushswap->un_sorted)
+		free(pushswap->un_sorted);
+	if (pushswap->stack_a)
+		free(pushswap->stack_a);
+	if (pushswap->stack_b)
+		free(pushswap->stack_b);
+	if (pushswap->sorted)
+		free(pushswap->sorted);
+}
+
 int	error(t_pushswap *stack)
 {
 	if (stack)
-	{
-		if (stack->stack_a)
-			free(stack->stack_a);
-		if (stack->stack_b)
-			free(stack->stack_b);
-	}
+		freeall(stack);
 	write(1, "Error\n", 7);
 	exit(69);
 	return (420);
@@ -23,28 +32,18 @@ int	fill(t_pushswap *stack, char **av, int ac)
 	j = 0;
 	ac--;
 	while (++i < ac)
-		stack->stack_a[i] = ft_atoi(av[++j], stack);
+		stack->un_sorted[i] = ft_atoi(av[++j], stack);
 	return (1);
 }
 
 int	checkdup(t_pushswap *stack)
 {
 	int	i;
-	int	j;
 
 	i = -1;
-	while (++i < stack->a_size)
-	{
-		j = i;
-		while (++j < stack->a_size)
-		{
-			if (stack->stack_a[i] == stack->stack_a[j])
-			{
-				printf("found error\n");
-				return (error(stack));
-			}
-		}
-	}
+	while (++i < (stack->total_size - 1))
+		if (stack->sorted[i] == stack->sorted[i+1])
+			return (error(stack));
 	return (1);
 }
 
@@ -86,8 +85,8 @@ int	is_solved(t_pushswap *stack)
 	int	i;
 
 	i = -1;
-	while (++i < (stack->a_size - 1))
-		if (stack->stack_a[i] > stack->stack_a[i+1])
+	while (++i < (stack->total_size - 1))
+		if (stack->un_sorted[i] > stack->un_sorted[i+1])
 			return (0);
 	return (1);
 }
@@ -98,27 +97,22 @@ int	main(int ac, char **av)
 
 	if (ac <= 1)
 		return (error(NULL));
-	pushswap.stack_a = (int *) malloc ((ac - 1) * sizeof(int));
 	pushswap.total_size = ac - 1;
-	pushswap.a_size = ac - 1;
-	pushswap.stack_b = (int *) malloc ((ac - 1) * sizeof(int));
-	ft_bzero(pushswap.stack_b, ac - 1);
-	pushswap.b_size = 0;
-	fill(&pushswap, av, ac);
-	checkdup(&pushswap);
+	pushswap.stack_a = NULL;
+	pushswap.stack_b = NULL;
+	pushswap.instructions = NULL;
 
-	pushswap.sorted = int_dup(pushswap.stack_a, pushswap.a_size);
+	pushswap.un_sorted = (int *) malloc ((ac - 1) * sizeof(int));
+	fill(&pushswap, av, ac);
+	pushswap.sorted = int_dup(pushswap.un_sorted, pushswap.total_size);
+	q_sort(pushswap.sorted, 0, (pushswap.total_size - 1));
+	checkdup(&pushswap);
 
 	if (!is_solved(&pushswap))
 		solve(&pushswap); // this would be the sorting algo
+	
+	printf("done\n");
 	printstack(&pushswap);
-
-	if (pushswap.stack_a)
-		free(pushswap.stack_a);
-	if (pushswap.stack_b)
-		free(pushswap.stack_b);
-	if (pushswap.sorted)
-		free(pushswap.sorted);
-
+	freeall(&pushswap);
 	return (1);
 }

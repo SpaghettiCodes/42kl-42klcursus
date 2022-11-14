@@ -82,7 +82,7 @@ void	search_and_add(t_pushswap *stack)
 	int	to_place;
 	int smlest_val_loc;
 
-	smlest_val_loc = smallest_loc(stack->stack_a, stack->a_size);
+	smlest_val_loc = get_lowest_loc(stack);
 	to_place = moves(larger_than(stack->stack_a, stack->stack_b[0], stack->a_size), smlest_val_loc, stack->a_size);
 	action(stack, to_place);
 }
@@ -99,7 +99,7 @@ void	solve_small_big(t_pushswap *stack)
 	while(stack->b_size > 0)
 		search_and_add(stack);
 
-	smlest_val_loc = smallest_loc(stack->stack_a, stack->a_size);
+	smlest_val_loc = get_lowest_loc(stack);
 	// if the smallest value location is at the right side of the stack
 	larger = smlest_val_loc >= (stack->a_size / 2);
 	if (larger)

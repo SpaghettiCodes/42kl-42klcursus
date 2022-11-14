@@ -1,7 +1,7 @@
 all : compile run
 
 compile :
-		gcc -Wall -Wextra -Werror -o push_swap.exe *.c
+		gcc -Wall -Wextra -Werror -o pushswap *.c
 
 debug :
 		gcc -o test *.c -g

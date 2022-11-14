@@ -1,6 +1,7 @@
 // oh boy
 // oh boy
 // 100 <= x <= 700 numbers time wahooooooooooo
+// documentation on this is going to be ass
 #include "push_swap.h"
 
 void	rotate_to_correct(t_pushswap *stack, int moves, char stack_name)
@@ -57,7 +58,7 @@ int	get_no_smaller(t_pushswap *stack, int reference, int first_elem_loc)
 	return (location);
 }
 
-int	initialization(t_pushswap *stack)
+int	init_chunk(t_pushswap *stack)
 {
 	if (stack->stack_b[0] < stack->stack_b[1])
 		sb(stack);
@@ -145,12 +146,11 @@ void	go_to_last_chunk(t_pushswap *stack, int last_stack_smallest_loc)
 	int	largest_val_loc;
 	int	l_ch_smallest_loc;
 
-	last_stack_smallest_val = stack->sorted[last_stack_smallest_loc];
-	l_ch_smallest_loc = get_loc(stack, last_stack_smallest_val);
-	largest_val_loc = get_largest_loc(stack);
 	if (last_stack_smallest_loc >= stack->total_size)
 		return ;
-	largest_val_loc = (stack->a_size - largest_val_loc - 1);
+	last_stack_smallest_val = stack->sorted[last_stack_smallest_loc];
+	l_ch_smallest_loc = get_loc(stack, last_stack_smallest_val);
+	largest_val_loc = (stack->a_size - get_largest_loc(stack) - 1);
 	if (largest_val_loc > l_ch_smallest_loc)
 	{	
 		if (l_ch_smallest_loc < stack->a_size / 2)
@@ -211,7 +211,7 @@ void	push_to_a(t_pushswap *stack, int start, int end)
 
 	max_val = stack->sorted[end];
 	min_val = stack->sorted[start];
-	initialization(stack);
+	init_chunk(stack);
 	while (stack->b_size)
 	{
 		find_lesser_moves(stack, max_val, min_val);
@@ -326,19 +326,39 @@ void	solve_chunk(t_pushswap *stack, int count)
 // ok i dont know what is divide and conqure ipraytogodiknowwhatiamdoing
 // you know i never know why divide and conqure is faster than linear alogrithm
 // ehe
-void	divide_and_conqure(t_pushswap *stack)
+
+int	*copy(int *source, int source_size)
 {
-	if (stack->total_size >= 100 && stack->total_size <= 400)
-	{
-		solve_chunk(stack, 2);
-	}
-	else
-	{
-		solve_chunk(stack, 3);
-	}
+	int	i;
+	int	*ret;
+
+	i = -1;
+	ret = malloc(sizeof(int) * source_size);
+	while (++i < source_size)
+		ret[i] = source[i];
+	return (ret);
 }
 
 void	solve_very_big(t_pushswap *stack)
 {
-	divide_and_conqure(stack);
+	int	count;
+	int	smallest_count;
+	int smallest_steps;
+	int	moves;
+
+	count = 1;
+	smallest_steps = INT_MAX;
+	while (++count <= 5)
+	{
+		init_stacks(stack);
+		solve_chunk(stack, count);
+		moves = count_instruct(stack->instructions);
+		if (moves < smallest_steps)
+		{
+			smallest_steps = moves;
+			smallest_count = count;
+		}
+	}
+	init_stacks(stack);
+	solve_chunk(stack, smallest_count);
 }

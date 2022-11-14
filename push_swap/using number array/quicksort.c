@@ -54,7 +54,6 @@ int	*int_dup(int *a, int size_a)
 	i = -1;
 	while (++i < size_a)
 		dup[i] = a[i];
-	q_sort(dup, 0, (size_a - 1));
 	return (dup);
 }
 
