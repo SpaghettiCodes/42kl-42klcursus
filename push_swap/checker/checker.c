@@ -45,7 +45,7 @@ int	is_solved(t_pushswap *pushswap)
 	int	i;
 
 	i = -1;
-	if (pushswap->a_size != pushswap->total_size)
+	if (pushswap->a_size != pushswap->total_size && pushswap->b_size == 0)
 		return (0);
 	while (++i < (pushswap->a_size - 1))
 		if (pushswap->stack_a[i] > pushswap->stack_a[i+1])
