@@ -59,7 +59,6 @@ int		solve_two(t_pushswap *stack);
 int		solve_three(t_pushswap *stack);
 void	solve_small_big(t_pushswap *stack);
 void	solve_very_big(t_pushswap *stack);
-int		smallest_loc(int *stack, int stack_size);
 
 // printstack for debug
 void	printstack(t_pushswap *stacks);
@@ -73,68 +72,68 @@ void	search_and_add(t_pushswap *stack);
 
 // solving big stacks
 
-// rotate the stacks to the correct location
-void	rotate_to_correct(t_pushswap *stack, int moves, char stack_name);
-// get number of elements larger than reference (from bottom)
-int		get_no_larger(t_pushswap *stack, int reference, int last_elem_loc);
-// get number of elements smaller than reference (from top)
-int		get_no_smaller(t_pushswap *stack, int reference, int first_elem_loc);
-// initialize chunk (pushing 2 elements from b to a to have a start element and end element)
-int		init_chunk(t_pushswap *stack);
-// find the start element in stack_a
-int		find_start_half(t_pushswap *stack, int max, int min);
-// find the end element in stack_a
-int		find_end_half(t_pushswap *stack, int max, int min);
-// determine moves needed to rotate a so that reference can be pushed correctly
-int		moves_needed(t_pushswap *stack, int reference, int max, int min);
-// get value location in stack a
-int		get_loc(t_pushswap *stack, int val);
-// get largest value location in stack a
-int		get_largest_loc(t_pushswap *stack);
-// gets the lowest value location in stack a
-int		get_lowest_loc(t_pushswap *stack);
-// go to the top of the last chunk OR the bottom of the very first chunk (has the largest value)
-void	go_to_last_chunk(t_pushswap *stack, int last_stack_smallest_loc);
-// calculate the value with the least moves to push into a
-void	find_lesser_moves(t_pushswap *stack, int max_val, int min_val);
 // pushes from b to a
 void	push_to_a(t_pushswap *stack, int start, int end);
 // pushes from a to b
 void	push_to_b(t_pushswap *stack, int start_loc, int end_loc, int chunk_size);
-// calculate the value within max and min with the least amount of moves to push to b
-int		find_and_push(t_pushswap *stack, int max, int min);
 // reverts all changes (lowest value at the top)
 void	revert_changes(t_pushswap *stack);
 // solves chunk
 void	solve_chunk(t_pushswap *stack, int count);
 // solves data with number >= 100
 void	solve_very_big(t_pushswap *stack);
-// determines how to rotate stack_b (to be used with (find_lesser_moves))
-void	rot_b(t_pushswap *stack, int smallest_move_loc);
+
+// get location of values in stack
+// get value location in stack a
+int		get_loc(t_pushswap *stack, int val);
+// find the start element in stack_a
+int		find_start_half(t_pushswap *stack, int max, int min);
+// find the end element in stack_a
+int		find_end_half(t_pushswap *stack, int max, int min);
+// get largest value location in stack a
+int		get_largest_loc(t_pushswap *stack);
+// gets the lowest value location in stack a
+int		get_lowest_loc(t_pushswap *stack);
+
+// determine the correct location of reference to push to stack_a
+// get number of elements larger than reference (from bottom)
+int		get_no_larger(t_pushswap *stack, int reference, int last_elem_loc);
+// get number of elements smaller than reference (from top)
+int		get_no_smaller(t_pushswap *stack, int reference, int first_elem_loc);
+
+// determine the number of moves to sort a certain value
 // determines moves needed to rotate stack_a
 int		moves_needed_rot_a(t_pushswap *stack, int reference, int max, int min);
+// calculate the value with the least moves to push into a
+void	find_lesser_moves(t_pushswap *stack, int max_val, int min_val);
+// calculate the value within max and min with the least amount of moves to push to b
+int		find_and_push(t_pushswap *stack, int max, int min);
 
+// rotating the stacks
+// determines how to rotate stack_b (to be used with (find_lesser_moves))
+void	rot_b(t_pushswap *stack, int smallest_move_loc);
+// rotate the stacks to the correct location
+void	rotate_to_correct(t_pushswap *stack, int moves, char stack_name);
+// go to the top of the last chunk OR the bottom of the very first chunk (has the largest value) to sort the next chunk at the correct location
+void	go_to_last_chunk(t_pushswap *stack, int last_stack_smallest_loc);
 
 // structure stuff
-
 // count number of instructions to sort data
 int				count_instruct(t_instructions *instruct);
 // delete and free all of instructions
 void			del_all(t_instructions **instructions);
 // initialize instructions
 t_instructions	*init_instruction();
-// copys one int array to another int array and returns a pointer to the copied int array
-int				*int_dup(int *source, int source_size);
-// initalize stacks a and b and also instructions
-void			init_stacks(t_pushswap *stack);
-// duplicates a string and returns a pointer to the duplicated string 
-char			*str_dup(char *str);
 // returns the pointer to the last node in a linked list 
 t_instructions	*last_node(t_instructions *instruction);
 // adds a new node at the last node in a linked list
 void			add_node(t_instructions *instruction, char *move);
-// initialize a new instruction node
-t_instructions	*init_instruct_node();
+
+// array utils
+// copys one int array to another int array and returns a pointer to the copied int array
+int				*int_dup(int *source, int source_size);
+// duplicates a string and returns a pointer to the duplicated string 
+char			*str_dup(char *str);
 
 //print
 int		str_len(char *str);
@@ -142,5 +141,13 @@ void	print_instruction(t_instructions *instruction);
 
 // error
 int		error(t_pushswap *stack);
+
+// initialize 
+// initialize chunk (pushing 2 elements from b to a to have a start element and end element)
+int		init_chunk(t_pushswap *stack);
+// initialize a new instruction node
+t_instructions	*init_instruct_node();
+// initalize stacks a and b and also instructions
+void			init_stacks(t_pushswap *stack);
 
 #endif
