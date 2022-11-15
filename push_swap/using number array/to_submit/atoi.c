@@ -35,6 +35,8 @@ int	ft_atoi(const char *str, t_pushswap *stacks)
 		negative = -1;
 	else if (str[i] == '+')
 		i++;
+	if (str[i] == '\0')
+		return (error(stacks));
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
