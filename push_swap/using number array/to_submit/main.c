@@ -91,16 +91,26 @@ int	is_solved(int *tab, int tab_size)
 	return (1);
 }
 
+void	init_struct(t_pushswap *pushswap)
+{
+	pushswap->stack_a = NULL;
+	pushswap->stack_b = NULL;
+	pushswap->sorted = NULL;
+	pushswap->un_sorted = NULL;
+	pushswap->instructions = NULL;
+	pushswap->total_size = 0;
+	pushswap->a_size = 0;
+	pushswap->b_size = 0;
+}
+
 int	main(int ac, char **av)
 {
 	t_pushswap pushswap; 
 
 	if (ac <= 1)
-		return (error(NULL));
+		return (69);
+	init_struct(&pushswap);
 	pushswap.total_size = ac - 1;
-	pushswap.stack_a = NULL;
-	pushswap.stack_b = NULL;
-	pushswap.instructions = NULL;
 
 	pushswap.un_sorted = (int *) malloc ((ac - 1) * sizeof(int));
 	fill(&pushswap, av, ac);

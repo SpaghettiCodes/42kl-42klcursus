@@ -47,7 +47,7 @@ void	rotate(int *tab, int size_tab)
 
 void	push(int *src, int *size_src, int *dest, int *size_dest)
 {
-	if (!size_src)
+	if (!(*size_src))
 		return ;
 	*size_dest = *size_dest + 1;
 	shift_right(dest, *size_dest);
