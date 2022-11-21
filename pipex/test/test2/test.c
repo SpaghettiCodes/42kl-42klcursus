@@ -42,19 +42,19 @@ int main(int ac, char *av[], char *envp[])
 {
 	int i = -1;
 	int	filedesc = open("outfile", O_CREAT | O_WRONLY);
-	// while (envp[++i])
-	// 	printf("%s\n", envp[i]);
+	while (envp[++i])
+		printf("%s\n", envp[i]);
 
-	str binaryPath = "/usr/bin/\0";
-	str command = "ls\0";
-	// dup2(filedesc, STDOUT_FD);
+	// str binaryPath = "/usr/bin/\0";
+	// str command = "ls\0";
+	/ dup2(filedesc, STDOUT_FD);
 	// printf("envp:\n");
 	// for (int i = 0; envp[i]; i++)
 	// 	printf("%s\n", envp[i]);
 	// printf("\n");
-	str	path = append(binaryPath, command);
-	printf("Path = %s\n", path);
-	str args[] = {"ls", "-la" , NULL};
-	execve(path, args, envp);
-	printf("Done\n");
+	// str	path = append(binaryPath, command);
+	// printf("Path = %s\n", path);
+	// str args[] = {"ls", "-la" , NULL};
+	// execve(path, args, envp);
+	// printf("Done\n");
 }
