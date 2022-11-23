@@ -41,6 +41,7 @@ int	str_len(char *str)
 	return (len);
 }
 
+// appends str2 at the back of str1, frees str1
 char	*str_join(char *str1, char *str2)
 {
 	char	*strjoined;
@@ -63,6 +64,7 @@ char	*str_join(char *str1, char *str2)
 		j++;
 	}
 	strjoined[i] = '\0';
-	free(str1);
+	if (str1)
+		free(str1);
 	return (strjoined);
 }

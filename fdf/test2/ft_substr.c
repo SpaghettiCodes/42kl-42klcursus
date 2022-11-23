@@ -12,6 +12,7 @@
 
 #include "ft_split.h"
 
+// returns a MALLOCED substring that starts at "start" and with the length of "len"
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;

@@ -88,6 +88,7 @@ static char	**ft_singlevalues(char const *s, int word)
 	return (splitted);
 }
 
+//Splits the string, returns a MALLOCED 2D array
 char	**ft_split(char const *s, char c)
 {
 	char	**splitted;
