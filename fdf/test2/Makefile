@@ -1,4 +1,4 @@
-FDF = test.c
+FDF = test.c no_fucking_idea.c
 
 ATOI = atoi.c
 

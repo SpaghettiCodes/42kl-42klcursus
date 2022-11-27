@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/04 12:12:48 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/06 15:15:29 by cshi-xia         ###   ########.fr       */
+/*   Created: 2022/07/04 12:13:14 by cshi-xia          #+#    #+#             */
+/*   Updated: 2022/07/06 18:03:47 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_split.h"
 
-int	ft_strlen(const char *s)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int	i;
-	
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return(i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*dup;
+	char	*substr;
 	int		i;
-	int		slen;
 
-	slen = ft_strlen(s);
-	dup = (char *) malloc ((slen + 1) * sizeof(char));
-	if (!dup)
-		return (0);
-	i = -1;
-	while (s[++i])
-		dup[i] = s[i];
-	dup[i] = '\0';
-	return (dup);
+	if (s)
+	{
+		if (!len || start > (unsigned int) ft_strlen(s))
+			return (ft_strdup(""));
+		substr = (char *) malloc ((len + 1) * sizeof(char));
+		if (substr)
+		{
+			i = -1;
+			while (++i < (int) len && s[start])
+			{
+				substr[i] = s[start];
+				start++;
+			}
+			substr[i] = '\0';
+			return (substr);
+		}
+	}
+	return (0);
 }

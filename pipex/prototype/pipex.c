@@ -1,31 +1,25 @@
 #include "pipex.h"
 #include <stdarg.h>
+#include <sys/types.h> 
+#include <sys/wait.h> 
 
-// ./pipex infile cmd cmd outfile
-
-void	debug_print(int	fd, char *format, ...)
+char	free_all(char *item, char **items)
 {
-	va_list ptr;
-	va_start(ptr, format);
-	char *test;
-	for (int i = 0; format[i]; i++)
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			i++;
-			test = va_arg(ptr, char *);
-			if (!test)
-				write(fd, "NULL", 4);
-			else
-				debug_print(fd, test);
-		}
-		else
-			write(fd, &format[i], 1);
-	}
-	va_end(ptr);
-}
+	int	i;
 
+	if (item)
+		free(item);
+	if (items)
+	{
+		i = 0;
+		while (items[i])
+		{
+			free(items[i]);
+			i++;
+		}
+		free(items);
+	}
+}
 
 char	*append(char *str1, char *str2)
 {
@@ -46,6 +40,28 @@ char	*append(char *str1, char *str2)
 	}
 	ret[i] = 0;
 	free(str1);
+	return (ret);
+}
+
+// like append but DOES NOT free str1
+char	*n_append(char *str1, char *str2)
+{
+	char	*ret;
+	int	i;
+	int	j;
+
+	ret = malloc (ft_strlen(str1) + ft_strlen(str2) + 1);
+	i = -1;
+	while (str1[++i])
+		ret[i] = str1[i];
+	j = 0;
+	while (str2[j])
+	{
+		ret[i] = str2[j];
+		j++;
+		i++;
+	}
+	ret[i] = 0;
 	return (ret);
 }
 
@@ -77,52 +93,43 @@ char	*get_paths(char **envp)
 	return (NULL);
 }
 
-char	*get_binarypath(char **envp, char *command, t_pipex fl_desc)
+char	*get_binarypath(char *command, char **paths)
 {
 	char	*test;
 	int		i;
-	char	**paths;
 
-	paths = ft_split(get_paths(envp), ':');
 	i = -1;
 	while (paths[++i])
 	{
-		paths[i] = append(paths[i], "/\0");
-		paths[i] = append(paths[i], command);
-		test = paths[i];
-		if (access(test, F_OK) == 0)
+		test = n_append(paths[i], "/\0");
+		test = append(test, command);
+		if (access(test, X_OK) == 0)
 			return (test);
 		free(test);
 	}
 	return (NULL);
 }
 
-void	childone(t_pipex fl_desc, char **av, char **envp)
+void	childone(t_pipex fl_desc, char **av, char **envp, char **paths)
 {
 	char	*path;
 	char	**command;
 
 	close(fl_desc.outfile);
 	close(fl_desc.pipefd[0]);
-	close(STDIN_FILENO);
+
 	if (dup2(fl_desc.infile, STDIN_FILENO) == -1)
 		perror("Failed\n");
-	close(STDOUT_FILENO);
 	if (dup2(fl_desc.pipefd[1], STDOUT_FILENO) == -1)
 		perror("Failed\n");
+
 	command = ft_split(av[2], ' ');
-	path = get_binarypath(envp, command[0], fl_desc);
-	debug_print(fl_desc.debug_1, "PATH: %s\n", path);	
-	if (path)
-	{
-		if (execve(path, command, envp) == -1)
-			perror(strerror(errno));
-	}
-	else
-		write(2, "\nError: Command Doesn't Exists\n", 32);
+
+	if (execve(fl_desc.binary_paths[0], command, envp) == -1)
+		perror(strerror(errno));
 }
 
-void	childtwo(t_pipex fl_desc, char **av, char **envp)
+void	childtwo(t_pipex fl_desc, char **av, char **envp, char **paths)
 {
 	char	**command;
 	char	*path;
@@ -130,55 +137,84 @@ void	childtwo(t_pipex fl_desc, char **av, char **envp)
 
 	close(fl_desc.infile);
 	close(fl_desc.pipefd[1]);
-	close(STDIN_FILENO);
+
 	dup2(fl_desc.pipefd[0], STDIN_FILENO);
-	close(STDOUT_FILENO);
 	dup2(fl_desc.outfile, STDOUT_FILENO);
+
 	command = ft_split(av[3], ' ');
-	path = get_binarypath(envp, command[0], fl_desc);
-	debug_print(fl_desc.debug_2, "PATH: %s\n", path);
-	if (path)
+
+	if (execve(fl_desc.binary_paths[1], command, envp) == -1)
+		perror(strerror(errno));
+}
+
+int	eprint(char *element, char *msg)
+{
+	write(2, "./pipex: ", 10);
+	if (element)
+		write(2, element, ft_strlen(element));
+	if (msg)
+		write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	return(11 + ft_strlen(element) + ft_strlen(msg));
+}
+
+void	test_cmd(char **av, char **paths, t_pipex pipex)
+{
+	int		i;
+	char	*test;
+	char	**cmd;
+
+	i = 2;
+	while (i <= 3)
 	{
-		if (execve(path, command, envp) == -1)
-			perror(strerror(errno));
+		cmd = ft_split(av[i], ' ');
+		test = get_binarypath(cmd[0], paths);
+		if (test == NULL)
+		{
+			free_all(test, cmd);
+			exit(eprint(av[i], ": command not found"));
+		}
+		pipex.binary_paths[i - 2] = ft_strdup(test);
+		free_all(test, cmd);
+		i++;
 	}
-	else
-		write(2, "\nError: Command Doesn't Exists\n", 32);
+	pipex.binary_paths[i - 2] = 0;
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	t_pipex	fl_desc;
-	int	childfd;
-	int	child2fd;
+	t_pipex	pipex;
+	int		childfd;
+	int		child2fd;
+	char	**paths;
 
 	if (ac != 5)
-		return (5);
-	
-	if (!access("debug_child_1", F_OK))
-		unlink("debug_child_1");
-	fl_desc.debug_1 = open("debug_child_1", O_RDWR);
-	if (!access("debug_child_2", F_OK))
-		unlink("debug_child_2");
-	fl_desc.debug_2 = open("debug_child_2", O_RDWR);
+		return (eprint("ARGS", ": Not enough arguments"));
 
-	fl_desc.infile = open(av[1], O_RDONLY);
-	if (fl_desc.infile == -1)
-		return (1);
-	fl_desc.outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0777);
-	pipe(fl_desc.pipefd);
+	pipex.infile = open(av[1], O_RDONLY);
+	if (pipex.infile == -1)
+		return(eprint(av[1], ": No such file or directory"));
+	pipex.outfile = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	
+	paths = ft_split(get_paths(envp), ':');
+	
+	pipex.binary_paths = malloc (sizeof(char *) * 3);
+	test_cmd(av, paths, pipex);
+
+	if (pipe(pipex.pipefd) == -1)
+		return (eprint("PIPE", ": pipe failed"));
 
 	childfd = fork();
 	if (childfd == 0)
-		childone(fl_desc, av, envp);
+		childone(pipex, av, envp, paths);
 	else
 	{
 		child2fd = fork();
 		if (child2fd == 0)
-			childtwo(fl_desc, av, envp);
+			childtwo(pipex, av, envp, paths);
 	}
-	// doesnt work in windows
-	// waitpid(childfd, &status, 0);
-	// waitpid(child2fd, &status, 0);
+
+	free_all(NULL, paths);
+	free_all(NULL, pipex.binary_paths);
 	return (0);
 }

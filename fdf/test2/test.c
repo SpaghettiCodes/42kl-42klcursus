@@ -1,51 +1,14 @@
-#include <mlx.h>
-#include <fcntl.h>
-#include "get_next_line.h"
-#include "ft_split.h"
-#include <math.h>
-
-#define X_LINE_LENGTH 50
-#define Y_LINE_LENGTH 50
-#define MULITIPLIER 20
-
-int	ft_atoi(const char *str);
-
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
-
-typedef struct	s_mlx
-{
-	void	*info;
-	void	*window;
-	t_data	image;
-	int		length;
-	int		width;
-} t_mlx;
-
-typedef struct s_coordinates
-{
-	int	projected_x;
-	int	projected_y;
-	int	x;
-	int	y;
-	int	z;
-	struct s_coordinates *next;
-	struct s_coordinates *beside;
-	struct s_coordinates *below;
-	struct s_coordinates *debug_link;
-	struct s_coordinates *debug_link2;
-} t_coordinates;
+#include "test.h"
 
 void	placepixel(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
 	// funny formula to calculate memory offset = (y * line_length + x * (bits_per_pixel / 8));
+	if (x < 0 || x >= data->length)
+		return;
+	if (y < 0 || y >= data->width)
+		return;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -82,7 +45,6 @@ void	freeall(char *line, char **coordinates)
 {
 	int	i;
 
-	printf("Freed line\n");
 	if (line)
 		free(line);
 	i = 0;
@@ -91,10 +53,8 @@ void	freeall(char *line, char **coordinates)
 		free(coordinates[i]);
 		i++;
 	}
-	printf("Freed coordinates\n");
 	if (coordinates)
 		free(coordinates);
-	printf("Freed head of coordinates\n");
 }
 
 t_coordinates *get_points(int	read_file_fd)
@@ -124,7 +84,6 @@ t_coordinates *get_points(int	read_file_fd)
 		while (coordinates[x])
 		{
 			fill_node(current, x, y, ft_atoi(coordinates[x]));
-			printf("FIlled (%d, %d, %d)\n", current->x, current->y, current->z);
 			if (coordinates[x + 1])
 			{
 				current->next = init();
@@ -132,7 +91,6 @@ t_coordinates *get_points(int	read_file_fd)
 			}
 			x++;
 		}
-		printf("Filled all in line\n");
 		freeall(line, coordinates);
 		y++;
 	}
@@ -184,8 +142,8 @@ int		set_color(int z, int multiplier)
 // guess which son-of-a cuck only allows int
 void	draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 {
-	int dx = n_point->x - o_point->x;
-	int	dy = n_point->y - o_point->y;
+	int dx = n_point->projected_x - o_point->projected_x;
+	int	dy = n_point->projected_y - o_point->projected_y;
 	int	yi = 1;
 
 	if (dy < 0)
@@ -194,13 +152,11 @@ void	draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 		dy = -dy;
 	}
 	int	D = (2 * dy) - dx;
-	int	y = o_point->y;
-	int x = o_point->x;
-	int height_val;
-	while (x <= n_point->x)
+	int	y = o_point->projected_y;
+	int x = o_point->projected_x;
+	while (x <= n_point->projected_x)
 	{
-		height_val = (((n_point->z - o_point->z) * (x - o_point->x)) / (n_point->x - o_point->x)) + o_point->z;
-		placepixel(&mlx->image, x, y, set_color(height_val, MULITIPLIER));
+		placepixel(&mlx->image, x, y, set_color(0, MULITIPLIER));
 		if (D > 0)
 		{
 			y = y + yi;
@@ -214,8 +170,8 @@ void	draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 
 void	draw_high_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 {
-	int dx = n_point->x - o_point->x;
-	int	dy = n_point->y - o_point->y;
+	int dx = n_point->projected_x - o_point->projected_x;
+	int	dy = n_point->projected_y - o_point->projected_y;
 	int	xi = 1;
 
 	if (dx < 0)
@@ -224,13 +180,11 @@ void	draw_high_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 		dx = -dx;
 	}
 	int	D = (2 * dy) - dx;
-	int	y = o_point->y;
-	int x = o_point->x;
-	int	height_val;
-	while (y <= n_point->y)
+	int	y = o_point->projected_y;
+	int x = o_point->projected_x;
+	while (y <= n_point->projected_y)
 	{
-		height_val = (((n_point->z - o_point->z) * (x - o_point->x)) / (n_point->x - o_point->x)) + o_point->z;
-		placepixel(&mlx->image, x, y, set_color(height_val, MULITIPLIER));
+		placepixel(&mlx->image, x, y, set_color(0, MULITIPLIER));
 		if (D > 0)
 		{
 			x = x + xi;
@@ -246,26 +200,27 @@ void	draw_vertical(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 {
 	int	x;
 	int	y;
-	int height_val;
 
-	x = o_point->x;
-	y = o_point->y;
-	while (y < n_point->y)
+	x = o_point->projected_x;
+	y = o_point->projected_y;
+	while (y < n_point->projected_y)
 	{
-		height_val = (((n_point->z - o_point->z) * (y - o_point->y)) / (n_point->y - o_point->y)) + o_point->z;
-		placepixel(&mlx->image, x, y, set_color(height_val, MULITIPLIER));
+		placepixel(&mlx->image, x, y, set_color(0, MULITIPLIER));
 		y++;
 	}
 }
 
 void	draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 {
-	int dy = n_point->y - o_point->y; 
-	int	dx = n_point->x - o_point->x;
+	int dy = n_point->projected_y - o_point->projected_y; 
+	int	dx = n_point->projected_x - o_point->projected_x;
 	
 	if (dx == 0)
 	{
-		draw_vertical(o_point, n_point, mlx);
+		if (n_point->projected_y > o_point->projected_y)
+			draw_vertical(o_point, n_point, mlx);
+		else
+			draw_vertical(n_point, o_point, mlx);
 		return;
 	}
 	if (dy < 0)
@@ -274,30 +229,17 @@ void	draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *ml
 		dx = -dx;
 	if (dy < dx)
 	{
-		if (o_point->x > n_point->x)
+		if (o_point->projected_x > n_point->projected_x)
 			draw_low_line(n_point, o_point, mlx);
 		else
 			draw_low_line(o_point, n_point, mlx);
 	}
 	else
 	{
-		if (o_point->y > n_point->y)
+		if (o_point->projected_y > n_point->projected_y)
 			draw_high_line(n_point, o_point, mlx);
 		else
 			draw_high_line(o_point, n_point, mlx);
-	}
-}
-
-void	apply_transformation(t_coordinates *points, int offset)
-{
-	t_coordinates *current;
-
-	current = points;
-	while (current)
-	{
-		current->x = transformation_x(current->x, offset, X_LINE_LENGTH);
-		current->y = transformation_y(current->y, offset, Y_LINE_LENGTH);
-		current = current->next;
 	}
 }
 
@@ -310,8 +252,7 @@ void	fill_image(t_mlx *mlx, t_coordinates *points)
 	current = points;
 	while (current)
 	{
-		placepixel(&(mlx->image), current->x, current->y, set_color(current->z, MULITIPLIER));
-		printf("Placed point no %d at coordinate (%d, %d)\n", i, current->x, current->y);
+		placepixel(&(mlx->image), current->projected_x, current->projected_y, set_color(0, MULITIPLIER));
 		if (current->beside)
 			draw_line_handler(current, current->next, mlx);
 		if (current->below)
@@ -380,7 +321,7 @@ void	link_below(t_coordinates *points)
 	current = points;
 	while (current)
 	{
-		printf("Linking..\n");
+		// printf("Linking..\n");
 		finder = find(points, current->x, (current->y + 1));
 		current->below = finder;
 		finder = find(points, (current->x + 1), current->y);
@@ -389,20 +330,45 @@ void	link_below(t_coordinates *points)
 	}
 }
 
-#define	ROT_X 0
-#define ROT_Y 0
-#define ROT_Z 0
-
 // i dont know what the fuck i am doing lmao
-void	project(t_coordinates *points, double rot_x, double rot_y, double rot_z)
+
+int	render_next_frame(void	*stuff)
 {
-	
+	t_mlx	*mlx;
+	mlx = (t_mlx *)stuff;
+
+	int	rot_x, rot_y, rot_z;
+	rot_x = 90, rot_y = 0, rot_z = 0;
+	int	light_dis;
+	light_dis = LIGHT_DIS;
+	while (1)
+	{
+		// initilaize the image
+		// printf("Current rot = %d\n", rot_y);
+		mlx->image.img = mlx_new_image(mlx->info, mlx->length, mlx->width);
+		mlx->image.addr = mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
+		mlx->image.length = mlx->length;
+		mlx->image.width = mlx->width;
+
+		// project(mlx->points, rot_x, rot_y, rot_z, TRANS_X, TRANS_Y, LINE_SIZE, light_dis, 'o');
+		// fill_image(mlx, mlx->points);
+		project(mlx->points, rot_x, rot_y, rot_z, TRANS_X, TRANS_Y, LINE_SIZE, light_dis, 'p');
+		fill_image(mlx, mlx->points);
+		mlx_put_image_to_window(mlx->info, mlx->window, mlx->image.img, 0, 0);
+		mlx_destroy_image(mlx->info, mlx->image.img);
+		// light_dis -= 2;
+		// rot_x++;
+		rot_y++;
+		// rot_z++;
+
+		// sleep(1);
+		usleep(50000);
+	}
 }
 
 int main(int ac, char **av)
 {
 	t_mlx	mlx;
-	t_coordinates	*points;
 	int		read_file_fd;
 
 	if (ac != 2)
@@ -412,14 +378,10 @@ int main(int ac, char **av)
 	}
 	// initialize the things. yes.
 	read_file_fd = open(av[1], O_RDONLY);
-	points = get_points(read_file_fd);
-	printf("Done Getting Points\n");
-	link_below(points);
-	link_points(points, 1, 1, 1);
-	link_points(points, -1, 1, 2);
-	apply_transformation(points, 50);
-
-	project(points, ROT_X, ROT_Y, ROT_Z);
+	mlx.points = get_points(read_file_fd);
+	link_below(mlx.points);
+	// link_points(points, 1, 1, 1);
+	// link_points(points, -1, 1, 1);
 
 	// initialize the window
 	mlx.length = get_length();
@@ -427,12 +389,7 @@ int main(int ac, char **av)
 	mlx.info = mlx_init();
 	mlx.window = mlx_new_window(mlx.info, mlx.length, mlx.width, "Look At These Points");
 
-	// initilaize the image
-	mlx.image.img = mlx_new_image(mlx.info, mlx.length, mlx.width);
-	mlx.image.addr = mlx_get_data_addr(mlx.image.img, &mlx.image.bits_per_pixel, &mlx.image.line_length, &mlx.image.endian);
-
 	// fill image
-	fill_image(&mlx, points);
-	mlx_put_image_to_window(mlx.info, mlx.window, mlx.image.img, 0, 0);
+	mlx_loop_hook(mlx.info, render_next_frame, (void *)&mlx);
 	mlx_loop(mlx.info);
 }

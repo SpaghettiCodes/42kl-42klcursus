@@ -14,8 +14,7 @@ typedef	struct s_pipex{
 	int infile;
 	int outfile; 
 	int	pipefd[2]; // 0 - read, 1 - write
-	int debug_1;
-	int	debug_2;
+	char **binary_paths;
 } t_pipex;
 
 #endif
