@@ -1,0 +1,26 @@
+//  pthread_mutex_init
+
+int pthread_mutex_init(pthread_mutex_t *mutex,  const pthread_mutexattr_t *attr);
+
+- initialises the mutex referenced by mutex with attributes specified by attr
+	- default mutex attributes are used in attr is NULL
+
+//  pthread_mutex_destroy
+
+ONLY DESTRY UNLCOKED MUTEXES
+
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+
+- destroy the mutex object referenced by mutex
+
+//  pthread_mutex_lock
+
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+
+- lock the mutex object referenced by mutex;
+-  f the mutex is already locked, the calling thread blocks until the mutex becomes available.
+
+//  pthread_mutex_unlock
+
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+- unlocks the mutex object referenced by mutex;

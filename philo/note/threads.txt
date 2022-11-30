@@ -1,0 +1,50 @@
+too lazy to write so
+
+THREADS
+- segment of a process
+- each thread within a process shares the same memory and resources of that process
+- used to improved processing of an application
+	- a single thread is executed at a time
+	- fast context switching between threads gives an illusion that threads are running parallelly
+- thread share code section, data section and OS resources (open files and signals)
+- Thread runs in shared memory spaces, processes run in seperate memory spaces
+- Thread can have 3 states - Running, Ready and Blocked
+
+MULTITREADING
+- achive parallelism by dividing a process into multiple threads
+	- your multiple tabs are multiple threads
+	- MS Word uses multiple threads - one to format, one to process input etc.
+
+
+
+**A FORK() SYSTEM CALL IS USED TO CREATE A NEW PROCESS = CHILD PROCESS**
+**CHILD PROCESS ARE INDEPENDENT OF EACH OTHER AND DO NOT SHARE MEMORY**
+
+
+ULT and KLT threads
+User Level thread
+- implemented in the user level library
+- Not created using system calls
+- Kernel does not know about these thread and manages as they were single threaded processes
+
+Adv -
+- can be implemented on an OS that does not support multithreading
+- Thread switching is faster since no OS calls need to be made
+- Simple to Create
+Dis -
+- No coordination among threads and Kernel
+- If one thread causes a page fault, the entire process blocks
+	page fault - SEG FAULT
+
+Kernal Level Thread
+- knows and manage threads
+- Instead of thread table in each process, the kernel has thread table that keeps track of all the threads in a system
+- Kernel also maintains the traditional process table to keep track of processes
+
+Adv -
+- scheduler may decide to give more time to processes having larger number of threads
+- good for applications that frequently block
+
+Limitations
+- slow 
+- requires thread control block 

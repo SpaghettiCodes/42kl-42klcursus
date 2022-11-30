@@ -1,0 +1,42 @@
+//  pthread_create
+
+int pthread_create(pthread_t *restrict thread, const pthread_attr_t *restrict attr, void *(*start_routine)(void *), void *restrict arg);
+
+- Create a new thread
+- The new thread starts execution by invoking start_routine(), arg is passed as the sole argument of start_routine
+- The new thread terminates when 
+	- (p_thread_exit(), with specifying an exit status value that is available to another thread in the same process that calls pthread_join())
+	- returns from start_routine() - same with calling pthread_exit() with the value supplied in the return()
+	- canceld (pthread_cancel())
+	- exit(), causes termination of all threads
+- attr
+	- poinst to a pthread_attr_t structure
+		- contents are used during creation
+		- determine attributes for new thread
+		- initialized using pthread_attr_init()
+	- set to NULL for default
+- successfull call to pthread_create() stores the ID of the new thread in the buffer pointed to by thread (pthread_t)
+	- used to refer to the thread in subsequent calls to other pthread functions
+
+//  pthread_detach
+
+int pthread_detach(pthread_t thread)
+- Detach a thread (????)
+	- seperates the thread of execution from the thread object
+		- allow execution to continue independently
+		- any allocated resources will be freed once the thread exit
+- When a detached thread terminates, its resources are automatically released back to the system
+
+"
+ So, should you use join or detach ?
+
+ Use join
+ Unless you need to have more flexibility AND are willing to provide a synchronization mechanism to wait for the thread completion on your own, in which case you may use detach
+"
+
+//  pthread_join
+
+int pthread_join(pthread_t thread, void **value_ptr);
+
+- suspend execution of the calling thread until the target thread terminates
+- On return from a successfull pthread_join() call with a value_ptr = value passed to pthread_exit() by the terminating thread shall be made available in value_ptr
