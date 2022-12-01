@@ -21,6 +21,8 @@ typedef	struct s_philo
 	long int	last_eaten;
 	bool		can_eat;
 	bool		is_thinking;
+	pthread_t	death_thread;
+	pthread_t	main_thread;
 } t_philo;
 
 typedef struct s_data
@@ -37,7 +39,13 @@ typedef struct s_data
 	bool			start_sim;
 	bool			someone_died;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	take_fork;
+	pthread_mutex_t	pick_fork;
 } t_data;
+
+typedef	struct s_arg
+{
+	t_philo	*philo_data;
+	t_data	*data;	
+} t_arg;
 
 #endif
