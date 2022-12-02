@@ -42,88 +42,87 @@ long int	gettime()
 void	philo_init(t_philo	*philo_data, t_data	*data)
 {
 	philo_data->is_thinking = FALSE;
+	philo_data->is_eating = FALSE;
+
 	philo_data->id = ++data->id;
-	philo_data->can_eat = FALSE;
+
+	philo_data->data = data;
+
+	philo_data->l_hand = &data->forks[philo_data->id - 1];
 	if (philo_data->id == data->n_philo)
-		philo_data->next_id = 1;
+		philo_data->r_hand = &data->forks[0];
 	else
-		philo_data->next_id = philo_data->id + 1;
+		philo_data->r_hand = &data->forks[philo_data->id];
 }
 
-void	philoeat(t_data *data, t_philo *philo_data)
+void	philoeat(t_philo *philo_data)
 {
-	if (data->start_sim)
-	{
-		print_timestamp(data, philo_data, "is eating\n");
-		philo_data->last_eaten = gettime();
-		// philo_data->start_time = philo_data->last_eaten;
-		if (data->eat_count[philo_data->id - 1] > 0)
-			data->eat_count[philo_data->id - 1]--;
-		usleep(data->time_to_eat);
-	}
+	print_timestamp(philo_data, "is eating\n", 0);
+	philo_data->last_eaten = gettime();
+
+	// debug purposes
+	// philo_data->start_time = philo_data->last_eaten;
+
+	if (philo_data->data->eat_count[philo_data->id - 1] > 0)
+		philo_data->data->eat_count[philo_data->id - 1]--;
+	usleep(philo_data->data->time_to_eat);
 }
 
-void	philosleep(t_data *data, t_philo *philo_data)
+void	philosleep(t_philo *philo_data)
 {
-	if (data->start_sim)
-	{
-		print_timestamp(data, philo_data, "is sleeping\n");
-		usleep(data->time_to_sleep);
-	}
+	print_timestamp(philo_data, "is sleeping\n", 0);
+	usleep(philo_data->data->time_to_sleep);
 }
 
 int	philodeath(void *arg)
 {
-	t_arg	*package;
-	t_data	*data;
 	t_philo	*philo_data;
 
-	package = (t_arg *) arg;
-	data = package->data;
-	philo_data = package->philo_data;
-	while (data->start_sim)
+	philo_data = (t_philo *) arg;
+	while (philo_data->data->start_sim)
 	{
-		usleep(data->time_to_die);
-		if (data->start_sim && !philo_data->can_eat && (gettime() - philo_data->last_eaten) > data->time_to_die)
+		usleep(philo_data->data->time_to_die);
+		if (philo_data->data->start_sim && !philo_data->is_eating && (gettime() - philo_data->last_eaten) > philo_data->data->time_to_die)
 		{
-			data->start_sim = FALSE;
-			print_timestamp(data, philo_data, "died\n");
+			philo_data->data->start_sim = FALSE;
+			print_timestamp(philo_data, "died\n", 1);
 			break;
 		}
 	}
 	return (0);
 }
 
-void	philothink(t_data *data, t_philo *philo_data)
+void	philothink(t_philo *philo_data)
 {
-	if (data->start_sim)
-		print_timestamp(data, philo_data, "is thinking\n");
+	print_timestamp(philo_data, "is thinking\n", 0);
 }
 
-void	get_fork(t_data *data, t_philo *philo_data)
+void	get_fork(t_philo *philo_data)
 {
 	// get fork
-	if (!philo_data->can_eat && philo_data->id != philo_data->next_id)
+	if (!philo_data->is_eating)
 	{
-		pthread_mutex_lock(&data->forks[philo_data->id - 1]);
-		print_timestamp(data, philo_data, "has taken a fork\n");
-		pthread_mutex_lock(&data->forks[philo_data->next_id - 1]);
-		print_timestamp(data, philo_data, "has taken a fork\n");
-		philo_data->can_eat = TRUE;
+		pthread_mutex_lock(philo_data->l_hand);
+		pthread_mutex_lock(philo_data->r_hand);
+
+		print_timestamp(philo_data, "has taken a fork\n", 0);
+		print_timestamp(philo_data, "has taken a fork\n", 0);
+
+		philo_data->is_eating = TRUE;
 		return ;
 	}
 
-	if (philo_data->can_eat)
+	if (philo_data->is_eating)
 	{
-		philo_data->can_eat = FALSE;
-		philoeat(data, philo_data);
+		philoeat(philo_data);
+		philo_data->is_eating = FALSE;
 
 		// return fork
-		pthread_mutex_unlock(&data->forks[philo_data->id - 1]);
-		pthread_mutex_unlock(&data->forks[philo_data->next_id - 1]);
+		pthread_mutex_unlock(philo_data->l_hand);
+		pthread_mutex_unlock(philo_data->r_hand);
 
-		philosleep(data, philo_data);
-		philothink(data, philo_data);
+		philosleep(philo_data);
+		philothink(philo_data);
 		return ; 
 	}
 }
@@ -147,7 +146,7 @@ void	check_full(void *arg)
 	t_data *data;
 
 	data = (t_data *) arg;
-	while (1)
+	while (data->start_sim)
 	{
 		if (check_count(data))
 		{
@@ -159,33 +158,26 @@ void	check_full(void *arg)
 
 void	run_sim(void *arg)
 {
-	t_data	*data;
 	t_philo *philo_data;
-	t_arg	*package;
 
-	package = (t_arg *) arg;
-	data = package->data;
-	philo_data = package->philo_data;
+	philo_data = (t_philo *) arg;
 	if (philo_data->id % 2)
 	{
-		philothink(data, philo_data);
-		usleep(data->time_to_sleep / 2);
+		philothink(philo_data);
+		usleep(philo_data->data->time_to_sleep / 2);
 	}
-	while (data->start_sim)
-		get_fork(data, philo_data);
+	while (philo_data->data->start_sim)
+		get_fork(philo_data);
 }
 
 int	philo(void *arg)
 {
 	t_data	*data;
 	t_philo	philo_data;
-	t_arg	package;
 
 	data = (t_data *) arg;
 	philo_init(&philo_data, data);
 
-	package.philo_data = &philo_data;
-	package.data = data;
 	if (philo_data.id == data->n_philo)
 		data->start_sim = TRUE;
 	else
@@ -196,9 +188,11 @@ int	philo(void *arg)
 	}
 	philo_data.start_time = gettime();
 	philo_data.last_eaten = philo_data.start_time;
-	pthread_create(&philo_data.main_thread, NULL, (void *)run_sim, &package);
-	pthread_create(&philo_data.death_thread, NULL, (void *)philodeath, &package);
+
+	pthread_create(&philo_data.main_thread, NULL, (void *)run_sim, &philo_data);
+	pthread_create(&philo_data.death_thread, NULL, (void *)philodeath, &philo_data);
 	pthread_create(&philo_data.check_thread, NULL, (void *)check_full, data);
+
 	pthread_join(philo_data.check_thread, NULL);
 	pthread_join(philo_data.main_thread, NULL);
 	pthread_join(philo_data.death_thread, NULL);
@@ -248,17 +242,16 @@ void	init_data(t_data *data, int	n_philo, int time_to_die, int time_to_eat, int 
 	data->start_sim = FALSE;
 	data->philo_id = malloc ((sizeof(pthread_t) * n_philo));
 
-	pthread_mutex_init(&data->pick_fork, NULL);
 	pthread_mutex_init(&data->write_data, NULL);
 }
 
 int	main(int ac, char **av)
 {
-	int	n_philo = 4;
-	int	time_to_die = 410;
+	int	n_philo = 5;
+	int	time_to_die = 800;
 	int	time_to_eat = 200;
 	int	time_to_sleep = 200;
-	int	eat_count = 3;
+	int	eat_count = 10;
 	t_data	data;
 	int	i;
 

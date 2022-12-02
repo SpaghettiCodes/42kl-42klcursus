@@ -13,42 +13,43 @@
 #define FALSE 0
 typedef	unsigned char status;
 
-typedef	struct s_philo
-{
-	int			id;
-	int			next_id;
-	long int	start_time;
-	long int	last_eaten;
-	status		can_eat;
-	status		is_thinking;
-	pthread_t	death_thread;
-	pthread_t	main_thread;
-	pthread_t	check_thread;
-} t_philo;
-
 typedef struct s_data
 {
 	int				id;
 	int				n_philo;
+
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+
 	int				*eat_count;
 	pthread_t		*philo_id;
 
 	status			start_sim;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	pick_fork;
 	pthread_mutex_t	write_data;
 } t_data;
 
-typedef	struct s_arg
+typedef	struct s_philo
 {
-	t_philo	*philo_data;
-	t_data	*data;
-} t_arg;
+	int			id;
+	long int	start_time;
+	long int	last_eaten;
+
+	status		is_eating;
+	status		is_sleeping;
+	status		is_thinking;
+	t_data		*data;
+
+	pthread_mutex_t	*r_hand;
+	pthread_mutex_t	*l_hand;
+
+	pthread_t	death_thread;
+	pthread_t	main_thread;
+	pthread_t	check_thread;
+} t_philo;
 
 long int	gettime();
-void	print_timestamp(t_data *data, t_philo *philo_data, char *msg);
+void		print_timestamp(t_philo *philo_data, char *msg, int override);
 
 #endif
