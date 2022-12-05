@@ -52,25 +52,23 @@ int	main(int ac, char **av, char **envp)
 	{
 		pipe(h_d);
 		here_doc(&pipex, av, ac, h_d);
-		pipex.cmd = &av[3];
-		pipex.cmd_num = ac - 4;
-		pipex.binary_paths = malloc (sizeof(char *) * (ac - 3));
 	}
 	else
-	{
 		get_fd(&pipex, av, ac);
-		pipex.cmd = &av[2];
-		pipex.cmd_num = ac - 3;
-		pipex.binary_paths = malloc (sizeof(char *) * (ac - 2));
-	}
-
 	paths = ft_split(get_paths(envp), ':');
 	if(!test_cmd(&pipex, paths))
 		return (free_all(NULL, paths));
-
 	if (!fork())
 		child(pipex, -1, pipex.infile);
-
+	else
+	{
+		index = 0;
+		while (index < pipex.cmd_num)
+		{
+			waitpid(-1, NULL, 0);
+			index++;
+		}
+	}
 	free_all(NULL, paths);
 	free_all(NULL, pipex.binary_paths);
 	return (0);

@@ -21,18 +21,24 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 	}
 }
 
-void	here_doc(t_pipex *fd_list, char **av, int ac, int p[2])
+void	here_doc(t_pipex *pipex, char **av, int ac, int p[2])
 {
-	fd_list->outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0777);
+	pipex->outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0777);
 	fill_in_pipe(STDIN_FILENO, p[1], av[2]);
 	close(p[1]);
-	fd_list->infile = p[0];
+	pipex->infile = p[0];
+	pipex->cmd = &av[3];
+	pipex->cmd_num = ac - 4;
+	pipex->binary_paths = malloc (sizeof(char *) * (ac - 3));
 }
 
-void	get_fd(t_pipex *fd_list, char **av, int ac)
+void	get_fd(t_pipex *pipex, char **av, int ac)
 {
-	fd_list->infile = open(av[1], O_RDONLY);
-	if (fd_list->infile == -1)
+	pipex->infile = open(av[1], O_RDONLY);
+	if (pipex->infile == -1)
 		exit(eprint(av[1], "No such file or directory"));
-	fd_list->outfile = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	pipex->outfile = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	pipex->cmd = &av[2];
+	pipex->cmd_num = ac - 3;
+	pipex->binary_paths = malloc (sizeof(char *) * (ac - 2));
 }

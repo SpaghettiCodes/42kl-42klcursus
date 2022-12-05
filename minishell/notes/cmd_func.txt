@@ -1,0 +1,71 @@
+getcwd
+
+char *getcwd(char *buffer, size_t size);
+
+	Determines the path name of the working directory and stores it in buffer
+
+chdir
+
+int chdir(const char *path);
+
+	Change the current working directory
+
+stat
+
+int stat(const char *path, struct stat *buf);
+
+	list informations of a file identified by path
+	Dumps output in buf struct
+	returns 0 sucess, -1 if failed
+
+lstat
+
+int lstat(const char *restrict path, struct stat *restrict buf);
+
+	exactly like stat() BTU when its refers to a symbolic link, lstat will return information about the link	
+		stat returns infomation about the file referenced by the link
+
+fstat
+
+int fstat(int fildes, struct stat *buf);
+
+	literally stat but file description
+
+unlink
+
+   int unlink(const char *pathname);
+	
+	bro its unlink again
+	deletes file
+
+execve
+
+int execve(const char *pathname, char *const argv[], char *const envp[]);
+
+	m yes pipex
+
+dup and dup2 and pipe
+
+	m yes pipex
+
+opendir
+
+		DIR *opendir(const char *name);
+	
+	opens a directory stream based on directory name
+		returns a pointer to the directory stream
+		positioned at the first entry in the directory
+
+readdir
+
+       struct dirent *readdir(DIR *dirp);
+
+	returns a pointer to a dirent structure
+		represeting the next directory entry in the directory stream pointer to by dirp
+		returns NULL on reaching end of directory stream
+		
+closedir 
+
+       int closedir(DIR *dirp);
+
+	close direcotry stream 

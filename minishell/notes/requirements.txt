@@ -1,0 +1,42 @@
+Not interpret unclosed quotes or special characters which are not required by the
+subject such as \ (backslash) or ; (semicolon).
+-- what?
+
+\ append user input
+; seperates multiple command
+								
+								echo test;ls;pwd
+output:
+
+test
+Bash_func.txt  Ext_func.txt  test.c
+/home/notchuasai/42kl-42klcursus/minishell/notes
+
+Handle ’ (single quote) which should prevent the shell from interpreting the metacharacters
+in the quoted sequence.
+
+	doing echo '$TEST' will pring out $TEST
+
+Handle " (double quote) which should prevent the shell from interpreting the metacharacters
+in the quoted sequence except for $ (dollar sign).
+
+	doing echo "\n" will print out \n
+	but doing echo "$TEST" will still print out the value of TEST
+
+Implement redirections and pipes:
+	you done this in pipex, now do it again 
+	<< does not have to update the history
+
+Handle environment variables ($ followed by sequence of characters)
+	$TEST
+
+Handle $? which should expand to the exit status of the most recently executed
+foreground pipeline.
+	- it's the exit status of the last command.
+
+Handle
+	ctrl-C - instantly creates a new line
+	ctrl-D - quits the terminal
+	ctrl-\ - ???
+
+Interactive mode (what is interactive mode)

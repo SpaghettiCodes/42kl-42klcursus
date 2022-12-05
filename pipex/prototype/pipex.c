@@ -216,5 +216,9 @@ int	main(int ac, char **av, char **envp)
 
 	free_all(NULL, paths);
 	free_all(NULL, pipex.binary_paths);
+	close(pipex.pipefd[1]);
+	close(pipex.pipefd[0]);
+    waitpid(childfd, NULL, 0);
+    waitpid(child2fd, NULL, 0);
 	return (0);
 }

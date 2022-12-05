@@ -1,0 +1,11 @@
+total 64
+drwxr-xr-x 2 notchuasai notchuasai  4096 Dec  4 21:47 .
+drwxr-xr-x 3 notchuasai notchuasai  4096 Dec  4 21:15 ..
+-rw-r--r-- 1 notchuasai notchuasai    10 Dec  4 21:44 debug
+-rwxr-xr-x 1 notchuasai notchuasai    15 Dec  4 21:33 infile
+-rwxr-xr-x 1 notchuasai notchuasai 16392 Dec  4 21:47 lapipex
+-rw-r--r-- 1 notchuasai notchuasai  1529 Dec  4 21:46 lapipex.c
+-rw-r--r-- 1 notchuasai notchuasai    15 Dec  4 21:43 outfile
+-rwxr-xr-x 1 notchuasai notchuasai     0 Dec  4 21:47 pizza
+-rwxr-xr-x 1 notchuasai notchuasai 15992 Dec  4 11:42 test
+-rw-r--r-- 1 notchuasai notchuasai   393 Dec  4 11:42 test1.c

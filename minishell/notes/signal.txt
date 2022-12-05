@@ -1,0 +1,69 @@
+signal,
+sigaction, sigemptyset, sigaddset
+
+void (*signal(int sig, void (*func)(int)))(int)
+
+	sets a function to handle a specific signal
+	
+void sigaction
+
+		int sigaction(int signum, const struct sigaction *restrict new, struct sigaction *restrict old);
+
+		change the action taken by a process of a specific signal
+		blocks all other signal until the handler returns
+
+		does not work on SIGKILL and SIGSTOP
+		read https://man7.org/linux/man-pages/man2/sigaction.2.html
+
+		new may be a NULL pointser --> sigaction determines action currently defined to handle sig
+			- if not NULL = the action specified becomes the new action
+
+		old ==> a memory location where sigaction can store a sigaction structure
+			stores the action current associated with sig
+			NULL = does not store
+		
+		for list of signal values -> https://www.ibm.com/docs/en/zos/2.1.0?topic=functions-sigaction-examine-change-signal-action
+
+           struct sigaction {
+               void     (*sa_handler)(int);
+               void     (*sa_sigaction)(int, siginfo_t *, void *);
+               sigset_t   sa_mask;
+               int        sa_flags;
+               void     (*sa_restorer)(void);
+           };
+
+		sa_handler = function to handle the signal (can be SIG_DFL or SIG_IGN)
+
+		sigset_t sa_mask
+			- identifies a set of signals that are added to the signal mask before the handler is called
+			see sigemptyset
+
+			- if this is not set i think it doesnt block any signals? not sure (default)
+
+		sa_flags
+			see https://www.ibm.com/docs/en/zos/2.1.0?topic=functions-sigaction-examine-change-signal-action
+			important flags 
+			SA_SIGINFO
+				- tells system to use signal action specified by sa_sigaction instead of sa_handler
+						void  function(int signo, siginfo_t *info, void *context);
+				- dont use this flag
+			_SA_IGNORE
+				- output only and cant be specified by application
+				- handler value is saved and returned but signal is ignored
+
+
+		USE SIGACTION INSTEAD OF SIGNAL
+
+sigemptyset()
+
+int sigemptyset(sigset_t *set);
+
+	initializes a signal set to the empty set
+	all recognized signals are excluded
+
+	SIGNAL SETS
+		data object that let a process keep track of a group of signals
+
+sigaddset
+
+	adds a signal to a signal set to be IGNORED by sigaction

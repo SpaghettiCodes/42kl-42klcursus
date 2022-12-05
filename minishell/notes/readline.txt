@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+readline
+
+char *readline (const char *prompt);
+
+	read a line from the terminal and return it
+	offers editing capabilities while the user is entering the line
+		- line editing command are similar to those of emacs (what.)
+			Emac style notation - denote keystrokes (oh)
+			- C-key
+				C-n means Control-N (ah so thats why you need readline)
+			- M-key
+				M-x means Esc-X
+	
+		more info read = https://www.man7.org/linux/man-pages/man3/readline.3.html
+
+	- funny bugs - its too big and too slow lmao
+
+	returns the line read w/o the \n
+
+
+rl_clear_history
+
+void rl_clear_history (void)
+	
+	clear history list
+	thats all it does
+
+rl_on_new_line
+
+int	rl_on_new_line (void)
+
+	Tell the update routines that we have moved onto a new (empty) line, usually after ouputting a newline.
+	- probably use in conjugtion with add_history? idk maybe
+
+rl_replace_line
+
+void rl_replace_line(const char *, int)
+
+	where are the fucking documentation on this
+	- from what i see is it replaces your input with whatever is specified
+	- yeah probably is
+
+rl_redisplay
+
+int rl_redisplay ()
+
+	Change what's displayed on the screen to reflect the current contents of rl_line_buffer.
+		rl_line_buffer
+		char * rl_line_buffer ==> line gathered so far (-probably what is the current user input) ===> used in rl_redisplay()
+
+add_history
+
+void	add_history(char *line)
+
+	save the line away in a history list of lines

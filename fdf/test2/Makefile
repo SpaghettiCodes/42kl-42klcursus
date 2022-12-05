@@ -1,4 +1,4 @@
-FDF = test.c no_fucking_idea.c
+FDF = test.c no_fucking_idea.c minmax.c mlxhooks.c
 
 ATOI = atoi.c
 

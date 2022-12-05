@@ -36,9 +36,9 @@ t_coordinates *init()
 
 t_coordinates *fill_node(t_coordinates *current, int x, int y, int z)
 {
-	current->x = x;
-	current->y = y;
-	current->z = z;
+	current->coord[X] = x;
+	current->coord[Y] = y;
+	current->coord[Z] = z;
 }
 
 void	freeall(char *line, char **coordinates)
@@ -142,8 +142,8 @@ int		set_color(int z, int multiplier)
 // guess which son-of-a cuck only allows int
 void	draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 {
-	int dx = n_point->projected_x - o_point->projected_x;
-	int	dy = n_point->projected_y - o_point->projected_y;
+	int dx = n_point->projected_coord[X] - o_point->projected_coord[X];
+	int	dy = n_point->projected_coord[Y] - o_point->projected_coord[Y];
 	int	yi = 1;
 
 	if (dy < 0)
@@ -152,9 +152,9 @@ void	draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 		dy = -dy;
 	}
 	int	D = (2 * dy) - dx;
-	int	y = o_point->projected_y;
-	int x = o_point->projected_x;
-	while (x <= n_point->projected_x)
+	int x = o_point->projected_coord[X];
+	int	y = o_point->projected_coord[Y];
+	while (x <= n_point->projected_coord[X])
 	{
 		placepixel(&mlx->image, x, y, set_color(0, MULITIPLIER));
 		if (D > 0)
@@ -170,8 +170,8 @@ void	draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 
 void	draw_high_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 {
-	int dx = n_point->projected_x - o_point->projected_x;
-	int	dy = n_point->projected_y - o_point->projected_y;
+	int dx = n_point->projected_coord[X] - o_point->projected_coord[X];
+	int	dy = n_point->projected_coord[Y] - o_point->projected_coord[Y];
 	int	xi = 1;
 
 	if (dx < 0)
@@ -180,9 +180,9 @@ void	draw_high_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 		dx = -dx;
 	}
 	int	D = (2 * dy) - dx;
-	int	y = o_point->projected_y;
-	int x = o_point->projected_x;
-	while (y <= n_point->projected_y)
+	int x = o_point->projected_coord[X];
+	int	y = o_point->projected_coord[Y];
+	while (y <= n_point->projected_coord[Y])
 	{
 		placepixel(&mlx->image, x, y, set_color(0, MULITIPLIER));
 		if (D > 0)
@@ -201,9 +201,9 @@ void	draw_vertical(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 	int	x;
 	int	y;
 
-	x = o_point->projected_x;
-	y = o_point->projected_y;
-	while (y < n_point->projected_y)
+	x = o_point->projected_coord[X];
+	y = o_point->projected_coord[Y];
+	while (y < n_point->projected_coord[Y])
 	{
 		placepixel(&mlx->image, x, y, set_color(0, MULITIPLIER));
 		y++;
@@ -212,12 +212,12 @@ void	draw_vertical(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 
 void	draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 {
-	int dy = n_point->projected_y - o_point->projected_y; 
-	int	dx = n_point->projected_x - o_point->projected_x;
+	int dy = n_point->projected_coord[Y] - o_point->projected_coord[Y]; 
+	int	dx = n_point->projected_coord[X] - o_point->projected_coord[X];
 	
 	if (dx == 0)
 	{
-		if (n_point->projected_y > o_point->projected_y)
+		if (n_point->projected_coord[Y] > o_point->projected_coord[Y])
 			draw_vertical(o_point, n_point, mlx);
 		else
 			draw_vertical(n_point, o_point, mlx);
@@ -229,14 +229,14 @@ void	draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *ml
 		dx = -dx;
 	if (dy < dx)
 	{
-		if (o_point->projected_x > n_point->projected_x)
+		if (o_point->projected_coord[X] > n_point->projected_coord[X])
 			draw_low_line(n_point, o_point, mlx);
 		else
 			draw_low_line(o_point, n_point, mlx);
 	}
 	else
 	{
-		if (o_point->projected_y > n_point->projected_y)
+		if (o_point->projected_coord[Y] > n_point->projected_coord[Y])
 			draw_high_line(n_point, o_point, mlx);
 		else
 			draw_high_line(o_point, n_point, mlx);
@@ -252,7 +252,7 @@ void	fill_image(t_mlx *mlx, t_coordinates *points)
 	current = points;
 	while (current)
 	{
-		placepixel(&(mlx->image), current->projected_x, current->projected_y, set_color(0, MULITIPLIER));
+		placepixel(&(mlx->image), current->projected_coord[0], current->projected_coord[1], set_color(0, MULITIPLIER));
 		if (current->beside)
 			draw_line_handler(current, current->next, mlx);
 		if (current->below)
@@ -268,12 +268,12 @@ void	fill_image(t_mlx *mlx, t_coordinates *points)
 
 int	get_length()
 {
-	return (1600);
+	return (1900);
 }
 
 int	get_width()
 {
-	return (768);
+	return (1050);
 }
 
 t_coordinates	*find(t_coordinates *points, int x, int y)
@@ -283,7 +283,7 @@ t_coordinates	*find(t_coordinates *points, int x, int y)
 	current = points;
 	while (current)
 	{
-		if (current->x == x && current->y == y)
+		if (current->coord[X] == x && current->coord[Y] == y)
 			break;
 		current = current->next;
 	}
@@ -299,7 +299,7 @@ void	link_points(t_coordinates *points, int	x_offset, int	y_offset, int debug_li
 	while (current)
 	{
 		printf("Linking..\n");
-		finder = find(points, (current->x + x_offset), (current->y + y_offset));
+		finder = find(points, (current->coord[X] + x_offset), (current->coord[Y] + y_offset));
 		if (!finder)
 		{
 			current = current->next; 
@@ -322,9 +322,9 @@ void	link_below(t_coordinates *points)
 	while (current)
 	{
 		// printf("Linking..\n");
-		finder = find(points, current->x, (current->y + 1));
+		finder = find(points, current->coord[X], (current->coord[Y] + 1));
 		current->below = finder;
-		finder = find(points, (current->x + 1), current->y);
+		finder = find(points, (current->coord[X] + 1), current->coord[Y]);
 		current->beside = finder;
 		current = current->next;
 	}
@@ -332,38 +332,87 @@ void	link_below(t_coordinates *points)
 
 // i dont know what the fuck i am doing lmao
 
-int	render_next_frame(void	*stuff)
+int	get_shit(t_mlx *mlx)
 {
-	t_mlx	*mlx;
-	mlx = (t_mlx *)stuff;
+	if (mlx->key_press.kbrd[W_KEY])
+		mlx->attributes.y_translation += 1;
+	if (mlx->key_press.kbrd[A_KEY])
+		mlx->attributes.x_translation -= 1;
+	if (mlx->key_press.kbrd[S_KEY])
+		mlx->attributes.y_translation -= 1;
+	if (mlx->key_press.kbrd[D_KEY])
+		mlx->attributes.x_translation += 1;
 
-	int	rot_x, rot_y, rot_z;
-	rot_x = 90, rot_y = 0, rot_z = 0;
-	int	light_dis;
-	light_dis = LIGHT_DIS;
-	while (1)
+	mlx->attributes.rot[X] = mlx->key_press.lmse_diff[Y] * SENS;
+	mlx->attributes.rot[Y] = mlx->key_press.lmse_diff[X] * SENS * -1;
+	mlx->attributes.rot[Z] = mlx->key_press.rmse_diff[X] * SENS;
+	// printf("ROT = %f, %f, %f\n", mlx->attributes.rot[X], mlx->attributes.rot[Y], mlx->attributes.rot[Z]);
+}
+
+int	render_next_frame(t_mlx *mlx)
+{
+	get_shit(mlx);
+
+	mlx->image.img = mlx_new_image(mlx->info, mlx->length, mlx->width);
+	mlx->image.addr = mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
+	mlx->image.length = mlx->length;
+	mlx->image.width = mlx->width;
+
+	project(mlx, mlx->attributes.type);
+	fill_image(mlx, mlx->points);
+	mlx_put_image_to_window(mlx->info, mlx->window, mlx->image.img, 0, 0);
+	mlx_destroy_image(mlx->info, mlx->image.img);
+}
+
+void	init_attri(t_mlx mlx, t_attri *attr, t_coordinates *coordinate)
+{
+	attr->light_dis = LIGHT_DIS;
+
+	attr->rot[X] = 0;
+	attr->rot[Y] = 0;
+	attr->rot[Z] = 0;
+
+	attr->line_size = LINE_SIZE;
+	attr->x_translation = mlx.length / 2;
+	attr->y_translation = mlx.width / 2;
+
+	attr->x_mid = highest_x(coordinate) / 2;
+	attr->y_mid = highest_y(coordinate) / 2;
+	attr->z_mid = (highest_z(coordinate) + lowest_z(coordinate)) / 2;
+
+	attr->type = 'p';
+}
+
+void	init_translated(t_coordinates *points, t_attri attr)
+{
+	t_coordinates *current;
+	int	index = 0;
+
+	current = points;
+	while (current)
 	{
-		// initilaize the image
-		// printf("Current rot = %d\n", rot_y);
-		mlx->image.img = mlx_new_image(mlx->info, mlx->length, mlx->width);
-		mlx->image.addr = mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
-		mlx->image.length = mlx->length;
-		mlx->image.width = mlx->width;
-
-		// project(mlx->points, rot_x, rot_y, rot_z, TRANS_X, TRANS_Y, LINE_SIZE, light_dis, 'o');
-		// fill_image(mlx, mlx->points);
-		project(mlx->points, rot_x, rot_y, rot_z, TRANS_X, TRANS_Y, LINE_SIZE, light_dis, 'p');
-		fill_image(mlx, mlx->points);
-		mlx_put_image_to_window(mlx->info, mlx->window, mlx->image.img, 0, 0);
-		mlx_destroy_image(mlx->info, mlx->image.img);
-		// light_dis -= 2;
-		// rot_x++;
-		rot_y++;
-		// rot_z++;
-
-		// sleep(1);
-		usleep(50000);
+		current->trans_coord[X] = (current->coord[X] - attr.x_mid );
+		current->trans_coord[Y] = (current->coord[Y] - attr.y_mid );
+		current->trans_coord[Z] = (current->coord[Z] - attr.z_mid ) * Z_MULTI;
+		printf("%d = (%f, %f, %f)\n",index, current->trans_coord[X], current->trans_coord[Y], current->trans_coord[Z]);
+		current = current->next;
+		index++;
 	}
+}
+
+void	init_keys(t_keypress *key_press)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+		key_press->kbrd[i] = RELEASED;
+	key_press->mse[L_MSE] = RELEASED;
+	key_press->mse[R_MSE] = RELEASED;
+	key_press->lmse_diff[X] = 0;
+	key_press->lmse_diff[Y] = 0;
+	key_press->rmse_diff[X] = 0;
+	key_press->rmse_diff[Y] = 0;
 }
 
 int main(int ac, char **av)
@@ -372,24 +421,29 @@ int main(int ac, char **av)
 	int		read_file_fd;
 
 	if (ac != 2)
-	{
-		perror("pls gibe name\n");
-		return (2);
-	}
+		return(write(2, "plz gibe nem\n", 14));
+
 	// initialize the things. yes.
 	read_file_fd = open(av[1], O_RDONLY);
+	if (read_file_fd == -1)
+		return(write(2, "no exists file\n", 16));
 	mlx.points = get_points(read_file_fd);
 	link_below(mlx.points);
-	// link_points(points, 1, 1, 1);
-	// link_points(points, -1, 1, 1);
+	// link_points(mlx.points, 1, 1, 1);
+	// link_points(mlx.points, -1, 1, 2);
 
-	// initialize the window
 	mlx.length = get_length();
 	mlx.width = get_width();
 	mlx.info = mlx_init();
 	mlx.window = mlx_new_window(mlx.info, mlx.length, mlx.width, "Look At These Points");
 
+	init_attri(mlx, &mlx.attributes, mlx.points);
+	init_translated(mlx.points, mlx.attributes);
+	init_keys(&mlx.key_press);
+	// initialize the window
+
 	// fill image
+	hook_me_up(&mlx);
 	mlx_loop_hook(mlx.info, render_next_frame, (void *)&mlx);
 	mlx_loop(mlx.info);
 }

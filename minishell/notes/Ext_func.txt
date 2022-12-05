@@ -1,0 +1,58 @@
+readline, rl_clear_history, rl_on_new_line,
+rl_replace_line, rl_redisplay, add_history,
+printf, malloc, free, write, access, open, read,
+close, fork, wait, waitpid, wait3, wait4, signal,
+sigaction, sigemptyset, sigaddset, kill, exit,
+getcwd, chdir, stat, lstat, fstat, unlink, execve,
+dup, dup2, pipe, opendir, readdir, closedir,
+strerror, perror, isatty, ttyname, ttyslot, ioctl,
+getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
+tgetnum, tgetstr, tgoto, tputs
+
+#include <unistd.h>
+extern char **environ;
+
+- basically envp = but you dont need to use an extra parameter :D
+
+kill
+
+int kill( pid_t pid, int sig );
+
+	sends a signal to a process
+
+strerror and perror
+
+used together to print out the error msg
+
+isatty
+
+int isatty(int fildes);
+
+determines if a file descriptor is associated with a terminal
+uhhh
+pizza
+
+ttyname
+
+	char *ttyname(int fd);
+
+returns the name of the terminal
+
+ttyslot
+
+	uh 
+	im just gonna pray i dont need this
+
+ioctl (input )
+
+	mmmm not sure
+	check back late 
+
+getenv
+
+char *getenv(const char *name)
+
+	searches the environment string pointed to by name and returns the aassociated value to the string
+	oh i
+	i didnt need
+	o h

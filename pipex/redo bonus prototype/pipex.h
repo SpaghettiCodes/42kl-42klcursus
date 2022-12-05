@@ -10,11 +10,14 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include "get_next_line.h"
+#include <sys/types.h> 
+#include <sys/wait.h> 
 
 typedef	struct s_pipex{
 	int		infile;
 	int		outfile;
 	char	**cmd;
+	int		ac;
 	int		cmd_num;
 	char	**envp; 
 	char	**binary_paths; // freeable
