@@ -36,10 +36,10 @@ void	push_to_b(t_pushswap *stack, int start_loc, int end_loc, int chunk_size)
 
 void	solve_chunk(t_pushswap *stack, int count)
 {
-	int chunk_size;
+	int	chunk_size;
 	int	remainder;
-	int start;
-	int end;
+	int	start;
+	int	end;
 
 	chunk_size = stack->total_size / count;
 	remainder = stack->total_size % count;
@@ -62,7 +62,7 @@ void	solve_very_big(t_pushswap *stack)
 {
 	int	count;
 	int	smallest_count;
-	int smallest_steps;
+	int	smallest_steps;
 	int	moves;
 
 	count = 1;
