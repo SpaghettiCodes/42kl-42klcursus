@@ -46,6 +46,8 @@ typedef struct s_coordinates
 	struct s_coordinates *debug_link2;
 
 	struct s_coordinates *next;
+
+	unsigned char	print;
 } t_coordinates;
 
 typedef	struct	s_attri {
@@ -55,7 +57,7 @@ typedef	struct	s_attri {
 	int	x_translation;
 	int	y_translation;
 	
-	int	line_size;
+	float	line_size;
 	// D = light source Distance btw (0, 0, D)
 	int	light_dis;
 
@@ -63,17 +65,19 @@ typedef	struct	s_attri {
 	float	y_mid;
 	float	z_mid;
 
+	float	z_multiplier;
+	float	z_diff;
 	char	type;
 } t_attri;
 
 #define SENS 0.05
 
 typedef	struct	s_keypress {
-	int	mse[2];
-	int	kbrd[4];
-	int	lmse_coord[2];
+	int		mse[2];
+	int		kbrd[4];
+	int		lmse_coord[2];
 	float	lmse_diff[2];
-	int	rmse_coord[2];
+	int		rmse_coord[2];
 	float	rmse_diff[2];
 } t_keypress;
 
@@ -105,7 +109,6 @@ typedef struct	s_mlx
 #define TRANS_Y 384
 #define LINE_SIZE 25
 #define Z_MULTI 1
-
 void		project(t_mlx *mlx, char type);
 int		highest_x(t_coordinates *coordinates);
 int		highest_y(t_coordinates *coordinates);

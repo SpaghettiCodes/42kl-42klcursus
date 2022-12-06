@@ -46,13 +46,19 @@ int	rotattat_z(t_coordinates *current, float radian)
 	current->trans_coord[Z] = z;
 }
 
-void	perspective_projection(t_coordinates *current, int light_dis, int coord_2[3])
+void	perspective_projection(t_coordinates *current, int light_dis)
 {
+	float	d_Dz;
 	// apparantly should work
 	// assumme light source at (0,0,D)
 
-	current->projected_coord[X] = ((light_dis * coord_2[X]) / (light_dis - coord_2[Z]));
-	current->projected_coord[Y] = ((light_dis * coord_2[Y]) / (light_dis - coord_2[Z]));
+	d_Dz = light_dis - current->trans_coord[Z];
+	// this garbage worked LMAO
+	if (d_Dz <= 0)
+		d_Dz = 1;
+
+	current->projected_coord[X] = ((light_dis * current->trans_coord[X]) / d_Dz);
+	current->projected_coord[Y] = ((light_dis * current->trans_coord[Y]) / d_Dz);
 }
 
 double	min_light_distance(t_coordinates *coordinates)
@@ -76,31 +82,32 @@ void	project(t_mlx *mlx, char type)
 {
 	t_coordinates *current;
 	t_attri	*attr;
-	int coord_2[3];
+	float radian_x, radian_y, radian_z;
 
 	current = mlx->points;
 	attr = &mlx->attributes;
 	while (current)
 	{
-		float radian_x = attr->rot[X] * (M_PI / 180);
-		float radian_y = attr->rot[Y] * (M_PI / 180);
-		float radian_z = attr->rot[Z] * (M_PI / 180);
+		current->trans_coord[X] = (current->coord[X] - attr->x_mid ) * attr->line_size;
+		current->trans_coord[Y] = (current->coord[Y] - attr->y_mid ) * attr->line_size;
+		current->trans_coord[Z] = (current->coord[Z] - attr->z_mid ) * attr->line_size * attr->z_multiplier;
+
+		radian_x = attr->rot[X] * (M_PI / 180);
+		radian_y = attr->rot[Y] * (M_PI / 180);
+		radian_z = attr->rot[Z] * (M_PI / 180);
 	
 		rotattat_x(current, radian_x);
 		rotattat_y(current, radian_y);
 		rotattat_z(current, radian_z);
 
 		// orthographic
-		coord_2[X] = current->trans_coord[X] * attr->line_size;
-		coord_2[Y] = current->trans_coord[Y] * attr->line_size;
-		coord_2[Z] = current->trans_coord[Z] * attr->line_size;
 		if (type == 'o')
 		{
-			current->projected_coord[X] = coord_2[X];
-			current->projected_coord[Y] = coord_2[Y];
+			current->projected_coord[X] = current->trans_coord[X];
+			current->projected_coord[Y] = current->trans_coord[Y];
 		} // perspective
 		else if (type == 'p')
-			perspective_projection(current, attr->light_dis, coord_2);
+			perspective_projection(current, attr->light_dis);
 
 		current->projected_coord[X] += attr->x_translation;
 		current->projected_coord[Y] += attr->y_translation;

@@ -6,6 +6,7 @@ int	handle_pressed(int keycode, t_mlx	*mlx)
 	{
 		printf("bye\n");
 		mlx_destroy_window(mlx->info, mlx->window);
+		mlx->window = NULL;
 	}
 	else if (keycode == 100)
 		mlx->key_press.kbrd[D_KEY] = PRESSED;
@@ -25,6 +26,10 @@ int	handle_pressed(int keycode, t_mlx	*mlx)
 		printf("Orthographic mode!\n");
 		mlx->attributes.type = 'o';
 	}
+	else if (keycode == 65362)
+		mlx->attributes.z_multiplier += 0.005;
+	else if (keycode == 65364)
+		mlx->attributes.z_multiplier -= 0.005;
 	else
 		printf("Key %d was pressed\n", keycode);
 	return (keycode);
@@ -40,8 +45,8 @@ int	handle_released(int keycode, t_keypress *key_press)
 		key_press->kbrd[A_KEY] = RELEASED;
 	else if (keycode == 119)
 		key_press->kbrd[S_KEY] = RELEASED;
-	else
-		printf("Key %d was released\n", keycode);
+	else;
+		// printf("Key %d was released\n", keycode);
 }
 
 int	mouse_press(int	keycode, int x, int y, t_mlx *mlx)
@@ -59,14 +64,10 @@ int	mouse_press(int	keycode, int x, int y, t_mlx *mlx)
 		mlx->key_press.rmse_coord[Y] = y;
 	}
 	else if (keycode == 4)
-	{
-		mlx->attributes.line_size += 1;
-	}
+		mlx->attributes.line_size += 0.2;
 	else if (keycode == 5)
-	{
-		mlx->attributes.line_size -= 1;
-	}
-	printf("Mouse pressed at %d, %d, key = %d\n", x, y, keycode);
+		mlx->attributes.line_size -= 0.2;
+	// printf("Mouse pressed at %d, %d, key = %d\n", x, y, keycode);
 }
 
 int	mouse_released(int keycode, int x, int y, t_keypress *key_press)
@@ -83,7 +84,7 @@ int	mouse_released(int keycode, int x, int y, t_keypress *key_press)
 		key_press->rmse_diff[X] = 0;
 		key_press->rmse_diff[Y] = 0;
 	}
-	printf("Mouse released at %d, %d, key = %d\n", x, y, keycode);
+	// printf("Mouse released at %d, %d, key = %d\n", x, y, keycode);
 }
 
 int	mouse_movement(int x, int y, t_keypress *key_press)
@@ -101,7 +102,8 @@ int	mouse_movement(int x, int y, t_keypress *key_press)
 
 		key_press->lmse_coord[X] = x;
 		key_press->lmse_coord[Y] = y;
-		printf("mouse moved to %d %d while pressing left click\n", x, y); 
+		// printf("mouse moved to %d %d while pressing left click\n", x, y); 
+		// printf("mouse changed (%f, %f)\n", key_press->lmse_diff[X], key_press->lmse_diff[Y]);
 	}
 	if (key_press->mse[R_MSE])
 	{
@@ -113,7 +115,7 @@ int	mouse_movement(int x, int y, t_keypress *key_press)
 
 		key_press->rmse_coord[X] = x;
 		key_press->rmse_coord[Y] = y;
-		printf("mouse moved to %d %d while pressing right click\n", x, y); 
+		// printf("mouse moved to %d %d while pressing right click\n", x, y); 
 	}
 }
 
