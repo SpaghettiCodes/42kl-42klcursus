@@ -25,7 +25,7 @@ int	handle_pressed(int keycode, t_mlx	*mlx)
 {
 	if (keycode == 65307)
 	{
-		printf("bye\n");
+		printf("Exit Window\n");
 		mlx_destroy_window(mlx->info, mlx->window);
 		mlx->window = NULL;
 	}
@@ -52,15 +52,9 @@ int	handle_pressed(int keycode, t_mlx	*mlx)
 	else if (keycode == 65364)
 		mlx->attributes.z_multiplier -= 0.005;
 	else if (keycode == 65361)
-	{
 		mlx->attributes.color_intens += 0.5;
-		printf("Color is now %f\n", mlx->attributes.color_intens);
-	}
 	else if (keycode == 65363)
-	{
 		mlx->attributes.color_intens -= 0.5;
-		printf("Color is now %f\n", mlx->attributes.color_intens);
-	}
 	else if (keycode == 114)
 		reset(mlx);
 	else if (keycode == 105)
