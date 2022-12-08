@@ -118,12 +118,12 @@ int	main(int ac, char **av)
 	if (!is_solved(pushswap.un_sorted, pushswap.total_size))
 		solve(&pushswap); // this would be the sorting algo
 	
-	printf("done\n");
-	if (is_solved(pushswap.stack_a, pushswap.a_size))
-		printf("SORTED!\n");
-	else
-		printf("NOT SORTED\n");
-	printstack(&pushswap);
+	// printf("done\n");
+	// if (is_solved(pushswap.stack_a, pushswap.a_size))
+	// 	printf("SORTED!\n");
+	// else
+	// 	printf("NOT SORTED\n");
+	// printstack(&pushswap);
 	freeall(&pushswap);
 	return (0);
 }
