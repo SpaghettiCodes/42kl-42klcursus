@@ -46,7 +46,6 @@ int	checkdup(t_pushswap *stack)
 }
 
 //testing purposes
-
 void printstack(t_pushswap *stacks)
 {
 	printf("Stack A: ");

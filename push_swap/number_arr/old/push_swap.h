@@ -14,21 +14,16 @@ typedef struct s_instructions
 	struct s_instructions *next;
 }	t_instructions;
 
-typedef unsigned int bool;
-#define TRUE 1
-#define FALSE 0
-
 typedef struct s_pushswap
 {
 	int	*un_sorted;
-	int	total_size;
 	int	*sorted;
 	int	*stack_a;
 	int	*stack_b;
 	int	a_size;
 	int	b_size;
-	unsigned int moves;
-	bool print:1;
+	int	total_size;
+	t_instructions	*instructions;
 }	t_pushswap;
 
 // normal sort algo 

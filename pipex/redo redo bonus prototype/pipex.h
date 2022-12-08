@@ -39,17 +39,20 @@ char	*n_append(char *str1, char *str2);
 
 // error printing, prints out error msg
 int		eprint(char *element, char *msg);
-/* test all the command given if they are executable
+/* 
+** test all the command given if they are executable
 ** also add any valid path into the binary_paths array
 */
 int	test_cmd(t_pipex *pipex, char **paths);
 int	free_all(char *item, char **items);
 
-/* executes the command 
+/* 
+** executes the command 
 ** exits automatically if success, returns 0 if an error occured
 */
 int		execute_command(char **path, char *cmd, char **envp);
-/* child process -- child process will create more child process to run all commands
+/* 
+** child process -- child process will create more child process to run all commands
 ** in = the STDIN of the child process
 ** child process will create the next pipe required for the next child process 
 */

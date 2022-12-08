@@ -2,6 +2,8 @@
 
 void	freeall(t_pushswap *pushswap)
 {
+	if (pushswap->instructions)
+		del_all(&pushswap->instructions);
 	if (pushswap->un_sorted)
 		free(pushswap->un_sorted);
 	if (pushswap->stack_a)
@@ -46,6 +48,7 @@ int	checkdup(t_pushswap *stack)
 }
 
 //testing purposes
+
 void printstack(t_pushswap *stacks)
 {
 	printf("Stack A: ");
@@ -94,6 +97,7 @@ void	init_struct(t_pushswap *pushswap)
 	pushswap->stack_b = NULL;
 	pushswap->sorted = NULL;
 	pushswap->un_sorted = NULL;
+	pushswap->instructions = NULL;
 	pushswap->total_size = 0;
 	pushswap->a_size = 0;
 	pushswap->b_size = 0;
@@ -117,12 +121,12 @@ int	main(int ac, char **av)
 	if (!is_solved(pushswap.un_sorted, pushswap.total_size))
 		solve(&pushswap); // this would be the sorting algo
 	
-	// printf("done\n");
-	// if (is_solved(pushswap.stack_a, pushswap.a_size))
-	// 	printf("SORTED!\n");
-	// else
-	// 	printf("NOT SORTED\n");
-	// printstack(&pushswap);
+	printf("done\n");
+	if (is_solved(pushswap.stack_a, pushswap.a_size))
+		printf("SORTED!\n");
+	else
+		printf("NOT SORTED\n");
+	printstack(&pushswap);
 	freeall(&pushswap);
 	return (0);
 }

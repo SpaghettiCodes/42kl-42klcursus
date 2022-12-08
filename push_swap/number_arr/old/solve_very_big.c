@@ -61,24 +61,24 @@ void	solve_chunk(t_pushswap *stack, int count)
 void	solve_very_big(t_pushswap *stack)
 {
 	int	count;
-	unsigned int	smallest_count;
-	unsigned int	smallest_moves;
+	int	smallest_count;
+	int	smallest_steps;
+	int	moves;
 
 	count = 1;
-	smallest_moves = INT_MAX;
+	smallest_steps = INT_MAX;
 	while (++count <= 5)
 	{
-		stack->moves = 0;
 		init_stacks(stack);
 		solve_chunk(stack, count);
-		printf("%d chunk solved in %d moves\n", count, stack->moves);
-		if (stack->moves < smallest_moves)
+		moves = count_instruct(stack->instructions);
+		// printf("%d chunks moves taken = %d\n", count, moves);		
+		if (moves < smallest_steps)
 		{
-			smallest_moves = stack->moves;
+			smallest_steps = moves;
 			smallest_count = count;
 		}
 	}
 	init_stacks(stack);
-	stack->print = TRUE;
 	solve_chunk(stack, smallest_count);
 }

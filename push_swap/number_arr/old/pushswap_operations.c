@@ -4,10 +4,7 @@ void	sa(t_pushswap *stack)
 {
 	if (stack->a_size < 2)
 		return ;
-	if (stack->print)
-		write(1, "sa\n", 3);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "sa\n\0");
 	swap(&stack->stack_a[0], &stack->stack_a[1]);
 }
 
@@ -15,19 +12,13 @@ void	sb(t_pushswap *stack)
 {
 	if (stack->b_size < 2)
 		return ;
-	if (stack->print)
-		write(1, "sb\n", 3);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "sb\n\0");
 	swap(&stack->stack_b[0], &stack->stack_b[1]);
 }
 
 void	ss(t_pushswap *stack)
 {
-	if (stack->print)
-		write(1, "ss\n", 3);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "ss\n\0");
 	sa(stack);
 	sb(stack);
 }
@@ -36,10 +27,7 @@ void	pa(t_pushswap *stack)
 {
 	if (!stack->b_size)
 		return ;
-	if (stack->print)
-		write(1, "pa\n", 3);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "pa\n\0");
 	push(stack->stack_b, &stack->b_size, stack->stack_a, &stack->a_size);
 }
 
@@ -47,10 +35,7 @@ void	pb(t_pushswap *stack)
 {
 	if (!stack->a_size)
 		return ;
-	if (stack->print)
-		write(1, "pb\n", 3);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "pb\n\0");
 	push(stack->stack_a, &stack->a_size, stack->stack_b, &stack->b_size);
 }
 
@@ -58,10 +43,7 @@ void	ra(t_pushswap *stack)
 {
 	if (stack->a_size < 2)
 		return ;
-	if (stack->print)
-		write(1, "ra\n", 3);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "ra\n\0");
 	rotate(stack->stack_a, stack->a_size);
 }
 
@@ -69,10 +51,7 @@ void	rb(t_pushswap *stack)
 {
 	if (stack->b_size < 2)
 		return ;
-	if (stack->print)
-		write(1, "rb\n", 3);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "rb\n\0");
 	rotate(stack->stack_b, stack->b_size);
 }
 
@@ -80,20 +59,14 @@ void	rr(t_pushswap *stack)
 {
 	ra(stack);
 	rb(stack);
-	if (stack->print)
-		write(1, "rr\n", 3);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "rr\n\0");
 }
 
 void	rra(t_pushswap *stack)
 {
 	if (stack->a_size < 2)
 		return ;
-	if (stack->print)
-		write(1, "rra\n", 4);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "rra\n\0");
 	reverserotate(stack->stack_a, stack->a_size);
 }
 
@@ -101,10 +74,7 @@ void	rrb(t_pushswap *stack)
 {
 	if (stack->b_size < 2)
 		return ;
-	if (stack->print)
-		write(1, "rrb\n", 4);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "rrb\n\0");
 	reverserotate(stack->stack_b, stack->b_size);
 }
 
@@ -112,8 +82,5 @@ void	rrr(t_pushswap *stack)
 {
 	rra(stack);
 	rrb(stack);
-	if (stack->print)
-		write(1, "rrr\n", 4);
-	else
-		stack->moves++;
+	add_node(stack->instructions, "rrr\n\0");
 }
