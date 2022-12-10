@@ -99,6 +99,7 @@ typedef struct	s_img {
 	int		endian;
 	int		length;
 	int		width;
+	int		**z_buff;
 }	t_data;
 
 typedef struct	s_mlx
@@ -111,6 +112,7 @@ typedef struct	s_mlx
 	t_keypress		key_press;
 	int				length;
 	int				width;
+	int				**z_buff;
 } t_mlx;
 
 typedef struct s_lineutils
@@ -140,7 +142,7 @@ int		hook_me_up(t_mlx *mlx);
 int		set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_attri attr);
 
 int		not_valid(int x, int y, t_data img);
-void	placepixel(t_data *data, int x, int y, int color);
+void	placepixel(t_data *data, int x, int y, int z, int color);
 int		putcolor(unsigned char trans, unsigned char r, unsigned char g, unsigned char b);
 int		skipx(int startx, t_data img_prop, t_lineutils *line);
 int		skipy(int startx, t_data img_prop, t_lineutils *line);

@@ -33,7 +33,7 @@ int	highest_z(t_coordinates *coordinates)
 	current = coordinates;
 	while (current)
 	{
-		if (ret->coord[2] < current->coord[2])
+		if (ret->coord[Z] < current->coord[Z])
 		{
 			ret = current;
 		}

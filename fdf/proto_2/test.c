@@ -181,6 +181,37 @@ int	get_shit(t_mlx *mlx)
 	// printf("ROT = %f, %f, %f\n", mlx->attributes.rot[X], mlx->attributes.rot[Y], mlx->attributes.rot[Z]);
 }
 
+int		**z_buffer(t_mlx mlx)
+{
+	int	**ret;
+	int	x;
+	int	y;
+
+	ret = malloc (sizeof(int *) * mlx.length);
+	x = 0;
+	while (x < mlx.length)
+	{
+		ret[x] = malloc (sizeof(int) * mlx.width);
+		x++;
+	}
+
+	return (ret);
+}
+
+void	freebuffer(int **tab, t_mlx mlx)
+{
+	int x;
+
+	x = 0;
+	while (x < mlx.length)
+	{
+		free(tab[x]);
+		x++;
+	}
+	free(tab);
+}
+
+
 int	render_next_frame(t_mlx *mlx)
 {
 	get_shit(mlx);
@@ -189,6 +220,7 @@ int	render_next_frame(t_mlx *mlx)
 	mlx->image.addr = mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
 	mlx->image.length = mlx->length;
 	mlx->image.width = mlx->width;
+	mlx->image.z_buff = mlx->z_buff;
 
 	project(mlx, mlx->attributes.type);
 
@@ -196,7 +228,7 @@ int	render_next_frame(t_mlx *mlx)
 
 	if (mlx->window)
 		mlx_put_image_to_window(mlx->info, mlx->window, mlx->image.img, 0, 0);
-
+	
 	mlx_destroy_image(mlx->info, mlx->image.img);
 }
 
@@ -264,7 +296,7 @@ int main(int ac, char **av)
 		return(write(2, "plz gibe nem\n", 14));
 
 	// initialize the things. yes.
-	read_file_fd = open(av[1], O_RDONLY);
+	read_file_fd = open(av[1], O_RDWR);
 	if (read_file_fd == -1)
 		return(write(2, "no exists file\n", 16));
 
@@ -280,7 +312,8 @@ int main(int ac, char **av)
 	mlx.width = get_width();
 	mlx.info = mlx_init();
 	mlx.window = mlx_new_window(mlx.info, mlx.length, mlx.width, "Look At These Points");
-	
+	mlx.z_buff = z_buffer(mlx);
+
 	// init necessary stuff
 	init_attri(mlx, &mlx.attributes, mlx.points);
 	init_keys(&mlx.key_press);
@@ -292,6 +325,7 @@ int main(int ac, char **av)
 	mlx_loop_hook(mlx.info, render_next_frame, (void *)&mlx);
 	mlx_loop(mlx.info);
 
+	freebuffer(mlx.z_buff, mlx);
 	mlx_destroy_display(mlx.info);
 	free(mlx.info);
 	free_coordinate(&mlx.points);

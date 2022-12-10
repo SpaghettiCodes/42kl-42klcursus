@@ -3,47 +3,38 @@
 // rotattat is in radian btw
 int	rotattat_x(t_coordinates *current, float radian)
 {
-	float x;
-	float y;
-	float z;
+	float	y;
+	float	z;
 
-	x =  current->trans_coord[X];
 	y = ( current->trans_coord[Y] * cos(radian)) - (current->trans_coord[Z] * sin(radian));
 	z = ( current->trans_coord[Y] * sin(radian)) + (current->trans_coord[Z] * cos(radian));
 
-	current->trans_coord[X] = x;
 	current->trans_coord[Y] = y;
 	current->trans_coord[Z] = z;
 }
 
 int	rotattat_y(t_coordinates *current, float radian)
 {
-	float x;
-	float y;
-	float z;
+	float	x;
+	float	z;
 	
 	x = (current->trans_coord[X] * cos(radian)) + (current->trans_coord[Z] * sin(radian));
-	y = current->trans_coord[Y];
 	z = (current->trans_coord[Z] * cos(radian)) - (current->trans_coord[X] * sin(radian));
 
 	current->trans_coord[X] = x;
-	current->trans_coord[Y] = y;
 	current->trans_coord[Z] = z;
 }
 
 int	rotattat_z(t_coordinates *current, float radian)
 {
-	float x;
-	float y;
-	float z;
+	float	x;
+	float	y;
 
 	x = (current->trans_coord[X] * cos(radian)) - (current->trans_coord[Y] * sin(radian));
 	y = (current->trans_coord[X] * sin(radian)) + (current->trans_coord[Y] * cos(radian));
-	z = current->trans_coord[Z];
 
 	current->trans_coord[X] = x;
 	current->trans_coord[Y] = y;
-	current->trans_coord[Z] = z;
 }
 
 void	perspective_projection(t_coordinates *current, int light_dis)
@@ -53,7 +44,6 @@ void	perspective_projection(t_coordinates *current, int light_dis)
 	// assumme light source at (0,0,D)
 
 	d_Dz = light_dis - current->trans_coord[Z];
-	// this garbage worked LMAO
 	if (d_Dz <= 0)
 		d_Dz = 1;
 
@@ -63,8 +53,8 @@ void	perspective_projection(t_coordinates *current, int light_dis)
 
 double	min_light_distance(t_coordinates *coordinates)
 {
-	t_coordinates *ret;
-	t_coordinates *current;
+	t_coordinates	*ret;
+	t_coordinates	*current;
 
 	ret = coordinates;
 	current = coordinates;
@@ -80,26 +70,23 @@ double	min_light_distance(t_coordinates *coordinates)
 
 void	project(t_mlx *mlx, char type)
 {
-	t_coordinates *current;
-	t_attri	*attr;
-	float radian_x, radian_y, radian_z;
+	t_coordinates	*current;
+	t_attri			*attr;
 
 	current = mlx->points;
 	attr = &mlx->attributes;
+	if (attr->line_size <= 0)
+		attr->line_size = 0.5;
+	if (attr->z_multiplier <= 0)
+		attr->z_multiplier = 0.005;
 	while (current)
 	{
 		current->trans_coord[X] = (current->coord[X] - attr->x_mid ) * attr->line_size;
 		current->trans_coord[Y] = (current->coord[Y] - attr->y_mid ) * attr->line_size;
 		current->trans_coord[Z] = (current->coord[Z] - attr->z_mid ) * attr->line_size * attr->z_multiplier;
-
-		radian_x = attr->rot[X] * (M_PI / 180);
-		radian_y = attr->rot[Y] * (M_PI / 180);
-		radian_z = attr->rot[Z] * (M_PI / 180);
-	
-		rotattat_x(current, radian_x);
-		rotattat_y(current, radian_y);
-		rotattat_z(current, radian_z);
-
+		rotattat_x(current, attr->rot[X]);
+		rotattat_y(current, attr->rot[Y]);
+		rotattat_z(current, attr->rot[Z]);
 		// orthographic
 		if (type == 'o')
 		{
@@ -108,12 +95,8 @@ void	project(t_mlx *mlx, char type)
 		} // perspective
 		else if (type == 'p')
 			perspective_projection(current, attr->light_dis);
-
 		current->projected_coord[X] += attr->x_translation;
 		current->projected_coord[Y] += attr->y_translation;
-
 		current = current->next;
 	}
-
-	// printf("Minimum Light Distance = %f\n", min_light_distance(coordinate));
 }

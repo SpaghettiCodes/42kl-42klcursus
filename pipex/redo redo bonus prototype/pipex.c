@@ -47,7 +47,6 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac < 5)
 		return (eprint("ARG", "not enough arguments"));
-
 	pipex.envp = envp;
 	if (ft_strcmp(av[1], "here_doc"))
 	{
@@ -62,16 +61,12 @@ int	main(int ac, char **av, char **envp)
 		pipex.cmd = &av[2];
 		pipex.cmd_num = ac - 3;
 	}
-
 	pipex.ac = (ac - 1) - 1;
 	pipex.path = ft_split((get_paths(envp)), ':');
-
 	first_childpid = fork();
 	if (first_childpid == 0)
 		child(pipex, 0, pipex.outfile);
-
 	free_all(NULL, pipex.path);
-
 	waitpid(first_childpid, NULL, 0);
 	printf("done\n");
 	return (0);

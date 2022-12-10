@@ -25,6 +25,7 @@ $(NAME): $(OBJ)
 
 a_san:
 	 -fsanitize=address
+	
 %.o : %.c
 	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 

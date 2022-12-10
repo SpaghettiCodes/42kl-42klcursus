@@ -1,5 +1,8 @@
 #include "test.h"
 
+// self-to-do
+
+// redo line algo
 void	swap(int *a, int *b)
 {
 	int	temp;
@@ -86,6 +89,17 @@ int		det_color_n(int z, t_attri attr)
 	return (putcolor(0, r, g, b));
 }
 
+int		calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y)
+{
+	int	z;
+
+	if (n_point && n_point->projected_coord[Y] - o_point->projected_coord[Y])
+		z =(((n_point->coord[Z] - o_point->coord[Z]) * (plot_y - o_point->projected_coord[Y])) / (n_point->projected_coord[Y] - o_point->projected_coord[Y])) + o_point->coord[Z];
+	else
+		z = o_point->coord[Z];
+	return (z);
+}
+
 int		set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_attri attr)
 {
 	float z;
@@ -95,11 +109,7 @@ int		set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_att
 	int	b;
 	int	diff;
 
-	if (n_point && n_point->projected_coord[Y] - o_point->projected_coord[Y])
-		z =(((n_point->coord[Z] - o_point->coord[Z]) * (plot_y - o_point->projected_coord[Y])) / (n_point->projected_coord[Y] - o_point->projected_coord[Y])) + o_point->coord[Z];
-	else
-		z = o_point->coord[Z];
-
+	z = calc_z(n_point, o_point, plot_y);
 	z *= attr.color_intens;
 	
 	if (z > 0)
@@ -110,23 +120,39 @@ int		set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_att
 
 int	out_of_bounds(int x, int y, t_data img)
 {
-	if (x < 0 || x >= img.length)
-		return (1);
-	if (y < 0 || y >= img.width)
-		return (1);
-	return (0);
+	if (x >= 0 && x < img.length)
+		if (y >= 0 && y < img.width)
+			return (0);
+	return (1);
 }
 
 int	out_of_bounds2(t_coordinates *coord, t_data img)
 {
-	if (coord->projected_coord[X] < 0 || coord->projected_coord[X] >= img.length)
-		return (1);
-	if (coord->projected_coord[Y] < 0 || coord->projected_coord[Y] >= img.width)
-		return (1);
-	return (0);
+	int	x;
+	int	y;
+
+	x = coord->projected_coord[X];
+	y = coord->projected_coord[Y];
+	if (x >= 0 && x < img.length)
+		if (y >= 0 && y < img.width)
+			return (0);
+	return (1);
 }
 
-void	placepixel(t_data *data, int x, int y, int color)
+// epic interpolation
+int	trans_z_calc(t_coordinates *n_point, t_coordinates *o_point, int plot_y)
+{
+	int	z;
+
+	if (n_point && n_point->projected_coord[Y] - o_point->projected_coord[Y])
+		z =(((n_point->trans_coord[Z] - o_point->trans_coord[Z]) * (plot_y - o_point->projected_coord[Y])) 
+			/ (n_point->projected_coord[Y] - o_point->projected_coord[Y])) + o_point->trans_coord[Z];
+	else
+		z = o_point->trans_coord[Z];
+	return (z);
+}
+
+void	placepixel(t_data *data, int x, int y, int z, int color)
 {
 	char	*dst;
 
@@ -134,6 +160,10 @@ void	placepixel(t_data *data, int x, int y, int color)
 	if (out_of_bounds(x, y, *data))
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	if (data->z_buff[x][y] < z)
+		data->z_buff[x][y] = z;
+	else
+		return ;
 	*(unsigned int*)dst = color;
 }
 
@@ -191,7 +221,7 @@ void	draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 		next_ll(&line);
 	while (!out_of_bounds(line.x, line.y, mlx->image) && line.x <= n_point->projected_coord[X])
 	{
-		placepixel(&mlx->image, line.x, line.y, set_color(line.y, o_point, n_point, mlx->attributes));
+		placepixel(&mlx->image, line.x, line.y, trans_z_calc(n_point, o_point, line.y), set_color(line.y, o_point, n_point, mlx->attributes));
 		next_ll(&line);
 
 	}
@@ -219,7 +249,7 @@ void	draw_high_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 		next_hl(&line);
 	while (!out_of_bounds(line.x, line.y, mlx->image) && line.y <= n_point->projected_coord[Y])
 	{
-		placepixel(&mlx->image, line.x, line.y, set_color(line.y, o_point, n_point, mlx->attributes));
+		placepixel(&mlx->image, line.x, line.y, trans_z_calc(n_point, o_point, line.y), set_color(line.y, o_point, n_point, mlx->attributes));
 		next_hl(&line);
 	}
 }
@@ -237,7 +267,7 @@ void	draw_vertical(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 		y++;
 	while (!out_of_bounds(x, y, mlx->image) && y < n_point->projected_coord[Y])
 	{
-		placepixel(&mlx->image, x, y, set_color(y, o_point, n_point, mlx->attributes));
+		placepixel(&mlx->image, x, y, trans_z_calc(n_point, o_point, y), set_color(y, o_point, n_point, mlx->attributes));
 		y++;
 	}
 }
@@ -275,6 +305,24 @@ void	draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *ml
 	}
 }
 
+void	set(int **tab, t_mlx *mlx)
+{
+	int x;
+	int y; 
+
+	x = 0;
+	while (x < mlx->length)
+	{
+		y = 0;
+		while (y < mlx->width)
+		{
+			tab[x][y] = INT_MIN;
+			y++;
+		}
+		x++;
+	}
+}
+
 void	fill_image(t_mlx *mlx, t_coordinates *points)
 {
 	t_coordinates	*current;
@@ -282,6 +330,7 @@ void	fill_image(t_mlx *mlx, t_coordinates *points)
 	
 	i = 1;
 	current = points;
+	set(mlx->z_buff, mlx);
 	while (current)
 	{
 		if (current->beside)

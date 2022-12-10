@@ -7,13 +7,6 @@ void	reset(t_mlx *mlx)
 	mlx->attributes.rot[Z] = 0;
 }
 
-void	isometric(t_mlx *mlx)
-{
-	mlx->attributes.rot[X] = 90 + 35;
-	mlx->attributes.rot[Y] = 45;
-	mlx->attributes.rot[Z] = 0;
-}
-
 void	color(t_mlx *mlx)
 {
 	mlx->attributes.color_type++;
@@ -57,8 +50,6 @@ int	handle_pressed(int keycode, t_mlx	*mlx)
 		mlx->attributes.color_intens -= 0.5;
 	else if (keycode == 114)
 		reset(mlx);
-	else if (keycode == 105)
-		isometric(mlx);
 	else if (keycode == 99)
 		color(mlx);
 	else
@@ -128,8 +119,8 @@ int	mouse_movement(int x, int y, t_keypress *key_press)
 		prev_coordx = key_press->lmse_coord[X];
 		prev_coordy = key_press->lmse_coord[Y];
 
-		key_press->lmse_diff[X] = x - prev_coordx;
-		key_press->lmse_diff[Y] = y - prev_coordy;
+		key_press->lmse_diff[X] = (x - prev_coordx) * 0.1;
+		key_press->lmse_diff[Y] = (y - prev_coordy) * 0.1;
 
 		key_press->lmse_coord[X] = x;
 		key_press->lmse_coord[Y] = y;
@@ -141,8 +132,8 @@ int	mouse_movement(int x, int y, t_keypress *key_press)
 		prev_coordx = key_press->rmse_coord[X];
 		prev_coordy = key_press->rmse_coord[Y];
 
-		key_press->rmse_diff[X] = x - prev_coordx;
-		key_press->rmse_diff[Y] = y - prev_coordy;
+		key_press->rmse_diff[X] = (x - prev_coordx);
+		key_press->rmse_diff[Y] = (y - prev_coordy);
 
 		key_press->rmse_coord[X] = x;
 		key_press->rmse_coord[Y] = y;
