@@ -39,6 +39,8 @@ int	init_data(t_data *data, int ac, char **av)
 	data->time_to_die = ft_atoi(av[2]) * 1000;
 	data->time_to_eat = ft_atoi(av[3]) * 1000;
 	data->time_to_sleep = ft_atoi(av[4]) * 1000;
+	if (data->time_to_die <= 0 || data->time_to_eat <= 0 || data->time_to_sleep <= 0)
+		return (eprint("Invalid Argument Value!\n"));
 	if (ac == 6)
 	{
 		eat_count = ft_atoi(av[5]);
@@ -47,7 +49,6 @@ int	init_data(t_data *data, int ac, char **av)
 	}
 	else
 		eat_count = -1;
-
 	data->philo = malloc (sizeof(t_philo) * data->n_philo);
 	data->eat_count = init_eatcount(data->n_philo, eat_count);
 	data->forks = init_forks(data->n_philo);

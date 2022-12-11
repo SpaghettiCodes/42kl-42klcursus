@@ -8,6 +8,13 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <limits.h>
+#include <semaphore.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <semaphore.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <string.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -15,17 +22,21 @@ typedef	unsigned char status;
 
 typedef struct s_data
 {
-	int				id;
+	pid_t			*philo_childid;
 	int				n_philo;
 
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				start_sim;
+	
+	int				eat_count;
 
-	int				*eat_count;
-
-	status			start_sim;
-
+	sem_t			*forks;
+	sem_t			*start;
+	sem_t			*write;
+	sem_t			*end;
+	sem_t			*full;
 } t_data;
 
 typedef	struct s_philo
@@ -39,12 +50,23 @@ typedef	struct s_philo
 	status		is_eating;
 	status		is_sleeping;
 	status		is_thinking;
-
+	status		is_writing;
 } t_philo;
 
 long int	gettime();
-void		print_timestamp(t_philo *philo_data, char *msg);
+
+void	print_timestamp(t_data *data, t_philo *philo_data, char *msg);
 int			ft_atoi(const char *str);
 int			str_len(char *msg);
+
+void	philoeat(t_philo *philo, t_data *data);
+
+void	philosleep(t_philo *philo,  t_data *data);
+
+void	philothink(t_philo *philo, t_data *data);
+
+void	get_fork(t_philo *philo, t_data *data);
+
+void	philo_action(t_philo *philo, t_data *data);
 
 #endif
