@@ -1,0 +1,14 @@
+From now on, all your classes must be designed in the Orthodox Canonical Form,
+unless explicitely stated otherwise. Then, they will implement the four required member
+functions below:
+
+• Default constructor
+• Copy constructor ClassName(ClassName &Class)
+	- member function that initilaizes an object using another object of the same class
+	- creates an object by initializing it with an object with same class
+	- there is this thing called "Copy Elision"? gotta research on that..
+• Copy assignment operator (that operator= thing? yeah that) ClassName & ClassName::operator=(class_name)
+• Destructor
+
+Split your class code into two files. The header file (.hpp/.h) contains the class
+definition whereas the source file (.cpp) contains the implementation

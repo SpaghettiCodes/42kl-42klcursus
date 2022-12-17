@@ -1,0 +1,49 @@
+Abstract Classes
+
+a class that is designed to be specifcally used as a base case
+
+that class must at least have ONE pure virutal function
+	- virtual function
+		- A method that is declared within a base class and is re-defined (overriden) by a derived class
+		- Ensure that the correct function is called for an object
+		- Used to achive that runtime polymorphism
+		- prototype has to be the same in the base and the derived class
+		- accessed using a pointer or reference of base class type
+
+					EXAMPLE
+
+					class base {
+					public:
+						virtual void print() {cout << "print base class\n";}
+						void show() { cout << "show base class\n"; }
+					};
+					
+					class derived : public base {
+					public:
+						void print() { cout << "print derived class\n"; }
+						void show() { cout << "show derived class\n"; }
+					};
+					
+					int main()
+					{
+						base *bptr;
+						derived d;
+						bptr = &d;
+					
+						// Virtual function, binded at runtime
+						bptr->print(); // this will print "print derived class"
+						// Non-virtual function, binded at compile time
+						bptr->show(); // this will bring "show base class"
+						return 0;
+					}
+		- if the derived class does not overide the virtual function, the base class version of the function is used;
+		- there are such things as "virtual destructor"
+
+Limitation
+
+- slower
+- difficult to debug
+
+A concrete class is a class that can be used to create an object. 
+An abstract class cannot be used to create an object 
+(you must extend an abstract class and make a concrete class to be able to then create an object).

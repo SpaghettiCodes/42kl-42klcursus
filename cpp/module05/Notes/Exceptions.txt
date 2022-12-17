@@ -1,0 +1,66 @@
+Exception handling
+
+- Code for error handling is seperated from your if else statements
+- Function can handle only exception they choose
+		- Many exception can be thrown but not caught
+		- A function can specify the exception that it throws using the (throw) keyword
+- Grouping error types
+	- both basic types and objects can be thrown as exceptions
+
+Try, Throw and Catch
+
+Try - define a block of code that can be tested for errors while it is being executed
+Throw - throws an exception when a problem is detected
+Catch - define a block of code to execute if an error occurs in the try block
+
+Example :- we use a try block to test some code, if that code has a variable of less than 100, we throw and exception, and handle it in our catch block
+
+EXAMPLE:
+				int x = -1;
+				
+				// Some code
+				try {
+					if (x < 0)
+					{
+						throw x;
+					}
+				}
+				catch (int x ) {
+					cout << "Exception Caught \n";
+				}
+				
+				cout << "After catch (Will be executed) \n";
+				return 0;
+
+Catch (...)
+used to catch all type of exception
+
+    try  {
+       throw 10;
+    }
+    catch (char *excp)  {
+        cout << "Caught " << excp;
+    }
+    catch (...)  {
+        cout << "Default Exception\n";
+    }
+
+			-- Default Exception is printed since there is no catch (int)
+	
+If an exception is thrown and not caught anywhere, the program terminates abnormally
+
+A derived class exception should be caught before a base class exception
+
+WHen an exception is thrown, all object created in a try block is destroyed before the control is tranasferred to the catch block
+
+
+Exception Classes
+
+using namespace std;
+
+class MyCustomException : public std::exception {
+    public:
+	char * what () {
+			return "Custom C++ Exception";
+    }
+};

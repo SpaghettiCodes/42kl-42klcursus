@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <limits.h>
-#include <semaphore.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <semaphore.h>
@@ -41,15 +40,13 @@ typedef struct s_data
 
 typedef	struct s_philo
 {
+	t_data		*data;
 	int			id;
 	long int	start_time;
 	long int	last_eaten;
-	t_data		*data;
-
 	int			forks;
+
 	status		is_eating;
-	status		is_sleeping;
-	status		is_thinking;
 	status		is_writing;
 } t_philo;
 

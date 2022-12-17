@@ -35,6 +35,15 @@ int	eprint(char	*str)
 	return(write(2, str, str_len(str)));
 }
 
+void	open_sem(t_data *data)
+{
+	data->forks = sem_open("/forks", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, data->n_philo);
+	data->write = sem_open("/write", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, 1);
+	data->start = sem_open("/start", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, 1);
+	data->end = sem_open("/end", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, 0);
+	data->full = sem_open("/full", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, 0);
+}
+
 int	init_data(t_data *data, int ac, char **av)
 {
 	data->n_philo = ft_atoi(av[1]);
@@ -50,13 +59,7 @@ int	init_data(t_data *data, int ac, char **av)
 	else
 		data->eat_count = -1;
 	data->philo_childid = malloc (sizeof(pid_t) * data->n_philo);
-	data->forks = sem_open("/forks", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, data->n_philo);
-	data->write = sem_open("/write", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, 1);
-	data->start = sem_open("/start", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, 1);
-	data->end = sem_open("/end", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, 0);
-	data->full = sem_open("/full", O_CREAT, S_IRWXG | S_IRWXO | S_IRWXU, 0);
-	if (data->forks == SEM_FAILED)
-		printf("something aint right\n");
+	open_sem(data);
 	data->start_sim = FALSE;
 	return (0);
 }
@@ -67,8 +70,6 @@ void	init_philo(t_philo *philo, t_data *data, int id)
 	philo->data = data;
 	philo->forks = 0;
 	philo->is_eating = FALSE; 
-	philo->is_sleeping = FALSE; 
-	philo->is_thinking = FALSE;
 	philo->is_writing = FALSE;
 }
 
@@ -81,7 +82,7 @@ void	run_sim(t_philo *philo)
 	data->start_sim = TRUE;
 	philo->start_time = gettime();
 	philo->last_eaten = philo->start_time;
-	if (philo->id % 2)
+	if (philo->id > (data->n_philo / 2))
 	{
 		philothink(philo, data);
 		usleep(data->time_to_eat / 2);

@@ -1,0 +1,129 @@
+Methods are functions that belongs to a class
+
+- Class Methods
+	- Inside class definition
+		class myclass
+		{
+			public:
+				void function(int pizza) {
+					do_something;
+				}
+		}
+
+		int main()
+		{
+			myclass.function();
+		}
+	- Outside class definition
+		class MyClass
+		{
+			void Function();
+		}
+
+		void MyClass::Function(){ <--- :: is a scole resolution operator
+			bla bla
+		}
+
+- Constructor
+	a special method that is automatically called when an object of a class is created;
+
+		class MyClass {     // The class
+		public:           // Access specifier
+			MyClass() {     // Constructor
+				cout << "Hello World!";
+			}
+		};
+
+		int main() {
+			MyClass myObj;    // Create an object of MyClass (this will call the constructor)
+			return 0;
+		}
+
+	A constructor will always have the same name as the class
+
+			Constructor Parameters
+				- setting initial values for attributes
+			
+			defined inside the class
+			class Car {        // The class
+				public:          // Access specifier
+					string brand;  // Attribute
+					string model;  // Attribute
+					int year;      // Attribute
+					Car(string x, string y, int z) { // Constructor with parameters
+						brand = x;
+						model = y;
+						year = z;
+			}
+			};
+
+			int main() {
+			// Create Car objects and call the constructor with different values
+				Car carObj1("BMW", "X5", 1999);
+				Car carObj2("Ford", "Mustang", 1969);
+
+				// Print values
+				cout << carObj1.brand << " " << carObj1.model << " " << carObj1.year << "\n";
+				cout << carObj2.brand << " " << carObj2.model << " " << carObj2.year << "\n";
+				return 0;
+			}
+
+			defineded outside the class
+			class Car {        // The class
+				public:          // Access specifier
+					string brand;  // Attribute
+					string model;  // Attribute
+					int year;      // Attribute
+					Car(string x, string y, int z); // Constructor declaration
+			};
+
+			// Constructor definition outside the class
+			Car::Car(string x, string y, int z) {
+				brand = x;
+				model = y;
+				year = z;
+			}
+
+Destructors
+	invoked immediately wheneer an object is about to be destoryed
+	last function called before an object is destroyed;
+
+	~ClassName()
+	{
+	}
+
+	ClassName :: ~ClassName()
+	{
+	}
+
+	has no parameters
+	has no return type
+	may not destroy the derived class if it is a pointer with allocated memory (use virtual for destructor instead);
+
+this Pointer
+	refer to the current instance of the class;
+	pass current object as a parameter to another methode
+	refer current class instance variable (because id = id doesnt make sense)
+	declare indexers
+
+				#include <iostream>  
+				using namespace std;  
+				class Employee {  
+					public:  
+						int id; //data member (also instance variable)      
+						string name; //data member(also instance variable)  
+						float salary;  
+						Employee(int id, string name, float salary)    
+							{    
+								this->id = id;    
+								this->name = name;    
+								this->salary = salary;   
+							}    
+						void display()    
+							{    
+								cout<<id<<"  "<<name<<"  "<<salary<<endl;    
+							}    
+				};  
+
+
+Const member functiosn CANNOT change values of data members in class

@@ -1,0 +1,23 @@
+#include <iostream>
+#include <fstream>
+
+ofstream - create and write to file
+ifstream - reads from file
+fstream- create reads and writes to file (wtf)
+
+OFC THIS IS AN OBJECT
+
+create and open a textfile
+
+ofstream MyFile("thingy");
+MyFile << "write stuff";
+MyFile.close();
+
+To read a file, use either the ifstream or fstream class
+
+string text;
+ifstream Readfile("filename.txt");
+while (getline(Readfile, text)){
+	cout << text;
+}
+Readfile.close();

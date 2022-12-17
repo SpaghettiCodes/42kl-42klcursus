@@ -1,0 +1,24 @@
+You are allowed to use almost everything from the standard library. Thus, instead
+of sticking to what you already know, it would be smart to use as much as possible
+the C++-ish versions of the C functions you are used to.
+
+• However, you can’t use any other external library. It means C++11 (and derived
+forms) and Boost libraries are forbidden. The following functions are forbidden
+too: *printf(), *alloc() and free(). If you use them, your grade will be 0 and
+that’s it.
+
+		string class for working with strings
+
+		iostream library for input/output operations, such as reading from cin and writing to cout
+		fstream library for working with files
+
+		complex class for working with complex numbers
+		random library for generating random numbers
+
+no containers
+vector/list/map (AWWWWWWw)
+
+no Algorithms
+ah yes, why would they let us use algo
+
+there are more.

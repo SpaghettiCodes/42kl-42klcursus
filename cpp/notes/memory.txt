@@ -1,0 +1,49 @@
+new and delete
+
+new is basically malloc
+delete is basically free
+
+- new data-type
+
+double *pvalue = new double; --> allocated memory
+
+we dont use malloc because new constructs object (its a oop after all)
+
+delete pvalue; --> free memory
+
+- You can dynamically allocate memory for arrays using new
+
+char *pvalue = NULL
+pvalue = new char[20] --> 20 free space baby;
+
+delete []pvalue; --> delete array pointed to by pvalue
+double **pvalue = NULL 
+
+- for multidimentional arrays
+double **pvalue = NULL
+pvalue = new double[4][1];
+
+delete []pvalue; --> yep, same syntax
+
+- Dynamically allocate memory for object (what)
+
+class MyClass
+{
+	public:
+		Box()
+		{
+			// constructor
+		}
+		~Box()
+		{
+			// destructor
+		}
+}
+
+int main()
+{
+	MyClass *class;
+	class = new MyClass[4] // will call constructor 4 times;
+
+	delete []class // will call destructor 4 times;
+}

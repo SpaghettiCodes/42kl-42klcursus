@@ -1,0 +1,89 @@
+Inheritance
+
+- inherit attributes and methods from one class to another
+ 
+derived class - the class that inherits from another class
+base class - the class being inherit from
+
+to inherit a class, use the : symbol
+
+		Base class: Derived Class{
+			public:
+				thingy;
+		}
+
+		class BaseClass
+		{
+			public: bla bla
+			private: bla bla
+		}
+
+		class DerivedClass: public BaseClass
+		{
+			public: bla bla;
+		}
+
+Inheritance is useful for code reusablity (DRY), reuse attribtues and methods of existing class when you create a new class
+
+- Multilevel Inheritance
+
+			// Base class (parent)
+			class MyClass {
+			public: bla bla bla
+			};
+
+			// Derived class (child)
+			class MyChild: public MyClass {
+			};
+
+			// Derived class (grandchild)
+			class MyGrandChild: public MyChild {
+			};
+			
+- Multiple Inheritance
+
+a class can be derived from more than one base class, using a comma-seperated list
+
+class MyClass {
+  public:
+    void myFunction() {
+      cout << "Some content in parent class." ;
+    }
+};
+
+// Another base class
+class MyOtherClass {
+  public:
+    void myOtherFunction() {
+      cout << "Some content in another class." ;
+    }
+};
+
+class MyChildClass: public MyClass, public MyOtherClass {
+	// this class has members from both Myclass and MyOtherClass
+	// it can use methods in both myclass and myotherclass
+};
+
+- Access specifier: Protected
+
+Similar to private but can be accesssed in inhertied classes
+
+- Difference between public private and protected childs
+ 
+If the inheritance is public, everything that is aware of Base and Child is also aware that Child inherits from Base.
+If the inheritance is protected, only Child, and its children, are aware that they inherit from Base.
+	// no using functions from Base
+If the inheritance is private, no one other than Child is aware of the inheritance.
+	// no using function from Base, nor using attributes from child
+
+- Virtual base classes
+
+used in virtual inheritance 
+- prevent multiple instances of a given class appearing in an inheritance hierarchy
+
+- if Class A is inhertited to Class C and Class B, then Class B and C combine to form Class D, Class D will have 2 instances of Class A's attributes
+- compiler does not know which of Class A attributes belongs to Class D (ERROR) (ambiguity)
+
+Declare Class B and C as virtual base class
+- only one copy of data will be copied to class C and class B
+

@@ -1,0 +1,17 @@
+define how members of a class can be accessed
+
+public - member can be accessed and modified from outside the code
+private - member cant be accessed (or viewed) from outside the class
+protected - members cannot be accessed from outside the class, but can be accessed in inherited classes
+
+it is possible to access private members of a class using public method inside the same class (Encapsulation)
+
+It is good practice to declare your data attribtues as private
+	- reduce possiblity of youself to mess up the code (cough)
+
+By default, everything is private if you dont specify an access specifier (except for the constructor)
+
+public emembers are used to provide an interface for interacting with the class
+private members are used to implement internal workings of the class
+
+allows the class to be used by other code without exposing its implementation detail 

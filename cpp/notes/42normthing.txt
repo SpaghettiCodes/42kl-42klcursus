@@ -1,0 +1,26 @@
+cpp
+
+i love object-oriented programming
+okay maybe not really
+idk
+
+Compiling cpp files
+
+g++ -o -Wall-Wextra-Werror -std=c++98 <name> <source files>
+
+orthodox canonical form what the fuck is this -
+
+A default construct
+	Used to initialize ojbect and data members when no other value is available
+
+A copy constructor 
+	Implement call-by-value parameters
+
+An assignment operator
+	assign one value to another 
+
+A destructor
+	i guess you free that object you call this?
+
+Write class names in UpperCamelCase format 
+Files containing class code is named according to the class name (wtf)

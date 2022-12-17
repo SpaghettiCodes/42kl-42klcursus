@@ -1,0 +1,47 @@
+MMMM OBJECT ORIENTED PROGRAMMING
+MMMMMMMM
+
+difference from c and c++
+
+Procedural programming 
+	writing procedures or functions that perform operations on the data 
+Object-oriented programming
+	creating objects that contain both data and functions.
+
+Adv
+	faster and easier to execute
+	provides clear structure 
+	keep C++ code DRY (dont repeat yourself)
+	create full reusable application with less code and shorter development time
+
+Class - templete for objects
+Object - instance of a class
+
+When individual objects are created, they inherit all variables and functions from the class
+
+- Attributes and methods
+
+Methods -> functions
+Attributes -> Variables
+
+Class - user-defined data type that we can use in our program
+		- work as an object constructor 
+		- a blueprint for creating objects
+
+class MyClass {       // The class
+  public:             // Access specifier
+    int myNum;        // Attribute (int variable)
+    string myString;  // Attribute (string variable)
+};
+
+class - create a class
+public - access specifier (u learn more ltr)
+Variables declared in a class is attributes;
+
+to access the class attributes, use the dot syntax (.)
+
+static members in an object - shared with all other objects in the class
+							- can be called even though there is no objects
+static methods in an object - can access only static data members
+							- cannot access non-static data members and not even call non-static members function
+							- can be called even if no object of the class exist

@@ -23,8 +23,8 @@ all : $(NAME) clean
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx-linux -lXext -lX11 -lm -lz -o $(NAME)
 
-a_san:
-	 -fsanitize=address
+# a_san:
+# 	 -fsanitize=address
 	
 %.o : %.c
 	$(CC) -I/usr/include -Imlx_linux -O3 -c $< -o $@

@@ -1,0 +1,104 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+  cout << "Hello World!";
+  return 0;
+}
+
+- using namespace std
+use all object and variables form (n.s name)
+	- dont need to go std::cin, that "std::" part, 
+	- we cant use in 42 :clown
+
+- << insertion operator 
+refer operator.txt
+
+- cout does not put a \n
+	endl can be used to put a \n
+	or just "\n" lmao
+
+- comment 
+use //
+or /*
+
+- variables
+int double char
+
+- to print out variables
+cout << "msg" << variable << endl;
+very cool you dont need printfs now
+
+- declaring multiple variables (holy shit i can actually do this now)
+int x, y, z; (wait i can do this now holy shit)
+
+- User input
+cin >> var
+	>> extraction operator
+	cin considers a space as a terminating character (wtf)
+		we use getline function to read a line of text (oh wait i dont think i can do that whoops)
+
+- short hand if else
+	we cant use this
+	variable = condition ? true : false
+
+- switch statements
+	cant use this either
+
+	switch (condition){
+		case x:
+		case y:
+		default:
+	}
+
+- Reference (NEW! BRAND NEW!)
+& - reference to existing variable
+its like a pointer, but you dont need to dereference every single time you wanna use it
+	an "alias" for an existing variables
+if the value in a reference is changed, the existing variable changes as well
+you cant reference a different variable, its set if its set
+
+you need to pass the reference of a variable to change the value inside of it
+yes that includes objects
+gone are the days of just yeeting your object and praying to god it works
+if your function doesnt work its probably cause you didnt reference it
+
+
+FUNCTIONS
+
+- Default Parameters
+	void myfunct(int para = default_val)
+	{
+		cin << para << endl
+	}
+
+	myfunct(1) -> prints out 1
+	myfunct() -> prinst out default_val
+
+- Pass by Reference
+void stuff(int &a, int &b)
+
+something like passing by pointers, but you dont need to pass its address now :D 
+
+	instead of 
+	void stuff(int *a, int *b)
+	stuff(&a, &b)
+
+	its
+	void stuff(int &a, int &b)
+	stuff(a, b)
+
+Useful if you need to change the value of the arguments
+
+- Function Overloading
+multiple functions can have the same name with different parameters - watafak
+
+int plusFunc(int x, int y) {
+  return x + y;
+}
+
+double plusFunc(double x, double y) {
+  return x + y;
+}
+
+you can now call plusFunc with either int or double variables

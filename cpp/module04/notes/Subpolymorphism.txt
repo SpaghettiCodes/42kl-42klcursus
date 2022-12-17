@@ -1,0 +1,16 @@
+Type of polymorphisms
+(what)
+
+Subtype polymorphism, parametric polymorphism, ad-hoc polymorphism and coercion polymorphism.
+
+Subtype polymorphism
+- Runtime polymorphism
+
+Parametric Polymorphism
+- Compile - time polymorphism
+
+ad-hoc polymorphism 
+- overloading
+
+coercion
+- casting
