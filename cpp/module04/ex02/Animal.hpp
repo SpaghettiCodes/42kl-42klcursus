@@ -21,7 +21,7 @@ class Animal
 
 		// "With a protected constructor you just tell other 
 		// developers that your class is only intended to be used as a base."
-		protected :
+	protected :
 		Animal();
 		Animal(Animal &ori);
 

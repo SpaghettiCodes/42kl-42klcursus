@@ -1,8 +1,9 @@
 #include "Bureaucrat.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat(): name("Unnamed"), grade(75)
 {
-	std::cout << "Bureaucrat is created" << std::endl;
+	std::cout << "Default Bureaucrat is created" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const &ori): name(ori.name), grade(ori.grade)
@@ -43,7 +44,17 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &ori)
 	return (*this);
 }
 
-void	Bureaucrat::increment()
+std::string const &Bureaucrat::getName() const
+{
+	return (name);
+}
+
+int Bureaucrat::getGrade() const
+{
+	return (grade);
+}
+
+void	Bureaucrat::increment_grade()
 {
 	try
 	{
@@ -58,7 +69,7 @@ void	Bureaucrat::increment()
 	}
 }
 
-void	Bureaucrat::decrement()
+void	Bureaucrat::decrement_grade()
 {
 	try
 	{
@@ -73,14 +84,14 @@ void	Bureaucrat::decrement()
 	}
 }
 
-std::string const &Bureaucrat::getName() const
+void	Bureaucrat::signForm(AForm &form)
 {
-	return (name);
+	form.beSigned((*this));
 }
 
-int Bureaucrat::getGrade() const
+void	Bureaucrat::executeForm(AForm const &form)
 {
-	return (grade);
+	form.execute(*this); 
 }
 
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &bureu)

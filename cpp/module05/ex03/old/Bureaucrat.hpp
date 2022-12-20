@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+class AForm;
 
 class Bureaucrat
 {
@@ -14,19 +15,20 @@ class Bureaucrat
 
 		Bureaucrat &operator=(Bureaucrat const &ori);
 
-		void increment();
-		void decrement();
-		std::string const &getName() const;
-		int getGrade() const;
+		std::string const	&getName() const;
+		int					getGrade() const;
+
+		void				increment_grade();
+		void				decrement_grade();
+		void				signForm(AForm &to_sign);
+		void				executeForm(AForm const &form);
+
 	private:
 		std::string const name;
 		int grade;
 
 		class GradeTooHighException : public std::exception
 		{
-			// https://en.cppreference.com/w/cpp/error/exception/what
-			// returns the string that contains what went wrong
-			// overload the throw() version, noexecept is only after c++11
 			public: 
 				const char *what() const throw()
 				{

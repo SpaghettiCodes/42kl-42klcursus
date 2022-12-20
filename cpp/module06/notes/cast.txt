@@ -1,0 +1,117 @@
+cast
+
+A special operator that forces one data type to be converted into another
+
+(type) expression
+
+const_cast<type> (expr)
+	- explicitly override const and/or volatile in a cast
+		- volatile 
+			- c++ compiler can optimize your code
+			- some variables will be replaced with something else in order to optimize running time
+
+			EXAMPLE:  int a = 1000
+						while (a == 1000)
+						{
+
+						}
+				-- the compiler might change while(a==1000) into while(TRUE)
+				-- this may cause undesired result if a is changed by some other sources (like multi-threaded applications)
+		
+			- volatile stops the compiler from optimizing code 
+
+				"volatile is a hint to the implementation to avoid aggressive optimization 
+				involving the object because the value of the object might be 
+				changed by means undetectable by an implementation"
+
+	- target type must be the same as the source type except for the alteration of its const or volatile attributes
+	- manipulates the const attribute of the passed object
+	- basically, removes or places a const keyword on the expr
+	- It is undefined behavior to modify a value which is initially declared as const
+
+dynamic_cast<type> (expr)
+	- performs a runtime cast that verifies the validity of the cast
+
+	- expr = NULL if the cast cannot be made
+		- used to perform cast on polymorphic types
+		- if cast failed, this returns NULL
+		- if type is a reference and cast failed, the operator throws the exception std::bad_cast
+		- if type T is a void pointer, dynamic cast returns the starting addresss of the object pointed to by expr
+
+	used to perform type-safe downcast (casting a reference of a base class to one of its derived class)
+		- Upcasting is casting a derived class pointer to a base class pointer
+		- conversion of a pointer or reference to a Base Class (A) to a pointer or reference to a Derived Class (B);
+		- A pointer of type A* might point to an object that isnt a derived class that belongs to a class derived from class B
+		- You can dynamic cast references to another reference types (remember that it returns badcast);
+
+		EXAMPLE: (oh wait this is what the pdf want us to do-)
+		https://www.ibm.com/docs/en/zos/2.4.0?topic=expressions-dynamic-cast-operator-c-only thanks ibm very cool
+
+					#include <iostream>
+					using namespace std;
+
+					struct A {
+						virtual void f() { cout << "Class A" << endl; }
+					};
+
+					struct B : A {
+						virtual void f() { cout << "Class B" << endl; }
+					};
+
+					struct C : A {
+						virtual void f() { cout << "Class C" << endl; }
+					};
+
+					void f(A* arg) {
+						// this function determines if a pointer arg points to an object of A B or C
+
+						// tries to convert arg to a pointer of type B
+						B* bp = dynamic_cast<B*>(arg);
+
+						// tries to convert arg to a pointer of type C
+						C* cp = dynamic_cast<C*>(arg);
+
+						// if the cast worked, arg is a pointer of type B
+						if (bp)
+							bp->f();
+						// if B didnt worked but cast C worked, arg is a pointer of type C
+						else if (cp)
+							cp->f();
+						// if both didnt work, arg must be a pointer of type A
+						else
+							arg->f();
+					};
+
+					int main() {
+						A aobj;
+						C cobj;
+						A* ap = &cobj;
+						A* ap2 = &aobj;
+						f(ap);
+						f(ap2);
+					}
+
+		// https://cplusplus.com/doc/tutorial/polymorphism/#:~:text=A%20class%20that%20declares%20or,area%20that%20always%20returns%200.
+		- A class that declares or inherits a virtual function is called a polymorphic class
+			- a virtual function is a member function that can be redefined in its derived class, while preserving its calling properties through references and pointers 
+		- Abstract classes will have at least ONE pure virtual function
+			- a derived class MUST overide a pure virtual function or it will become a abstract class as well
+		
+reinterpret_cast<type> (expr)
+
+	- change the pointer to any other type of pointer
+	- allows casting from pointer to an integer type
+
+	"All reinterpret_cast does is allow you to read the memory you passed in a different way. \
+	You give it a memory location and you ask it to read that memory as if it was what you asked it to."
+
+	- usually used so that we can work with bits
+	- read this - https://stackoverflow.com/questions/573294/when-to-use-reinterpret-cast
+
+static_cast<type> (expr)
+
+	- performs a nonpolymorphic cast
+		- cast a base class pointer into a derived class pointer
+	- your classic casting
+
+" safest to unsafe casts: dynamic_cast, static_cast, const_cast, reinterpret_cast, C-style cast"

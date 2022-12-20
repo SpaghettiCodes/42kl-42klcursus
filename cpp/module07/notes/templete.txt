@@ -1,0 +1,127 @@
+Templete
+
+
+Pass data type as a parameter so that we dont need to write the same code for different data types
+
+rather than writing and maintaining multiple codes, we can write one instance of the code and pass data type as a parameter (wtf)
+
+templete and typename (can be replaced as class)
+
+How does templete works
+
+Templete are expanded at compiler time
+	- work like macros
+
+compiler does type checking before templete expansion
+
+the source code only has 1 templete function
+but the compiled code has multiple copies of the same function / class
+
+To write a function templete: we write a generic function that can be used for different data types
+	Generic functions
+
+		Enable programmer to write a general algo whcih works for all data types
+		Allow type to be parameter to method, classes and interfaces
+		
+		Adv 
+			- code reusability
+			- avoid function overloading
+
+		Generic Functions using templete:
+
+		Example:
+
+			template <typename T> T myMax(T x, T y)
+			{
+				return (x > y) ? x : y;
+			}
+
+			to call this function = myMax<typename>(var, var);
+
+		Generic Class using templete:
+			a class defines something that does not depend on data type
+			used to create LinkedList, Stack, Queue, Array, binary tree
+		Example
+
+				template <typename T> class Array {
+				private:
+					T* ptr;
+					int size;
+				
+				public:
+					Array(T arr[], int s);
+					void print();
+				};
+				
+				template <typename T>
+				Array<T>::Array(T arr[], int s)
+				{
+					ptr = new T[s];
+					size = s;
+					for (int i = 0; i < size; i++)
+						ptr[i] = arr[i];
+				}
+				
+				template <typename T>
+				void Array<T>::print()
+				{
+					for (int i = 0; i < size; i++)
+						cout << " " << *(ptr + i);
+					cout << endl;
+				}
+
+				int main()
+				{
+					int arr[5] = { 1, 2, 3, 4, 5 };
+					Array<int> a(arr, 5);
+					a.print();
+					return 0;
+				}
+		
+		Generic Functions support multi type Generics
+
+		EXAMPLE
+
+			template <class T, class U> class A {
+				T x;
+				U y;
+			
+			public:
+				A()
+				{
+					cout << "Constructor Called" << endl;
+				}
+			};
+			
+			int main()
+			{
+				// we can either have 2 of the same type
+				A<char, char> a;
+				// or 2 different type
+				A<int, double> b;
+				return 0;
+			}
+
+	Default Value for templete arguments
+	template <class T, class U = char> class A
+
+	Non type parameters to templetes
+		- use to specify max and min value or any constant value for an instance of a templete
+		- non type parameters are const
+
+
+	// note that typename can be repalced as class
+	template <class T, int max> int arrMin(T arr[], int n)
+	{
+		int m = max;
+		for (int i = 0; i < n; i++)
+			if (arr[i] < m)
+				m = arr[i];
+	
+		return m;
+	}
+
+	to call this generic function - arrMin<type, an_integer>(arr[], n)
+
+
+Templete are basically a substitute, it can be replaced with any type name when the function//class is called
