@@ -135,7 +135,7 @@ void	killallchild(t_data data)
 	while (i < data.n_philo)
 	{
 		kill(data.philo_childid[i], SIGTERM);
-		// printf("Killed child\n");
+		sem_post(data.full);
 		i++;
 	}
 }
@@ -160,15 +160,15 @@ void	full_check(t_data *data)
 		sem_wait(data->full);
 		done_eating++;
 	}
-	killallchild(*data);
-	freedata(data);
+	sem_post(data->end);
 	exit(10);
 }
 
-void	death_check(t_data *data)
+void	death_check(t_data *data, pthread_t *checker)
 {
 	sem_wait(data->end);
 	killallchild(*data);
+	pthread_join(*checker, NULL);
 	freedata(data);
 	exit(10);
 }
@@ -212,5 +212,5 @@ int	main(int ac, char **av)
 	while (++i < data.n_philo)
 		sem_post(data.start);
 	pthread_create(&checker, NULL, (void *)full_check, &data);
-	death_check(&data);
+	death_check(&data, &checker);
 }
