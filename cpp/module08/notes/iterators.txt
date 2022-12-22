@@ -1,0 +1,67 @@
+Iterators
+
+Use to point at the memory address of STL containers
+reduce complexity and execution time of program
+
+begin() return the beginning position of the container 
+end() return the after end position of the container
+advance() increment the iterator position till the specified number mentioned in its argument
+next() returns the new iterator that the iterator would point after advancing x position
+prev() returns the new iterator that the iterator would point after decrementing x position
+inserter() insert element at any position in the container
+				- accepts 2 agument, the container and the iterator to position where the elements have to be inserted.
+
+There are 5 types of iterators
+
+input (simplest and least used)
+	- used only with single-pass algorithms (cannot decrement, only increment)
+
+	- each value pointed by an iterator is read-only once
+		- used in Algo in which we can go to all the location in the range at most 1
+
+	- An input iterator cna be compared for equality with another iterator (== / !=)
+		- 2 iterator will be equal only when they point to the same position
+
+	- can be dereferenced * -> to obtain value stored
+
+	- incrementable (++() operator)
+
+	- swappable 
+		- value pointed to by these iterators can be exchanged // swapped
+
+	- CANT assign values to the location pointed by this iterator
+		- used to access elements and not assign elements
+
+	- CANT be decremented
+
+	- CANT be used in multipass algorithm (process the container multiple time)
+
+	- CANT be used with relational operators (> / <)
+	
+output
+	- The exact opposite of input iiterators
+	- can assign values in a sequence BUT cant access values 
+	
+	- used only in single pass algorithms
+
+	- can be dereferenced * -> to provide the location to store the value
+
+	- incrementable ++()
+
+	- Swappable - value pointed to by these iterators can be exchanged and swapped
+
+	- 
+forward
+	- Combinition of input and output iterator
+	- allows values to be both accessed and modified
+	- enable algoritm to use multiple copies of an iterator to pass more than once by the same iterator value
+
+bidirectional
+	- like forward, but can decrement
+
+random-access (most complete)
+	- like bidirectional, but support [] operators (offset dereference operators)
+	- also supports arithmetric operations
+		A + 1 -> increment 1
+		A - 4 -> decrement 4
+

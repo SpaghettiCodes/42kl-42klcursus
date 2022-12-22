@@ -1,39 +1,46 @@
 #ifndef __ARRAY_TPP__
 #define __ARRAY_TPP__
 
+// this attempt tried to make it so that copying from a different type would work
+
+// this attempt failed (obviously) because even if we managed to copy over the value, we cant
+// change the pointer type which is pointing towards the array
+
 template <typename Type>
 Array<Type>::Array() : stuff_size(0), stuff(NULL)
 {
 }
 
 template <typename Type>
-Array<Type>::Array(Array<Type> const &ori) : stuff(NULL)
+Array<Type>::Array(Array<Type> &ori) : stuff(NULL)
 {
 	(*this) = ori;
 }
 
-template <typename Type>
-Array<Type> &Array<Type>::operator=(Array<Type> const &ori)
+template <typename Type> 
+template <typename Type2>
+Array<Type> &Array<Type>::operator=(Array<Type2> const &ori)
 {
 	if (this->stuff)
 		delete []this->stuff;
-	this->stuff_size = ori.stuff_size;
-	this->stuff = copy_over(ori.stuff, ori.stuff_size);
+	this->stuff_size = ori.size();
+	this->stuff = copy_over <Type2> (ori);
 
 	return (*this);
 }
 
 template <typename Type>
-Type *Array<Type>::copy_over(Type *ori, int ori_size)
+template <typename Type2>
+Type2 *Array<Type>::copy_over(Array<Type2> const &ori)
 {
-	if (!ori_size)
+	if (!ori.size())
 		return (NULL);
-		
-	Type *ret;
+
+	Type2 *ret;
 
 	// deep copy
-	ret = new Type[stuff_size];
-	for (int i = 0; i < ori_size; i++)
+	ret = new Type2[ori.size()];
+	for (unsigned int i = 0; i < ori.size(); i++)
 		ret[i] = ori[i];
 	return (ret);
 }

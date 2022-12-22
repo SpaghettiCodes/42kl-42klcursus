@@ -1,0 +1,18 @@
+<Algorithms>
+
+defines a collection of functions specifically designed to be used on a range of elements
+act on containers and provde means for various operations 
+
+- Sorting
+std::sort
+
+sorts the array
+		sort(start address, end address)
+
+
+- Binary Search
+
+searching algorithm
+requires the array to be sorted before searching
+
+binary_search(startaddress, endaddress, valuetofind)

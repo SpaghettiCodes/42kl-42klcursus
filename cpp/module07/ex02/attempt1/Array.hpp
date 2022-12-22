@@ -7,10 +7,11 @@ class Array
 	public:
 		Array();
 		Array(unsigned int size);
-		Array(Array<Type> const &ori);
+		Array(Array<Type> &ori);
 		~Array();
 
-		Array<Type>	&operator=(Array const &ori);
+		template <typename Type2>
+		Array<Type>	&operator=(Array<Type2> const &ori);
 		Type 		&operator[](int const index);
 
 		// so that const Array can have their stuff taken out
@@ -23,7 +24,8 @@ class Array
 		unsigned int		stuff_size;
 		Type				*stuff;
 
-		Type	*copy_over(Type *ori, int ori_size);
+		template <typename Type2>
+		Type2	*copy_over(Array<Type2> const &ori);
 
 		class OutOfBounds : public std::exception
 		{

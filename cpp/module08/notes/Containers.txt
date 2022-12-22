@@ -1,0 +1,26 @@
+Containers
+
+a holder object that stores a collection of other objects;
+Implemented as class templates 
+	- greater flexibility in type supported as elements
+
+Managers the storage space for its elemetns and provide member functions to access them (iterators)
+
+Provide member functions to access them using iterators or directly 
+
+Types of Containers
+
+- Sequence containers
+	- can be access sequenctially
+		- array
+		- vector
+		- deque
+		- forward_list
+		- list
+	
+Associative containers
+	- can be quickly searched (O(log n) complexity)
+		- set (unique keys)
+		- map (key-value pairs (unique keys))
+		- multiset (keys)
+		- multimap (keys-value pairs) 

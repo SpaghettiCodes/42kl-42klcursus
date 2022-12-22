@@ -1,0 +1,7 @@
+use STL
+
+Containers and Algorithms <algorithm> 
+
+
+PLEASE REMEMBER TO USE THEM
+YOU HAVE FORGOT TO USE IT FOR 2 FUCKIN EX NOW

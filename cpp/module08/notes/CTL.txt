@@ -1,0 +1,16 @@
+Cpp STL library
+
+Standard Template Library - set of c++ template classes to provide common programming structures and functions
+	- list
+	- stacks
+	- array
+
+Library of container classes, algorithms and itrators
+
+Components of STL
+- Algorithms
+- Containers
+- Functions
+- Iterators
+
+https://www.geeksforgeeks.org/algorithms-library-c-stl/

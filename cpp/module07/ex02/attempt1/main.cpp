@@ -136,10 +136,8 @@ int main()
 
 	const Array<int> empray2;
 	empray = empray2;
+	
+	const Array<char> charray;
 
-	Array <int> intray2(constray);	
-	Array <int> intray3 = constray;
-
-	Array <int> intray4;
-	intray4 = constray;
+	intray = charray;
 }
