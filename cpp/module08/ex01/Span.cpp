@@ -58,14 +58,14 @@ int	Span::shortestSpan()
 		throw Span::NotEnoughNum();
 
 	std::vector<int> copy(_tab);
-	std::vector<unsigned int> diff(copy.size());
+	std::vector<unsigned int> diff;
 
 	// sort from lowest to largest
 	// pdf example abit cacat
 	std::sort(copy.begin(), copy.end());
 
 	// completely unnecessary function :))))))
-	std::adjacent_difference(copy.begin(), copy.end(), diff.begin(), paranoid_difference);
+	std::adjacent_difference(copy.begin(), copy.end(), back_inserter(diff), paranoid_difference);
 
 	// the first result from adjacent_difference will be equal to first element of the array
 	diff.erase(diff.begin());
