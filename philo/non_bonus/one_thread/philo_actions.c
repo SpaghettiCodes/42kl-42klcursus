@@ -39,7 +39,10 @@ void	philo_action(t_philo *philo_data, t_data *data)
 {
 	// get fork
 	if (!philo_data->forks)
+	{
 		get_fork(philo_data, data);
+		return ;
+	}
 	if (philo_data->forks == 2)
 	{
 		philoeat(philo_data, data);
@@ -50,5 +53,6 @@ void	philo_action(t_philo *philo_data, t_data *data)
 		// sleep and think
 		philosleep(philo_data, data);
 		philothink(philo_data, data);
+		return ;
 	}
 }

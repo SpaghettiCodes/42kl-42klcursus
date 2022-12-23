@@ -38,10 +38,8 @@ int	philodeath(t_data *data)
 
 void	check_cond(t_data *data)
 {
-	while (data->start_sim)
+	while (data->start_sim && !philodeath(data))
 	{
-		if (philodeath(data))
-			break;
 		if (check_count(data))
 		{
 			pthread_mutex_lock(&data->write_data);
