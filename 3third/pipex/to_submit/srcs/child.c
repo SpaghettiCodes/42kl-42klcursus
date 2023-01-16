@@ -12,7 +12,7 @@ int	execute_command(char **path, char *cmd, char **envp)
 	char	*cmd_path;
 
 	command = ft_split(cmd, ' ');
-	if (command)
+	if ( command )
 	{
 		cmd_path = get_binarypath(command[0], path);
 		free_all(NULL, path);
@@ -33,9 +33,9 @@ void	next_child(t_pipex pipex, int *next_pipe, int index)
 	int	next_childfd;
 
 	next_childfd = fork();
-	if (!next_childfd)
+	if ( !next_childfd )
 		child(pipex, index, next_pipe[1]);
-	else if (next_childfd == -1)
+	else if ( next_childfd == -1 )
 	{
 		free_all(NULL, pipex.path);
 		exit(eprint("fork", "fork failed"));
@@ -54,13 +54,12 @@ void	child(t_pipex pipex, int index, int out)
 	index++;
 	dup2(out, STDOUT_FILENO);
 	close(out);
-	if ((pipex.cmd_num - index))
+	if ( pipex.cmd_num - index )
 	{
 		if (pipe(next_pipe) == -1)
-			exit(child_error(pipex.path, "Pipe", 
-					"Ah Shit Something Went Wrong"));
+			exit(child_error(pipex.path, "Pipe", "Something Went Wrong"));
 		if (dup2(next_pipe[0], STDIN_FILENO) == -1)
-			exit(child_error(pipex.path, "dup2", 
+			exit(child_error(pipex.path, "dup2",
 					"input output redirection failed"));
 		close(next_pipe[0]);
 		next_child(pipex, next_pipe, index);
@@ -72,7 +71,7 @@ void	child(t_pipex pipex, int index, int out)
 				"input output redirection failed"));
 		close(pipex.infile);
 	}
-	if (execute_command(pipex.path, 
-			pipex.cmd[pipex.cmd_num - index], pipex.envp))
+	if ( execute_command(pipex.path,
+			pipex.cmd[pipex.cmd_num - index], pipex.envp) )
 		exit(1);
 }
