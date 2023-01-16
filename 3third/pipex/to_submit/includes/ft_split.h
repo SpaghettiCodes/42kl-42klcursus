@@ -1,9 +1,9 @@
 #ifndef FT_SPLIT_H
 #define FT_SPLIT_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/types.h>
 
 int		ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
