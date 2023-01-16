@@ -8,16 +8,6 @@ void	eprint_warn_heredoc(char *limiter)
 	write(2, "')\n", 3);
 }
 
-void	print_nl(char *stuff)
-{
-	for (int i = 0; i < ft_strlen(stuff); ++i) {
-		if (stuff[i] == '\n')
-			write(1, "\\n", 2);
-		else
-			write(1, &stuff[i], 1);
-	}
-}
-
 void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 {
 	char	*line;
@@ -25,9 +15,7 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 	while (1)
 	{
 		write(in_file, "> ", 2);
-		line = get_next_line(in_file);
-		print_nl(line);
-
+		line = get_next_line(in_file, 0);
 		if (!line)
 		{
 			eprint_warn_heredoc(limiter);
@@ -37,12 +25,8 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 		{
 			if (line)
 				free(line);
+			get_next_line(in_file, 1);
 			break;
-		}
-		if (*line == '\n')
-		{
-			free(line);
-			continue;
 		}
 		write(out_fd, line, ft_strlen(line));
 		free(line);

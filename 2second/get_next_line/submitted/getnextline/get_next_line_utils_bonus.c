@@ -102,12 +102,12 @@ int	has_sep(t_fd_list *list)
 	i = list->checkuntil;
 	while (list->contents[i])
 	{
-		i++;
 		if (list->contents[i] == '\n')
 		{
 			list->checkuntil = i;
 			return (1);
 		}
+		i++;
 	}
 	list->checkuntil = i;
 	return (0);

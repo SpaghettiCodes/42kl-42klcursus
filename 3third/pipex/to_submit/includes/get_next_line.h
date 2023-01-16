@@ -21,7 +21,7 @@
 #  define BUFFER_SIZE 100
 # endif
 
-char		*get_next_line(int fd);
+char		*get_next_line(int fd, char clear);
 
 char		*str_substr(char *str, int start, int len);
 int			str_len(char *str);

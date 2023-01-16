@@ -20,9 +20,9 @@ int	has_sep(char *content)
 	i = 0;
 	while (content[i])
 	{
-		i++;
 		if (content[i] == '\n')
 			return (1);
+		i++;
 	}
 	return (0);
 }

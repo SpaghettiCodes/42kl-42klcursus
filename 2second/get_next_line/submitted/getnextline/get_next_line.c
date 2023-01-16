@@ -21,12 +21,12 @@ int	has_sep(char *content)
 	i = lastsaw;
 	while (content[i])
 	{
-		i++;
 		if (content[i] == '\n')
 		{
 			lastsaw = i;
 			return (1);
 		}
+		i++;
 	}
 	lastsaw = i;
 	return (0);

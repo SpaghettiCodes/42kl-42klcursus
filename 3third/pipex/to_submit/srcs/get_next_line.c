@@ -85,12 +85,21 @@ char	*buff_to_content(char *buff, int fd, char *content)
 	return (content) ;
 }
 
-char	*get_next_line(int fd)
+char	*clear_content(char	**toclear)
+{
+	free(*toclear);
+	*toclear = NULL;
+	return (NULL);
+}
+
+char	*get_next_line(int fd, char clear)
 {
 	static char	*content[1024];
 	char		*buff;
 	char		*line;
 
+	if (clear && content[fd])
+		return (clear_content(&content[fd]));
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 1024)
 		return (0);
 	buff = (char *) malloc (BUFFER_SIZE + 1);
