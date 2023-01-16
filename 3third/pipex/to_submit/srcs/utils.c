@@ -1,6 +1,8 @@
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-int	ft_strcmp(char *str1, char *str2)
+int	ft_strfind(char *str1, char *str2)
 {
 	int	i;
 

@@ -2,10 +2,20 @@
 
 void	eprint_warn_heredoc(char *limiter)
 {
-	write(2, "pipex: warning: here-document delimited by end-of-file", 55);
+	write(2, "\npipex: warning: here-document delimited by end-of-file", 56);
 	write(2, " (wanted '", 11);
 	write(2, limiter, ft_strlen(limiter));
 	write(2, "')\n", 3);
+}
+
+void	print_nl(char *stuff)
+{
+	for (int i = 0; i < ft_strlen(stuff); ++i) {
+		if (stuff[i] == '\n')
+			write(1, "\\n", 2);
+		else
+			write(1, &stuff[i], 1);
+	}
 }
 
 void	fill_in_pipe(int in_file, int out_fd, char *limiter)
@@ -16,6 +26,8 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 	{
 		write(in_file, "> ", 2);
 		line = get_next_line(in_file);
+		print_nl(line);
+
 		if (!line)
 		{
 			eprint_warn_heredoc(limiter);
@@ -26,6 +38,11 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 			if (line)
 				free(line);
 			break;
+		}
+		if (*line == '\n')
+		{
+			free(line);
+			continue;
 		}
 		write(out_fd, line, ft_strlen(line));
 		free(line);

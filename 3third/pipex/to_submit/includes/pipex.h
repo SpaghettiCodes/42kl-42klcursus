@@ -25,7 +25,7 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter);
 void	here_doc(t_pipex *fd_list, char **av, int ac, int p[2]);
 void	get_fd(t_pipex *fd_list, char **av, int ac);
 
-int		ft_strcmp(char *str1, char *str2);
+int		ft_strfind(char *str1, char *str2);
 int		ft_strcmp_nl(char *str1, char *str2);
 char	*append(char *str1, char *str2);
 char	*n_append(char *str1, char *str2);

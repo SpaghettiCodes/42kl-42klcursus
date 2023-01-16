@@ -1,3 +1,5 @@
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 char	*get_binarypath(char *command, char **paths)

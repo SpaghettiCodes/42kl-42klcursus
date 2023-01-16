@@ -1,3 +1,5 @@
+/* ************************************************************************** */
+
 #include "pipex.h"
 #include <stdarg.h>
 
@@ -8,7 +10,7 @@ char	*get_paths(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strcmp(envp[i], "PATH\0"))
+		if (ft_strfind(envp[i], "PATH\0"))
 			return (&envp[i][5]);
 		i++;
 	}
@@ -31,7 +33,6 @@ int	fork_child(t_pipex pipex)
 	{
 		free_all(NULL, pipex.path);
 		waitpid(first_childpid, NULL, 0);
-		printf("done\n");
 	}
 	return (0);
 }
@@ -44,7 +45,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac < 5)
 		return (eprint("ARG", "not enough arguments"));
 	pipex.envp = envp;
-	if (ft_strcmp(av[1], "here_doc"))
+	if (ft_strfind (av[1], "here_doc"))
 	{
 		if (pipe(h_d) == -1)
 			return (eprint("PIPE", "pipe failed"));
