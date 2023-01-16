@@ -10,12 +10,12 @@ CFLAG = -Wall -Wextra -Werror
 
 NAME = pipex
 
+all : $(NAME)
+
 commit :
 	git add .
 	git commit -m "norminatting"
 	git push
-	
-all : $(NAME)
 
 .c.o :
 		gcc ${CFLAG} -I./includes -c $< -o ${<:.c=.o}
