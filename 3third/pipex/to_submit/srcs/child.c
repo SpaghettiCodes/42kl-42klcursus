@@ -57,18 +57,22 @@ void	child(t_pipex pipex, int index, int out)
 	if ((pipex.cmd_num - index))
 	{
 		if (pipe(next_pipe) == -1)
-			exit(child_error(pipex.path, "Pipe", "Ah Shit Something Went Wrong"));
+			exit(child_error(pipex.path, "Pipe", 
+					"Ah Shit Something Went Wrong"));
 		if (dup2(next_pipe[0], STDIN_FILENO) == -1)
-			exit(child_error(pipex.path, "dup2", "input output redirection failed"));
+			exit(child_error(pipex.path, "dup2", 
+					"input output redirection failed"));
 		close(next_pipe[0]);
 		next_child(pipex, next_pipe, index);
 	}
 	else
 	{
 		if (dup2(pipex.infile, STDIN_FILENO) == -1)		
-			exit(child_error(pipex.path, "dup2", "input output redirection failed"));
+			exit(child_error(pipex.path, "dup2", 
+				"input output redirection failed"));
 		close(pipex.infile);
 	}
-	if (execute_command(pipex.path, pipex.cmd[pipex.cmd_num - index], pipex.envp))
+	if (execute_command(pipex.path, 
+			pipex.cmd[pipex.cmd_num - index], pipex.envp))
 		exit(1);
 }
