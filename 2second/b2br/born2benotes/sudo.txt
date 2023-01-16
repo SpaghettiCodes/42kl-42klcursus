@@ -1,0 +1,34 @@
+vim /etc/sudoers
+
+Authentication using sudo has to be limited to 3 attempts in the event of an incorrect password.
+
+Defaults	passwd_tries=num_tries
+
+A custom message of your choice has to be displayed if an error due to a wrong
+password occurs when using sudo.
+
+Defaults	badpass_message="Message"
+
+Each action using sudo has to be archived, both inputs and outputs. The log file
+has to be saved in the /var/log/sudo/ folder
+
+Defaults	logfile="logfilepath"
+Defaults	log_input,log_output
+
+The TTY mode has to be enabled for security reasons-
+
+Defaults	requiretty
+
+TTY	(teletype mode)
+	command-line interface (CLI)
+	allows user to interact with the operating system using text-based commands
+	enabling requiretty makes it so that a user must be logged in to a TTY in order to use the "sudo" command
+		this prevents users from running the sudo command over an insecure network connection or in scripts
+
+For security reasons too, the paths that can be used by sudo must be restricted.
+Example:
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+
+Defaults	secure_path="those_path"
+
+this already is default

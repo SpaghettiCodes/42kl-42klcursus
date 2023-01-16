@@ -1,0 +1,31 @@
+Aptitutde vs APT
+
+APT - lower level package manager 
+Aptitude - high level package manaer
+
+Aptitude offers better functionality compared to apt-get
+	- Aptitude can be used for more functionality 
+		- package search
+		- setting package installation
+		- also has apt-get functionalities like apt-mark apt-cache
+
+
+APT (Advanced Packaging Tool)
+
+handle software installation and removal
+part of debians's .deb package
+
+command-line tool
+	- use commands with no visual refernce from graphical interface
+
+the package has its sources specified in the 'etc/apt/sources/list' and contain all the dependencies list that the package needs to install automatically
+apt downloads all the dependencies automatically
+
+Aptitude
+
+text based interface to the debian GNU//Linux package system
+allow user to view list of packages and to perform package management task 
+can be performed from a visual interfaec or command-line
+
+to get aptitude, install aptitude using apt
+apt install aptitude -y

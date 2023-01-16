@@ -1,0 +1,100 @@
+SSH
+
+Secure Shell Protocol
+
+Network communication protocol for operating network services securely over an unsecured network
+	application are remote login and command-line execution
+
+communication between 2 computers is encrypted meaning it is suitable for use on insecure network
+(cryptographic network protocol)
+
+allows 2 computer to communicate (hypertext transfer protocol http) and share data
+
+often used to perform operations on remote computers
+
+Based on a client-server architecture
+	- connecting an SSH client instance with an SSH server
+
+Secure communication provides a strong password authentication and encrypted communication with a public key over an insecure channel
+
+Protects the network from various attacks such as DNS spoofing, IP source routing and IP spoofing
+
+Usage of SSH Protocol
+- provides secure access to users and automated processes
+- secure way to transfer files from one system to another over an insecure network
+- issues remote commands to the users
+- helps user manage the network infrastucture and critical system components
+- log in to shell on a host and is used to execute a single command
+- used for forwarding a port
+- securely browse the web through the encrypted proxy connection 
+
+How does it work
+Connects to a secure shell client application with the SSH server
+1. Client initiates the connection by contacting server
+2. Server sends its public key
+3. Client negotiatie parameter and open secure channel
+4. User login to server host operating system
+
+SSH - Keys
+
+Public key - everyone can see it (encryption)
+Private key - stays in computer and must be protected (decryption)
+
+Key pairs
+	User Key - public and private remain on user
+	Host Key - public and privaate are on remote system
+	Session Key - used when large amount of data is to be transmitted
+
+SSH encryption methods
+rsa, dsa, ed25519
+
+How is a key generated
+	- public keys from local computer are passed to the server which is to be accessed
+	- server identifies if the public key is registered
+	- server creates a new secret key and encrypts it with the public key 
+	- encrypted code is sent to the local compueter
+	- data is unlocked by the private key of the system and is sent to the server
+	- server verifies with the local computer
+	- ssh creates a route and all encrypted data arre transferred through it
+
+Set up a ssh server using OpenSSH:
+OpenSSH	connectivity tool for remote sign-in that uses SSH protocol
+- encrypts all traffic between client and server to eliminate eavesdropping, connection hijacking
+
+update package manager
+1. sudo apt-get update
+
+install ssh server
+2. sudo apt install openssh-server
+
+check ssh service 
+3. sudo systemctl status ssh
+OR sudo service ssh status
+
+stop ssh server
+4. sudo service ssh stop
+
+start ssh server
+5. sudo service ssh start
+
+turn off ssh indefinitely
+5. sudo systemctl disable ssh
+
+Get server IP address:
+ip a
+
+Connecting to a Server Using SSH:
+
+ssh Username@IPAddressOrHostname -p (specify port)
+
+Change SSH configuration :
+sudo vim /etc/ssh/sshd_config
+sshd_config - server config file on Linux
+ssh_config - client config file on UNix
+
+to change the ssh default port
+#Port 22 -> Port 4242
+
+disable root login
+#PermitRootLogin no -> PermitRootLogin no
+- now you have to log in as a normal user and use su - to become a root user

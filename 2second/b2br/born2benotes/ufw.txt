@@ -1,0 +1,33 @@
+UFW (Uncomplicated FireWall)
+
+protects your system by preventing anyone from remotely connecting to it (except for allowed ports)
+
+install ufw
+
+sudo apt-get install ufw
+
+enable ufw
+
+sudo ufw enable
+
+view status
+
+sudo ufw status
+sudo ufw status numbered
+
+to allow incoming ssh connections
+
+sudo ufw allow ssh
+sudo ufw allow 22 (default port of 22)
+
+to allow a specific port
+
+sudo ufw allow (port_num)
+
+reload ufw
+
+sudo ufw reload
+
+delete a port rule
+
+sudo ufw delete

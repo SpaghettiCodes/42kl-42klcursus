@@ -1,0 +1,45 @@
+AppArmor (Application Armor)
+
+Linux kernel security module
+- allows sys admin to restrict programs' capabilities with per-program profiles
+	- profiles allow capabilities like network access, raw socket access, and the permission to read, write or execute files
+
+	- supplements traditional Unix Discretionary access control (DAC) model by providing mandatory access control (MAC)
+	
+		DAC discretionary access control
+			type of access control that restrict access to objects based on the identity of subjects and groups to which they belong
+		MAC mandatory access control
+			- method of limiting access to resources based on the sensitivity of the information and the authorization of the user to access information 
+			- define sensitivity by means of security label
+					- represents a level or hierarchical classification of the information
+					- defines the category or group the information belongs
+
+		proactively protects the operating system ad application from external or internal threats by enforcing a specific rule set on a per application basis
+			- define what system resources individual application can access and with what privileges
+		
+		Every breach iof policy triggers a message in the system log
+
+	
+Test if AppArmor is enabled
+
+aa-enabled
+
+Display current loaded status
+
+aa-status
+doesnt work for me :(
+
+Disable apparmor
+
+aa-teardown
+
+AppArmor vs SELinux:
+
+AppArmor
+Pathname-based system does not require labelling or relabelling file system
+
+
+
+
+
+i never used this in this entire duration of doing b2br

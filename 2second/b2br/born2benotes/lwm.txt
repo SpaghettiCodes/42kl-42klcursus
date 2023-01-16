@@ -1,0 +1,90 @@
+Logical Volume Manager (Linux)
+
+Device mapper framework 
+	- maps physical blcok devices onto higher-level virtual block devices
+	- provides logical volume management for Linux kernel
+	
+	- Device mapper 
+		- framework provided by Linux kernel for mapping physical block devices onto higher-level virtual block devices
+
+		- passes data from a virtual block device to another block devices
+
+		Usage
+			- applications that create new mapped devices talk to the device mapper via the libdevmapper.so shared library
+			- Mapped Devices
+				- shortcut to a drive that is physically located on another different computer
+					- can be used to reach resources on a different computer on a local network
+				- a block devices (hard disk partition) can be mapped into another device (/dev/mapper)
+				- can have additional processing over the data that flows through it
+					- example : encryption device mapping
+						- all writes to the mapped device is encrypted, and all reads are deciphered
+	
+	- Logical volume management
+			- provides a method of allocating space on mass-storage devices 
+			- more flexible than conventional partitioning schemes to store values
+			- concatenate, stripe together and combine partitions into larger virtual partitions
+				- admin can re-size or move these partitions without interupting system use
+		
+			- Starts with a physical volume (PV)
+			- Volume management treats each PV as being composed of sequence of chunks (physical extents) (PE)
+				- some has uniformed size of PV, others have variably sized PEs that can be split and merged at will
+			- PE are then mapped one-to-one to logical extents (LE)
+				- These PE are drawn from a physical volume group (PVG)
+					PVG - set of same-sized PVs which act similar to hard disks
+			- system pools LE to a volume group (VG)	
+				- pooled LE can be concatenated together into virtual disk partitions (logical volumes LV)
+				- system can use LV as raw block devices just like disk partitions
+					- create mountable file systems
+			- Admin can grow LVs (concate more LEs) or shrink them (return LEs)
+			- PVs and LVs cannot be shared between or span different VGs
+			- VGs can grow storage by absorbing new PVs
+
+lsblk
+
+	list information on block devices
+
+	NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+
+	NAME - name
+	MAJ:MIN - major and minor devices number
+	RM - boolen values for removable and non-removable
+	SIZE - device size
+	RO - Read only status 1 - readonly 0 - not readonly
+	TYPE - type of devices (disck, loopback, partition, LVM)
+	MOUNTPOINT - mount point on which the device is mounted
+
+
+	MAJ:MIN	major minor numbers
+		major - identifies the device driver associated with
+			- in turn, tells us what type of driver that is
+		minor - identifies a specific device controlled by that driver
+			- refer to sub-devices
+			- may vary depending on device driver
+
+	MOUNTPOITN - mount point
+		directory where a seperate file system can be mounted and access as it is a part of main file system
+		- allow multiple file system to be used on a single machine 
+
+https://www.digitalocean.com/community/tutorials/create-a-partition-in-linux
+
+fdisk
+text based command line utility for viewing and managing disk partition
+
+list all partitions
+sudo fdisk -l
+
+choose disk for partition
+sudo fdisk [disk path]
+
+creating partition
+command 'n'
+logical partition - 'l'
+primary partition - 'p'
+
+setting partition type
+choose Linux LVM
+
+Formatting partition
+sudo mkfs
+sudo mkfs.ext4 [partition path]
+

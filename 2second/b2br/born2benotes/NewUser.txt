@@ -1,0 +1,61 @@
+Add users on Debian:
+
+sudo adduser (username)
+
+members of the group sudo are granted with sudo access
+
+Add users into a group:
+
+sudo usermod -aG (group name) (username)
+usermod - modify a user account
+-a - append a group
+		- addes the user to the group without remove it from current groups
+-G - groups
+
+Delete a user in debian:
+sudo deluser username
+
+to delete the user and its home dir 
+sudo deluser --remove-home username
+
+List Users on Debian:
+
+cat /etc/passwd 
+getent passwd
+
+/etc/passwd columns
+
+(username):(password):(UID):(GID):(Comment):(Home Dir):(Shell used)
+password -> x = passowrd is encrypted (found in /etc/shadow file)
+
+to list only names
+
+cut -d: -f1
+-d delimiter use :
+-f choose field 1 (name field)
+
+awk -F: '{print $1}'
+
+awk - mawk - pattern scanning and text processing language
+
+-F(value): sets field seperator to value
+($1) = first field ($0 = second field)
+
+To list connected users to a Linux host:
+
+who
+users
+
+Groups:-
+
+To list groups:
+
+groups
+
+To add group:
+
+groupadd (-g group-ID) group-name
+
+to find group membership for a user:
+
+groups (username)

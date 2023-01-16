@@ -1,0 +1,16 @@
+Hostname
+
+modify hostname
+
+edit file vim	
+
+/etc/hostname OR 
+hostnamectl set-hostname (new_hostname)
+
+edit file vim	
+
+/etc/hosts
+
+reboot			
+
+su reboot

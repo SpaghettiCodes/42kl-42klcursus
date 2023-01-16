@@ -1,0 +1,53 @@
+ROCKY (successor to CENTOS)
+
+Linux distribution develop by rocky enterprise software foundation 
+A downstream, complete binary compatible release using the Red Hat Enterprise Linux (RHEL) operating system source code
+
+	Downstream
+		- a direction away from the original authors or maintainers of softwar that is distrubuted as source code
+	binary compatible release
+		- runs the same machine executable code for a CPU
+		- ability to run the same software without requiring the application to be recompiled
+		- opposite of Source code compatibility
+			- recompilation or interpretation is necessary before the program can run
+	Red Hat Enterprise Linux (RHEL)
+		- commercial open source Linux distribution developed by RedHat for commercial market
+	
+
+KDUMP
+	- A feature of Linux kernel that creates crash dump in the event of a kernal crash
+			- crash dump
+				- taking all information in RAM and writing into a storage drive
+				- recorded state of the working memory of a computer program at a specific time
+					- generally when the program crashed // terminal abnormally
+				- other key pieces of program state are dumped at the same time
+					- process registers
+					- porgram counter
+					- stack pointer
+					- memory management information
+					- other porcessor and operating system flags and information
+
+				- snap dump (snapshot dump)
+					- a memory dump requested by the computer operator or by the running program, after which the program can continue
+					- assist in diagnosing and debugging
+				
+				- fatal exception automatically triggers a core dump
+
+			- kernel crash (kernel panic) (BSOD)
+				- computer error where the system os cannot easily recorver
+				- safety measure taken by an os upon detecting an internal fatal error
+					- fatal system error
+						- operating system halts because it has reached a condition where it can no longer operate safely
+
+
+	- Exports a memory image (vmcore) that can be analyzed for the purpose of debugging and determining cause of crash
+	
+	- Dumped image is exported as a Executable and Linkable Format (ELF) object
+	
+	- can be accessed through 
+		- /proc/vmcore
+
+	- can be saved to a 
+		- locally accessible file system 
+		- raw device
+		- remote system over the network

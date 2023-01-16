@@ -1,0 +1,13 @@
+Makefile
+append.c
+backup
+error.c
+ft_split.c
+ft_split.h
+ft_strdup.c
+ft_substr.c
+infile
+main.c
+minishell.h
+test
+variable.c

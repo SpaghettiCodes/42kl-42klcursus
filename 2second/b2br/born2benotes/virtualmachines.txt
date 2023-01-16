@@ -1,0 +1,35 @@
+what is a virtual machine:
+
+virtual environment that works like a computer within a computer
+runs on an isolated partition of its host computer with its own CPU, power, memory, operating system and otehr resources
+
+How a virtual machine works:
+
+emulate a whole computer and runs inside your physical computer
+Works as a seperate independent machine, but runs as a process on your host operating system
+
+Virtualization tech
+	- simulate virtual hardware
+	- physical machine are known as host while VM running on it are called guests
+	- managed by software known as a hypervisor
+		- responsible for managing and provisioning resources
+		- schedules operation in VMs
+			- does not overrun each other when using resources
+
+		Types of hypervisors
+			Type 1
+				- bare metal hypervisors
+				- installed natively on the underlying physical hardware
+				- VM interact directly with hosts to allocate hardware resources (x extra software layers in between)
+				- found in server based environment
+				- Microsoft Hyper-Virtualization
+				- seperate management tool needed to handle guest activities (creating new vm or managing permissions)
+
+			Type 2 hypervisor
+				- hosted hypervisors
+				- runs on the host computer operating system
+				- pass VM request to the host operating system, which then provisions the appopriate physical resources to each guest
+				- slower than Type 1
+					- each action have to go thru the host operating system
+				- guest operating system are not tied to physical hardware
+					- users can run VM and use their computer as usually

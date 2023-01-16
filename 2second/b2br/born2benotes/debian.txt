@@ -1,0 +1,34 @@
+DEBIAN
+
+- linux ditribution
+
+- developed by community-supported debian project (Ian Murdock)
+- released on september 15 1993
+- basis of many other distrubution (UBUNTU)
+
+- One of the most oldest operating system based on Linux Kernel
+
+- coordinated over the internet by a team of volunteers
+	- guided by debian project leader and 3 foundational documents
+		- debian social contract
+		- debian constitution
+		- debian free software guidelines
+	
+
+
+Difference between Rocky and Debian
+(where r all the resources on this)
+
+Rocky   - new Linux Distrubution (2021)
+		- based on red head enterprise linux (RHEL)
+			- fully compatible with RHEL
+		- uses Yum // DNF package manager
+		- intended for enterprise use
+		- uses linux system roles (LSR) for system management
+
+Debian  - established Linux distribution that has been around since 1993
+		- known for stability and large package repository
+		- uses apt package manager
+		- suitable for wide range of use cases
+		- provide wide range of tools for system management
+
