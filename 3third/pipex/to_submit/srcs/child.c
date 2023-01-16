@@ -1,16 +1,11 @@
 #include "pipex.h"
 
-// handles child error, frees pipex.path and prints out error msg
-int		child_error(char **path, char *asp, char *msg)
+int	child_error(char **path, char *asp, char *msg)
 {
 	free_all(NULL, path);
 	return(eprint(asp, msg));
 }
 
-/* 
-** executes the command 
-** exits automatically if success, returns 1 if an error occured
-*/
 int	execute_command(char **path, char *cmd, char **envp)
 {
 	char	**command;
@@ -33,7 +28,6 @@ int	execute_command(char **path, char *cmd, char **envp)
 	return (1);
 }
 
-// handles forking of next child
 void	next_child(t_pipex pipex, int *next_pipe, int index)
 {
 	int	next_childfd;
@@ -53,10 +47,6 @@ void	next_child(t_pipex pipex, int *next_pipe, int index)
 	}
 }
 
-/* child process -- child process will create more child process to run all commands
-** in = the STDIN of the child process
-** child process will create the next pipe required for the next child process 
-*/
 void	child(t_pipex pipex, int index, int out)
 {
 	int	next_pipe[2];

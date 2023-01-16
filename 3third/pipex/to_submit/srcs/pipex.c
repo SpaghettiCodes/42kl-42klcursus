@@ -1,10 +1,6 @@
 #include "pipex.h"
 #include <stdarg.h>
 
-// ./pipex infile cmd cmd outfile
-
-
-// returns the address of the string that contains the paths from envp
 char	*get_paths(char **envp)
 {
 	int	i;

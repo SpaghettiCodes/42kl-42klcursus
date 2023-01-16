@@ -19,7 +19,7 @@ typedef struct s_pipex{
 	char	**cmd;
 	char	**envp;
 	char	**path;
-} t_pipex;
+}	t_pipex;
 
 void	fill_in_pipe(int in_file, int out_fd, char *limiter);
 void	here_doc(t_pipex *fd_list, char **av, int ac, int p[2]);
@@ -34,6 +34,6 @@ int		execute_command(char **path, char *cmd, char **envp);
 void	child(t_pipex pipex, int index, int in);
 char	*get_binarypath(char *command, char **paths);
 
-int	free_all(char **item1, char **item2);
+int		free_all(char **item1, char **item2);
 
 #endif

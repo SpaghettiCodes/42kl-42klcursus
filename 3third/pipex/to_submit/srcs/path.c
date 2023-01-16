@@ -1,6 +1,5 @@
 #include "pipex.h"
 
-// gets the executable binary file path and returns a malloced string of said pathway
 char	*get_binarypath(char *command, char **paths)
 {
 	char	*test;
