@@ -1,5 +1,5 @@
 #ifndef FT_SPLIT_H
-#define FT_SPLIT_H
+# define FT_SPLIT_H
 
 # include <stdio.h>
 # include <stdlib.h>
