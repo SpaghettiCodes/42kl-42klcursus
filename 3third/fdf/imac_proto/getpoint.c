@@ -32,6 +32,7 @@ t_coordinates	*process_line(char *line, int y, t_coordinates *point, int *index)
 		}
 		++x;
 	}
+	freeall(NULL, coordinates);
 	return (current);
 }
 

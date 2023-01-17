@@ -7,13 +7,15 @@ void	freeall(char *line, char **coordinates)
 	if (line)
 		free(line);
 	i = 0;
-	while (coordinates[i])
-	{
-		free(coordinates[i]);
-		i++;
-	}
 	if (coordinates)
+	{
+		while (coordinates[i])
+		{
+			free(coordinates[i]);
+			i++;
+		}
 		free(coordinates);
+	}
 }
 
 // FORMULA TO CALCULATE THE COLOR FOR LINES
