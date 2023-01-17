@@ -6,7 +6,7 @@ SPLIT = ft_split.c ft_strdup.c ft_substr.c
 
 GNL = get_next_line.c get_next_line_utils.c
 
-SRCS = $(FDF) $(SPLIT) $(GNL) $(ATOI)
+SRCS = *.c
  
 OBJ = $(SRCS:.c=.o)
 
