@@ -154,7 +154,6 @@ int				lowest_z(t_coordinates *coordinates);
 int				hook_me_up(t_mlx *mlx);
 int				set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_attri attr);
 
-void			placepixel(t_data *data, int x, int y, int z, int color);
 int				putcolor(unsigned char trans, unsigned char r, unsigned char g, unsigned char b);
 
 // bersenham line algo
@@ -164,12 +163,11 @@ void			draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx)
 void			draw_high_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx);
 void			draw_vertical(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx);
 void			draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx);
-void			fill_image(t_mlx *mlx, t_coordinates *points);
 
 // mouse
-int			mouse_press(int	keycode, int x, int y, t_mlx *mlx);
-int			mouse_released(int keycode, int x, int y, t_keypress *key_press);
-int			mouse_movement(int x, int y, t_keypress *key_press);
+int				mouse_press(int	keycode, int x, int y, t_mlx *mlx);
+int				mouse_released(int keycode, int x, int y, t_keypress *key_press);
+int				mouse_movement(int x, int y, t_keypress *key_press);
 
 // colors
 void			color_choice(int *r, int *g, int *b, t_attri attr);
@@ -217,5 +215,12 @@ void			reset_rot(t_mlx *mlx);
 void			color_type(t_mlx *mlx);
 
 int				hook_values(t_mlx *mlx);
+
+
+int				calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y);
+int				trans_z_calc(t_coordinates *n_point, t_coordinates *o_point, int plot_y);
+void			placepixel(t_data *data, int x, int y, int z, int color);
+void			fill_image(t_mlx *mlx, t_coordinates *points);
+
 
 #endif
