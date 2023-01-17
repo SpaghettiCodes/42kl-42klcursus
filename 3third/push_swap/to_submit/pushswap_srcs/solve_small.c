@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solve_small.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 16:20:23 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 16:20:23 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	solve_two(t_pushswap *stack)
 {
-	int a;
-	int b;
+	int	a;
+	int	b;
 
 	a = stack->stack_a[0];
 	b = stack->stack_a[1];
@@ -14,9 +26,9 @@ int	solve_two(t_pushswap *stack)
 
 int	solve_three(t_pushswap *stack)
 {
-	int a;
-	int b;
-	int c;
+	int	a;
+	int	b;
+	int	c;
 
 	a = stack->stack_a[0];
 	b = stack->stack_a[1];

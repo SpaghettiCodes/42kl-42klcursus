@@ -3,7 +3,7 @@ SRCS_C =    $(wildcard ./pushswap_srcs/*.c)
 BONUS_C =   $(wildcard ./checker_srcs/*.c)
 
 BONUS_H = checker.h
-            
+
 SRCS_H = push_swap.h
 
 SRCS_O := ${SRCS_C:.c=.o}

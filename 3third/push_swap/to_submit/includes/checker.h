@@ -1,8 +1,20 @@
-#ifndef CHECKER_H
-#define CHECKER_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 13:04:35 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 17:18:05 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "ft_split.h"
-#include "get_next_line.h"
+#ifndef CHECKER_H
+# define CHECKER_H
+
+# include "ft_split.h"
+# include "get_next_line.h"
 
 typedef struct s_pushswap{
 	int	*stack_a;
@@ -10,13 +22,14 @@ typedef struct s_pushswap{
 	int	*stack_b;
 	int	b_size;
 	int	total_size;
-} t_pushswap;
+}	t_pushswap;
 
-int	ft_atoi(const char *str, t_pushswap *stacks, char **to_free, int *to_free2);
+int		ft_atoi(const char *str, t_pushswap *stacks,
+			char **to_free, int *to_free2);
 
 void	freedoublechar(char	**tab);
 
-int	fill(t_pushswap *stack, char **av, int ac);
+int		fill(t_pushswap *stack, char **av, int ac);
 
 // operations
 void	sa(t_pushswap *stack);
@@ -40,13 +53,13 @@ void	rotate(int *tab, int size_tab);
 void	push(int *src, int *size_src, int *dest, int *size_dest);
 
 // string utils
-int	str_cmp(char *str1, char *str2);
+int		str_cmp(char *str1, char *str2);
 
 // handle input
-int	listeninstruction(t_pushswap *stacks);
+int		listeninstruction(t_pushswap *stacks);
 
 // error
-int	errorexit(t_pushswap *stacks, char **to_free, int *to_free2);
+int		errorexit(t_pushswap *stacks, char **to_free, int *to_free2);
 void	freeall(t_pushswap *stacks);
 
 #endif

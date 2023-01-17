@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solve_very_big.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 16:20:29 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 16:20:29 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	push_to_a(t_pushswap *stack, int start, int end)
@@ -11,18 +23,19 @@ void	push_to_a(t_pushswap *stack, int start, int end)
 	while (stack->b_size)
 	{
 		find_lesser_moves(stack, max_val, min_val);
-		rotate_to_correct(stack, moves_needed_rot_a(stack, stack->stack_b[0], max_val, min_val) ,'a');
+		rotate_to_correct(stack, moves_needed_rot_a(stack,
+				stack->stack_b[0], max_val, min_val), 'a');
 		pa(stack);
 	}
 }
 
 void	push_to_b(t_pushswap *stack, int start_loc, int end_loc, int chunk_size)
 {
-	int max;
-	int min;
+	int	max;
+	int	min;
 
 	max = stack->sorted[end_loc];
-	min = stack->sorted[start_loc]; 
+	min = stack->sorted[start_loc];
 	while (chunk_size)
 	{
 		find_and_push(stack, max, min);
@@ -49,7 +62,7 @@ void	solve_chunk(t_pushswap *stack, int count)
 		push_to_a(stack, start, end);
 		if (remainder)
 			remainder = 0;
-		count--;
+		--count;
 	}
 	revert_changes(stack);
 }

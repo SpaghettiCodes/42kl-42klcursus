@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_arg.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 16:18:59 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 17:12:23 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void realloc_tab(t_pushswap *stack, int new_size, char **new_stuff)
+void	realloc_tab(t_pushswap *stack, int new_size, char **new_stuff)
 {
 	int	*new;
 	int	i;
@@ -29,10 +41,10 @@ void realloc_tab(t_pushswap *stack, int new_size, char **new_stuff)
 	stack->total_size = new_size;
 }
 
-unsigned int count_elem(char **stuff)
+unsigned int	count_elem(char **stuff)
 {
 	unsigned int	i;
-	
+
 	i = 0;
 	while (stuff[i])
 		++i;

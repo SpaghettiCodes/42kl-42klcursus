@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   operation_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 13:20:19 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 17:22:19 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "checker.h"
 
-//shift all the elements in dest to the right by 1, the last element becomes the first
+//shift all the elements in dest to the right
+// by 1, the last element becomes the first
 void	shift_right(int *dest, int size_dest)
 {
 	size_dest--;
@@ -12,7 +25,8 @@ void	shift_right(int *dest, int size_dest)
 	return ;
 }
 
-//shift all the elements in dest to the left by 1, the first element becomes the last
+//shift all the elements in dest to the left by 1,
+// the first element becomes the last
 void	shift_left(int *dest, int size_dest)
 {
 	int		i;
@@ -25,6 +39,7 @@ void	shift_left(int *dest, int size_dest)
 	}
 	return ;
 }
+
 void	reverserotate(int *tab, int size_tab)
 {
 	shift_right(tab, size_tab);
@@ -34,8 +49,6 @@ void	rotate(int *tab, int size_tab)
 {
 	shift_left(tab, size_tab);
 }
-
-#include <stdio.h>
 
 void	push(int *src, int *size_src, int *dest, int *size_dest)
 {

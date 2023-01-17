@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:47:21 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/11 18:47:13 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/17 17:26:31 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*buff_to_content(char *buff, int fd, char *content)
 			break ;
 	}
 	free(buff);
-	return (content) ;
+	return (content);
 }
 
 char	*get_next_line(int fd, int error)
@@ -96,10 +96,9 @@ char	*get_next_line(int fd, int error)
 	if (error)
 	{
 		if (content[fd])
-		{
 			free (content[fd]);
-			return (NULL);
-		}
+		content[fd] = NULL;
+		return (NULL);
 	}
 	buff = (char *) malloc (BUFFER_SIZE + 1);
 	content[fd] = buff_to_content(buff, fd, content[fd]);

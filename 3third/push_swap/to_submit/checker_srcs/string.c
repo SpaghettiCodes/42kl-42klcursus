@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 13:20:27 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 17:26:58 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "checker.h"
 
 int	str_cmp(char *str1, char *str2)
@@ -5,7 +17,7 @@ int	str_cmp(char *str1, char *str2)
 	int	i;
 
 	i = 0;
-	while(str1[i] && str2[i])
+	while (str1[i] && str2[i])
 	{
 		if (str1[i] != str2[i])
 			return (0);
@@ -14,7 +26,7 @@ int	str_cmp(char *str1, char *str2)
 	return (1);
 }
 
-char *str_dup(char *src)
+char	*str_dup(char *src)
 {
 	int		i;
 	char	*ret;
@@ -27,5 +39,5 @@ char *str_dup(char *src)
 		i++;
 	}
 	ret[i] = '\0';
-	return(ret);
+	return (ret);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 13:04:41 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 17:24:27 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "checker.h"
 
 void	freeall(t_pushswap *stacks)
@@ -20,12 +32,12 @@ int	checkdup(t_pushswap *stack)
 		while (j < stack->total_size)
 		{
 			if (stack->stack_a[i] == stack->stack_a[j])
-				return(errorexit(stack, NULL, NULL));
+				return (errorexit(stack, NULL, NULL));
 			j++;
 		}
 		i++;
 	}
-	return(1);
+	return (1);
 }
 
 int	is_solved(t_pushswap *pushswap)
@@ -36,7 +48,7 @@ int	is_solved(t_pushswap *pushswap)
 	if ((pushswap->a_size != pushswap->total_size) || pushswap->b_size != 0)
 		return (0);
 	while (++i < (pushswap->a_size - 1))
-		if (pushswap->stack_a[i] > pushswap->stack_a[i+1])
+		if (pushswap->stack_a[i] > pushswap->stack_a[i + 1])
 			return (0);
 	return (1);
 }
@@ -55,7 +67,7 @@ int	main(int ac, char **av)
 	t_pushswap	pushswap;
 
 	if (ac < 2)
-		return(errorexit(NULL, NULL, NULL));
+		return (errorexit(NULL, NULL, NULL));
 	init_pushswap(&pushswap);
 	fill(&pushswap, av, ac);
 	checkdup(&pushswap);
@@ -68,5 +80,5 @@ int	main(int ac, char **av)
 	else
 		write(1, "OK\n", 3);
 	freeall(&pushswap);
-	return(0);
+	return (0);
 }

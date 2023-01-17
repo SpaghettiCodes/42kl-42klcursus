@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solve.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 16:20:26 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 16:20:26 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void solve(t_pushswap *stack)
+void	solve(t_pushswap *stack)
 {
 	init_stacks(stack);
 	if (stack->total_size < 100)
@@ -11,6 +23,6 @@ void solve(t_pushswap *stack)
 		solve_three(stack);
 	else if (stack->total_size < 100)
 		solve_small_big(stack);
-	else 
+	else
 		solve_very_big(stack);
 }

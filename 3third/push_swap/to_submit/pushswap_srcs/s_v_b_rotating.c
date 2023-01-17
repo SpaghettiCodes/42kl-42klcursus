@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   s_v_b_rotating.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 16:44:11 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 16:44:11 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	rotate_to_correct(t_pushswap *stack, int moves, char stack_name)
@@ -38,8 +50,8 @@ void	go_to_last_chunk(t_pushswap *stack, int last_stack_smallest_loc)
 	l_ch_smallest_val = stack->sorted[last_stack_smallest_loc];
 	l_ch_smallest_loc = get_loc(stack, l_ch_smallest_val);
 	largest_val_loc = (stack->a_size - get_largest_loc(stack) - 1);
-	if (largest_val_loc > l_ch_smallest_loc)
-	{	
+	if ((largest_val_loc + 1) > l_ch_smallest_loc)
+	{
 		if (l_ch_smallest_loc < stack->a_size / 2)
 			moves = l_ch_smallest_loc;
 		else
@@ -50,7 +62,7 @@ void	go_to_last_chunk(t_pushswap *stack, int last_stack_smallest_loc)
 		if (largest_val_loc < stack->a_size / 2)
 			moves = (largest_val_loc * -1);
 		else
-			moves = largest_val_loc;
+			moves = largest_val_loc + 1;
 	}
 	rotate_to_correct(stack, moves, 'a');
 }
@@ -62,15 +74,16 @@ void	rot_b(t_pushswap *stack, int smallest_move_loc)
 		if (smallest_move_loc < stack->b_size / 2)
 			rotate_to_correct(stack, smallest_move_loc, 'b');
 		else
-			rotate_to_correct(stack, (stack->b_size - smallest_move_loc) * -1, 'b');
+			rotate_to_correct(stack, (stack->b_size - smallest_move_loc) * -1,
+				'b');
 	}
 }
 
 void	revert_changes(t_pushswap *stack)
 {
-	int	lowest_loc; 
+	int	lowest_loc;
 	int	mid;
-	
+
 	mid = stack->a_size / 2;
 	lowest_loc = get_lowest_loc(stack);
 	if (lowest_loc <= mid)

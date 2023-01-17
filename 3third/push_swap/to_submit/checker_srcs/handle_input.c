@@ -1,6 +1,16 @@
-#include "checker.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_input.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 13:04:54 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 17:26:53 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// sa\nsb\nss\npa\npb\nra\nrb\nrr\nrra\nrrr\n
+#include "checker.h"
 
 int	instructions(int input, t_pushswap *stacks)
 {
@@ -18,7 +28,7 @@ int	instructions(int input, t_pushswap *stacks)
 	action[9] = rrb;
 	action[10] = rrr;
 	(*action[input])(stacks);
-	return(1);
+	return (1);
 }
 
 /*               No switches?
@@ -39,27 +49,27 @@ int	instructions(int input, t_pushswap *stacks)
 int	do_stuff(char *input, t_pushswap *stacks)
 {
 	if (str_cmp(input, "sa\n"))
-		return(instructions(0, stacks));
+		return (instructions(0, stacks));
 	else if (str_cmp(input, "sb\n"))
-		return(instructions(1, stacks));
+		return (instructions(1, stacks));
 	else if (str_cmp(input, "ss\n"))
-		return(instructions(2, stacks));
+		return (instructions(2, stacks));
 	else if (str_cmp(input, "pa\n"))
-		return(instructions(3, stacks));
+		return (instructions(3, stacks));
 	else if (str_cmp(input, "pb\n"))
-		return(instructions(4, stacks));
+		return (instructions(4, stacks));
 	else if (str_cmp(input, "ra\n"))
-		return(instructions(5, stacks));
+		return (instructions(5, stacks));
 	else if (str_cmp(input, "rb\n"))
-		return(instructions(6, stacks));
+		return (instructions(6, stacks));
 	else if (str_cmp(input, "rr\n"))
-		return(instructions(7, stacks));
+		return (instructions(7, stacks));
 	else if (str_cmp(input, "rra\n"))
-		return(instructions(8, stacks));
+		return (instructions(8, stacks));
 	else if (str_cmp(input, "rrb\n"))
-		return(instructions(9, stacks));
+		return (instructions(9, stacks));
 	else if (str_cmp(input, "rrr\n"))
-		return(instructions(10, stacks));
+		return (instructions(10, stacks));
 	else
 		return (0);
 }
@@ -68,12 +78,12 @@ int	listeninstruction(t_pushswap *stacks)
 {
 	char	*line;
 
-	while(1)
+	while (1)
 	{
 		line = get_next_line(0, 0);
 		if (!line)
-			break;
-		if(!do_stuff(line, stacks))
+			break ;
+		if (!do_stuff(line, stacks))
 		{
 			free(line);
 			get_next_line(0, 1);

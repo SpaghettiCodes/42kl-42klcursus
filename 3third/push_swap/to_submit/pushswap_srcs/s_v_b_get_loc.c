@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   s_v_b_get_loc.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 16:20:17 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 16:20:17 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	get_lowest_loc(t_pushswap *stack)
 {
-	int i;
-	int location;
+	int	i;
+	int	location;
 
 	i = -1;
 	location = 0;
@@ -33,7 +45,7 @@ int	get_loc(t_pushswap *stack, int val)
 	i = -1;
 	while (++i < stack->a_size)
 		if (stack->stack_a[i] == val)
-			break;
+			break ;
 	return (i);
 }
 
@@ -43,9 +55,9 @@ int	find_start_half(t_pushswap *stack, int max, int min)
 
 	closest_start = -1;
 	while (++closest_start < stack->a_size)
-		if ((stack->stack_a[closest_start] < min || stack->stack_a[closest_start] > max))
-			break;
-
+		if ((stack->stack_a[closest_start] < min
+				|| stack->stack_a[closest_start] > max))
+			break ;
 	return (closest_start - 1);
 }
 
@@ -55,8 +67,8 @@ int	find_end_half(t_pushswap *stack, int max, int min)
 
 	closest_end = stack->a_size;
 	while (--closest_end >= 0)
-		if ((stack->stack_a[closest_end] < min || stack->stack_a[closest_end] > max))
-			break;
-
+		if ((stack->stack_a[closest_end] < min
+				|| stack->stack_a[closest_end] > max))
+			break ;
 	return (closest_end + 1);
 }
