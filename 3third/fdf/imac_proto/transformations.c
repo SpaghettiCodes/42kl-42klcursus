@@ -1,4 +1,4 @@
-#include "test.h"
+#include "fdf.h"
 
 // rotattat is in radian btw
 int	rotattat_x(t_coordinates *current, float radian)
@@ -37,11 +37,12 @@ int	rotattat_z(t_coordinates *current, float radian)
 	current->trans_coord[Y] = y;
 }
 
+
+// apparantly should work
+// assumme light source at (0,0,D)
 void	perspective_projection(t_coordinates *current, int light_dis)
 {
 	float	d_Dz;
-	// apparantly should work
-	// assumme light source at (0,0,D)
 
 	d_Dz = light_dis - current->trans_coord[Z];
 	if (d_Dz <= 0)
@@ -75,10 +76,6 @@ void	project(t_mlx *mlx, char type)
 
 	current = mlx->points;
 	attr = &mlx->attributes;
-	if (attr->line_size <= 0)
-		attr->line_size = 0.5;
-	if (attr->z_multiplier <= 0)
-		attr->z_multiplier = 0.005;
 	while (current)
 	{
 		current->trans_coord[X] = (current->coord[X] - attr->x_mid ) * attr->line_size;
@@ -87,12 +84,11 @@ void	project(t_mlx *mlx, char type)
 		rotattat_x(current, attr->rot[X]);
 		rotattat_y(current, attr->rot[Y]);
 		rotattat_z(current, attr->rot[Z]);
-		// orthographic
 		if (type == 'o')
 		{
 			current->projected_coord[X] = current->trans_coord[X];
 			current->projected_coord[Y] = current->trans_coord[Y];
-		} // perspective
+		}
 		else if (type == 'p')
 			perspective_projection(current, attr->light_dis);
 		current->projected_coord[X] += attr->x_translation;

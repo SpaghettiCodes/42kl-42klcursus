@@ -14,16 +14,6 @@
 
 int	ft_atoi(const char *str);
 
-#define W_CODE 13
-#define A_CODE 0
-#define S_CODE 1
-#define D_CODE 2
-#define O_CODE 31
-#define P_CODE 35
-#define ESC_CODE 53
-#define UP_CODE 126
-#define DOWN_CODE 125
-
 #define X 0
 #define Y 1
 #define Z 2
@@ -38,6 +28,28 @@ int	ft_atoi(const char *str);
 
 #define PRESSED 1
 #define RELEASED 0
+
+enum {
+	W_CODE = 13,
+	A_CODE = 0,
+	S_CODE = 1,
+	D_CODE = 2,
+	O_CODE = 31,
+	P_CODE = 35,
+	ESC_CODE = 53,
+	UP_CODE = 126,
+	DOWN_CODE = 125,
+};
+
+enum {
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17,
+};
 
 typedef struct s_coordinates
 {
@@ -164,4 +176,9 @@ void	draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *ml
 void	fill_image(t_mlx *mlx, t_coordinates *points);
 void	freebuffer(int **tab, t_mlx mlx);
 void	free_coordinate(t_coordinates **stuff);
+
+// mouse
+int		mouse_press(int	keycode, int x, int y, t_mlx *mlx);
+int		mouse_released(int keycode, int x, int y, t_keypress *key_press);
+int		mouse_movement(int x, int y, t_keypress *key_press);
 #endif
