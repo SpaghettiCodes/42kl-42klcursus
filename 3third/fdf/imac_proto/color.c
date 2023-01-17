@@ -9,6 +9,18 @@ void	swap(int *a, int *b)
 	*b = temp;
 }
 
+int	set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_attri attr)
+{
+	float z;
+
+	z = calc_z(n_point, o_point, plot_y);
+	z *= attr.color_intens;
+	if (z > 0)
+		return (det_color_p(z, attr));
+	else
+		return (det_color_n(z, attr));
+}
+
 void	color_choice(int *r, int *g, int *b, t_attri attr)
 {
 	int temp;

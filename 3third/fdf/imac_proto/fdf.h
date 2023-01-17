@@ -38,7 +38,7 @@ enum {
 	P_CODE = 35,
 	ESC_CODE = 53,
 	UP_CODE = 126,
-	DOWN_CODE = 125,
+	DOWN_CODE = 125
 };
 
 enum {
@@ -48,7 +48,7 @@ enum {
 	ON_MOUSEUP = 5,
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
-	ON_DESTROY = 17,
+	ON_DESTROY = 17
 };
 
 typedef struct s_coordinates
@@ -61,12 +61,14 @@ typedef struct s_coordinates
 	struct s_coordinates	*next;
 } t_coordinates;
 
-#define NO 0
-#define RG 1
-#define BG 2
-#define RB 3
-#define GR 4
-#define YB 5
+enum {
+	NO = 0,
+	RG = 1,
+	BG = 2,
+	RB = 3,
+	GR = 4,
+	YB = 5
+};
 
 typedef	struct	s_attri {
 	// 0 = x rotation, 1 = y rotation, 2 = z rotation
@@ -171,6 +173,10 @@ int			mouse_movement(int x, int y, t_keypress *key_press);
 
 // colors
 void			color_choice(int *r, int *g, int *b, t_attri attr);
+int				putcolor(unsigned char trans, unsigned char r,
+					unsigned char g, unsigned char b);
+int				set_color(int plot_y, t_coordinates *o_point,
+					t_coordinates *n_point, t_attri attr);
 int				det_color_p(int z, t_attri attr);
 int				det_color_n(int z, t_attri attr);
 
