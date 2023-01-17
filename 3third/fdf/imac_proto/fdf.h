@@ -194,4 +194,7 @@ void			init_attri(t_mlx mlx, t_attri *attr, t_coordinates *coordinate);
 void			init_keys(t_keypress *key_press);
 t_coordinates	*init();
 
+// get file contents
+t_coordinates *get_points(int	read_file_fd);
+
 #endif
