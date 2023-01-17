@@ -1,12 +1,4 @@
-FDF = test.c no_fucking_idea.c minmax.c mlxhooks.c old_line_algo.c
-
-ATOI = atoi.c
-
-SPLIT = ft_split.c ft_strdup.c ft_substr.c
-
-GNL = get_next_line.c get_next_line_utils.c
-
-SRCS = *.c
+SRCS = $(wildcard *.c)
  
 OBJ = $(SRCS:.c=.o)
 
@@ -21,6 +13,7 @@ CFLAGS = -Wall -Wextra -Werror
 all : $(NAME) clean
 
 $(NAME): $(OBJ)
+	cd ./mlx && make
 	$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 a_san: $(OBJ)
