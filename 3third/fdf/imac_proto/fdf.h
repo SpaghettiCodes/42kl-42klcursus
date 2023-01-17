@@ -187,4 +187,12 @@ void	color_choice(int *r, int *g, int *b, t_attri attr);
 int		det_color_p(int z, t_attri attr);
 int		det_color_n(int z, t_attri attr);
 
+// rotation
+#include "fdf.h"
+
+// rotattat is in radian btw
+int	rotate_x(t_coordinates *current, float radian);
+int	rotate_y(t_coordinates *current, float radian);
+int	rotate_z(t_coordinates *current, float radian);
+
 #endif
