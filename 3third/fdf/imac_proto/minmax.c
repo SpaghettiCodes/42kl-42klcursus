@@ -1,4 +1,4 @@
-#include "test.h"
+#include "fdf.h"
 
 int	highest_x(t_coordinates *coordinates)
 {

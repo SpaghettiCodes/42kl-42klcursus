@@ -181,4 +181,10 @@ void	free_coordinate(t_coordinates **stuff);
 int		mouse_press(int	keycode, int x, int y, t_mlx *mlx);
 int		mouse_released(int keycode, int x, int y, t_keypress *key_press);
 int		mouse_movement(int x, int y, t_keypress *key_press);
+
+// colors
+void	color_choice(int *r, int *g, int *b, t_attri attr);
+int		det_color_p(int z, t_attri attr);
+int		det_color_n(int z, t_attri attr);
+
 #endif
