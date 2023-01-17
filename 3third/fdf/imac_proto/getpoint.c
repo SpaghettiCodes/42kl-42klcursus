@@ -7,7 +7,7 @@ t_coordinates *fill_node(t_coordinates *current, int x, int y, int z)
 	current->coord[Z] = z;
 }
 
-t_coordinates	*process_line(char *line, int y, t_coordinates *point, int *index)
+t_coordinates	*process_line(char *line, int y, t_coordinates *point, int *total)
 {
 	int				x;
 	char			**coordinates;
@@ -24,7 +24,7 @@ t_coordinates	*process_line(char *line, int y, t_coordinates *point, int *index)
 	while (coordinates[x])
 	{
 		fill_node(current, x, y, ft_atoi(coordinates[x]));
-		++(*index);
+		++(*total);
 		if (coordinates[x + 1])
 		{
 			current->next = init();
@@ -40,23 +40,23 @@ t_coordinates *get_points(int read_file_fd)
 {
 	char	*line;
 	int		y;
-	int		index;
+	int		total;
 	t_coordinates *ret;
 	t_coordinates *current;
 
 	ret = init();
 	current = ret;
 	y = 0;
-	index = 0;
+	total = 0;
 	while (1)
 	{
 		line = get_next_line(read_file_fd);
 		if (!line)
 			break;
-		current = process_line(line, y, current, &index);
+		current = process_line(line, y, current, &total);
 		freeall(line, NULL);
 		y++;
 	}
-	printf("Got all points = %d\n", index);
+	printf("Got all points = %d\n", total);
 	return (ret);
 }

@@ -200,6 +200,13 @@ t_coordinates *get_points(int	read_file_fd);
 // free
 void	freeall(char *line, char **coordinates);
 
+// key_pressed
+int	handle_pressed2(int keycode, t_mlx *mlx);
+int	handle_pressed(int keycode, t_mlx *mlx);
+int	handle_released(int keycode, t_keypress *key_press);
 
+void	reset_rot(t_mlx *mlx);
+
+void	color_type(t_mlx *mlx);
 
 #endif
