@@ -53,22 +53,12 @@ enum {
 
 typedef struct s_coordinates
 {
-	// 0 = x, 1 = y
-	int		projected_coord[2];
-	// 0 = x, 1 = y, 2 = z
-	float	trans_coord[3];
-	// 0 = x, 1 = y, 2 = z
-	int		coord[3];
-
-	struct s_coordinates *beside;
-	struct s_coordinates *below;
-
-	struct s_coordinates *debug_link;
-	struct s_coordinates *debug_link2;
-
-	struct s_coordinates *next;
-
-	unsigned char	print;
+	int						coord[3];
+	int						projected_coord[2];
+	float					trans_coord[3];
+	struct s_coordinates	*beside;
+	struct s_coordinates	*below;
+	struct s_coordinates	*next;
 } t_coordinates;
 
 #define NO 0
@@ -138,11 +128,11 @@ typedef struct	s_mlx
 
 typedef struct s_lineutils
 {
-	int dx;
-	int dy;
+	int	dx;
+	int	dy;
 	int	D;
-	int x;
-	int y;
+	int	x;
+	int	y;
 	int	yi;
 	int xi;
 } t_lineutils;
