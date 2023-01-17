@@ -210,6 +210,11 @@ int				**z_buffer(t_mlx mlx);
 void			freebuffer(int **tab, t_mlx mlx);
 void			set(int **tab, t_mlx *mlx);
 
+// link points
+// n = next to, b = below
+t_coordinates	*find_adjacent(t_coordinates *points, int x, int y, char option);
+void			link_below(t_coordinates *points);
+
 void			reset_rot(t_mlx *mlx);
 
 void			color_type(t_mlx *mlx);
