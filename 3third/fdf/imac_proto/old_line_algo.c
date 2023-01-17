@@ -5,7 +5,7 @@ int		calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y)
 	int	z;
 
 	if (n_point && n_point->projected_coord[Y] - o_point->projected_coord[Y])
-		z =(((n_point->coord[Z] - o_point->coord[Z]) * (plot_y - o_point->projected_coord[Y])) / 
+		z = (((n_point->coord[Z] - o_point->coord[Z]) * (plot_y - o_point->projected_coord[Y])) / 
 				(n_point->projected_coord[Y] - o_point->projected_coord[Y])) + o_point->coord[Z];
 	else
 		z = o_point->coord[Z];
@@ -19,9 +19,9 @@ int		set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_att
 	z = calc_z(n_point, o_point, plot_y);
 	z *= attr.color_intens;
 	if (z > 0)
-		return(det_color_p(z, attr));
+		return (det_color_p(z, attr));
 	else
-		return(det_color_n(z, attr));
+		return (det_color_n(z, attr));
 }
 
 int	out_of_bounds(int x, int y, t_data img)
@@ -245,8 +245,3 @@ void	fill_image(t_mlx *mlx, t_coordinates *points)
 		current = current->next;
 	}
 }
-
-// if (current->debug_link)
-// 	draw_line_handler(current, current->debug_link, mlx);
-// if (current->debug_link2)
-// 	draw_line_handler(current, current->debug_link2, mlx);

@@ -55,7 +55,6 @@ int		det_color_p(int z, t_attri attr)
 	b = 255 - z;
 	if (b < 0)
 		b = 0;
-
 	color_choice(&r, &g, &b, attr);
 	return (putcolor(0, r, g, b));
 }
@@ -81,7 +80,6 @@ int		det_color_n(int z, t_attri attr)
 	b = 255 - z;
 	if (b < 0)
 		b = 0;
-
 	color_choice(&r, &g, &b, attr);
 	return (putcolor(0, r, g, b));
 }

@@ -36,6 +36,32 @@ void	freeall(char *line, char **coordinates)
 		free(coordinates);
 }
 
+t_coordinates	*process_line(char **coordinates, int y, t_coordinates *point, int *index)
+{
+	int	x;
+	t_coordinates *current;
+
+	x = 0;
+	current = point;
+	if (y)
+	{
+		current->next = init();
+		current = current->next;
+	}
+	while (coordinates[x])
+	{
+		fill_node(current, x, y, ft_atoi(coordinates[x]));
+		(*index)++;
+		if (coordinates[x + 1])
+		{
+			current->next = init();
+			current = current->next;
+		}
+		x++;
+	}
+	return (current);
+}
+
 t_coordinates *get_points(int	read_file_fd)
 {
 	char	*line;
@@ -56,23 +82,7 @@ t_coordinates *get_points(int	read_file_fd)
 		if (!line)
 			break;
 		coordinates = ft_split(line, ' ');
-		x = 0;
-		if (y)
-		{
-			current->next = init();
-			current = current->next;
-		}
-		while (coordinates[x])
-		{
-			fill_node(current, x, y, ft_atoi(coordinates[x]));
-			index++;
-			if (coordinates[x + 1])
-			{
-				current->next = init();
-				current = current->next;
-			}
-			x++;
-		}
+		current = process_line(coordinates, y, current, &index);
 		freeall(line, coordinates);
 		y++;
 	}
