@@ -30,9 +30,9 @@ int	ft_atoi(const char *str);
 #define RELEASED 0
 
 enum {
-	W_CODE = 13,
+	W_CODE = 1,
 	A_CODE = 0,
-	S_CODE = 1,
+	S_CODE = 13,
 	D_CODE = 2,
 	O_CODE = 31,
 	P_CODE = 35,
