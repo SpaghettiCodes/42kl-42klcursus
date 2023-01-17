@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:47:16 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/11 17:05:05 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:08:20 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,18 @@ char	*str_join(char *str1, char *str2)
 	strjoined[i] = '\0';
 	free(str1);
 	return (strjoined);
+}
+
+int	has_sep(char *content)
+{
+	int			i;
+
+	i = 0;
+	while (content[i])
+	{
+		if (content[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }

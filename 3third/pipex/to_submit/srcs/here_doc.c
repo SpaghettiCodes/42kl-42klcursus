@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 11:06:14 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 11:07:27 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	eprint_warn_heredoc(char *limiter)
@@ -19,14 +31,14 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 		if (!line)
 		{
 			eprint_warn_heredoc(limiter);
-			break;
+			break ;
 		}
 		if (ft_strcmp_nl(line, limiter))
 		{
 			if (line)
 				free(line);
 			get_next_line(in_file, 1);
-			break;
+			break ;
 		}
 		write(out_fd, line, ft_strlen(line));
 		free(line);

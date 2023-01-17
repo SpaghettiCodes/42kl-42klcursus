@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:48 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/06 15:15:29 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:08:57 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	ft_strlen(const char *s)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!s)
-		return(0);
+		return (0);
 	while (s[i])
 		i++;
-	return(i);
+	return (i);
 }
 
 char	*ft_strdup(const char *s)

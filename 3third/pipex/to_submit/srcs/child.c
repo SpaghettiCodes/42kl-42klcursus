@@ -1,10 +1,21 @@
 /* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 11:05:57 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 11:12:22 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 int	child_error(char **path, char *asp, char *msg)
 {
 	free_all(NULL, path);
-	return(eprint(asp, msg));
+	return (eprint(asp, msg));
 }
 
 int	execute_command(char **path, char *cmd, char **envp)
@@ -67,9 +78,9 @@ void	child(t_pipex pipex, int index, int out)
 	}
 	else
 	{
-		if (dup2(pipex.infile, STDIN_FILENO) == -1)		
-			exit(child_error(pipex.path, "dup2", 
-				"input output redirection failed"));
+		if (dup2(pipex.infile, STDIN_FILENO) == -1)
+			exit(child_error(pipex.path, "dup2",
+					"input output redirection failed"));
 		close(pipex.infile);
 	}
 	if (execute_command(pipex.path,

@@ -1,4 +1,14 @@
 /* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 11:06:01 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 11:11:34 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "pipex.h"
 
@@ -11,5 +21,5 @@ int	eprint(char *element, char *msg)
 	if (msg)
 		write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
-	return(11 + ft_strlen(element) + ft_strlen(msg));
+	return (11 + ft_strlen(element) + ft_strlen(msg));
 }

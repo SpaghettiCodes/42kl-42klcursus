@@ -1,7 +1,16 @@
 /* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 11:06:27 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 11:07:03 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "pipex.h"
-#include <stdarg.h>
 
 char	*get_paths(char **envp)
 {
@@ -29,7 +38,7 @@ int	fork_child(t_pipex pipex)
 	}
 	else if (first_childpid == 0)
 		child(pipex, 0, pipex.outfile);
-	else 
+	else
 	{
 		free_all(NULL, pipex.path);
 		waitpid(first_childpid, NULL, 0);
