@@ -209,4 +209,6 @@ void	reset_rot(t_mlx *mlx);
 
 void	color_type(t_mlx *mlx);
 
+int	hook_values(t_mlx *mlx);
+
 #endif

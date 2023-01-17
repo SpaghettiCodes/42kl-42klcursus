@@ -1,5 +1,16 @@
 #include "fdf.h"
 
+int	hook_values(t_mlx *mlx)
+{
+	mlx->attributes.y_translation += mlx->key_press.kbrd[W_KEY];
+	mlx->attributes.x_translation -= mlx->key_press.kbrd[A_KEY];
+	mlx->attributes.y_translation -= mlx->key_press.kbrd[S_KEY];
+	mlx->attributes.x_translation += mlx->key_press.kbrd[D_KEY];
+	mlx->attributes.rot[X] += mlx->key_press.lmse_diff[Y] * SENS * -1;
+	mlx->attributes.rot[Y] += mlx->key_press.lmse_diff[X] * SENS;
+	mlx->attributes.rot[Z] += mlx->key_press.rmse_diff[X] * SENS;
+}
+
 void	reset_rot(t_mlx *mlx)
 {
 	mlx->attributes.rot[X] = 0;
