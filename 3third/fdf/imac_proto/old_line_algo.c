@@ -1,17 +1,5 @@
 #include "fdf.h"
 
-// self-to-do
-
-// redo line algo
-void	swap(int *a, int *b)
-{
-	int	temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
 int		calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y)
 {
 	int	z;

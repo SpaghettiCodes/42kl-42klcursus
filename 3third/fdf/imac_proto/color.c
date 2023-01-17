@@ -1,5 +1,14 @@
 #include "fdf.h"
 
+void	swap(int *a, int *b)
+{
+	int	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
 void	color_choice(int *r, int *g, int *b, t_attri attr)
 {
 	int temp;
