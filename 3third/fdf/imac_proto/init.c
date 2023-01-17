@@ -38,9 +38,7 @@ t_coordinates *init()
 	t_coordinates *ret;
 
 	ret = (t_coordinates *) malloc ( sizeof( t_coordinates ) );
-	ret->next = NULL;
-	ret->debug_link = NULL;
-	ret->debug_link2 = NULL; 
+	ret->next = NULL; 
 	ret->below = NULL;
 	return (ret);
 }
