@@ -29,6 +29,7 @@ int	ft_atoi(const char *str);
 #define PRESSED 1
 #define RELEASED 0
 
+// key codes
 enum {
 	W_CODE = 1,
 	A_CODE = 0,
@@ -41,6 +42,7 @@ enum {
 	DOWN_CODE = 125
 };
 
+// x_event numbers
 enum {
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
@@ -49,6 +51,16 @@ enum {
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
 	ON_DESTROY = 17
+};
+
+// color codes
+enum {
+	NO = 0,
+	RG = 1,
+	BG = 2,
+	RB = 3,
+	GR = 4,
+	YB = 5
 };
 
 typedef struct s_coordinates
@@ -60,15 +72,6 @@ typedef struct s_coordinates
 	struct s_coordinates	*below;
 	struct s_coordinates	*next;
 } t_coordinates;
-
-enum {
-	NO = 0,
-	RG = 1,
-	BG = 2,
-	RB = 3,
-	GR = 4,
-	YB = 5
-};
 
 typedef	struct	s_attri {
 	// 0 = x rotation, 1 = y rotation, 2 = z rotation
@@ -211,21 +214,22 @@ void			freebuffer(int **tab, t_mlx mlx);
 void			set(int **tab, t_mlx *mlx);
 
 // link points
-// n = next to, b = below
 t_coordinates	*find_adjacent(t_coordinates *points, int x, int y, char option);
 void			link_below(t_coordinates *points);
+
+// z calculators
+int				calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y);
+int				trans_z_calc(t_coordinates *n_point, t_coordinates *o_point, int plot_y);
+
+// fill image
+void			placepixel(t_data *data, int x, int y, int z, int color);
+void			fill_image(t_mlx *mlx, t_coordinates *points);
+
 
 void			reset_rot(t_mlx *mlx);
 
 void			color_type(t_mlx *mlx);
 
 int				hook_values(t_mlx *mlx);
-
-
-int				calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y);
-int				trans_z_calc(t_coordinates *n_point, t_coordinates *o_point, int plot_y);
-void			placepixel(t_data *data, int x, int y, int z, int color);
-void			fill_image(t_mlx *mlx, t_coordinates *points);
-
 
 #endif
