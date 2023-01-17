@@ -1,5 +1,11 @@
 #include "fdf.h"
 
+t_coordinates *fill_node(t_coordinates *current, int x, int y, int z)
+{
+	current->coord[X] = x;
+	current->coord[Y] = y;
+	current->coord[Z] = z;
+}
 
 t_coordinates	*process_line(char **coordinates, int y, t_coordinates *point, int *index)
 {

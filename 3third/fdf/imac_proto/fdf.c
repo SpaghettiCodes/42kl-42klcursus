@@ -1,12 +1,5 @@
 #include "fdf.h"
 
-t_coordinates *fill_node(t_coordinates *current, int x, int y, int z)
-{
-	current->coord[X] = x;
-	current->coord[Y] = y;
-	current->coord[Z] = z;
-}
-
 void	freeall(char *line, char **coordinates)
 {
 	int	i;

@@ -197,4 +197,9 @@ t_coordinates	*init();
 // get file contents
 t_coordinates *get_points(int	read_file_fd);
 
+// free
+void	freeall(char *line, char **coordinates);
+
+
+
 #endif
