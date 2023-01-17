@@ -195,4 +195,8 @@ int	rotate_x(t_coordinates *current, float radian);
 int	rotate_y(t_coordinates *current, float radian);
 int	rotate_z(t_coordinates *current, float radian);
 
+// out of bounds checker
+int	out_of_bounds(int x, int y, t_data img);
+int	out_of_bounds2(t_coordinates *coord, t_data img);
+
 #endif

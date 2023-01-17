@@ -5,7 +5,6 @@ t_coordinates *init()
 	t_coordinates *ret;
 
 	ret = (t_coordinates *) malloc ( sizeof( t_coordinates ) );
-
 	ret->next = NULL;
 	ret->debug_link = NULL;
 	ret->debug_link2 = NULL; 
@@ -38,8 +37,8 @@ void	freeall(char *line, char **coordinates)
 
 t_coordinates	*process_line(char **coordinates, int y, t_coordinates *point, int *index)
 {
-	int	x;
-	t_coordinates *current;
+	int				x;
+	t_coordinates	*current;
 
 	x = 0;
 	current = point;
@@ -51,13 +50,13 @@ t_coordinates	*process_line(char **coordinates, int y, t_coordinates *point, int
 	while (coordinates[x])
 	{
 		fill_node(current, x, y, ft_atoi(coordinates[x]));
-		(*index)++;
+		++(*index);
 		if (coordinates[x + 1])
 		{
 			current->next = init();
 			current = current->next;
 		}
-		x++;
+		++x;
 	}
 	return (current);
 }
@@ -91,8 +90,9 @@ t_coordinates *get_points(int	read_file_fd)
 }
 
 // FORMULA TO CALCULATE THE COLOR FOR LINES
-// 		plot_z = (((n_point->z - o_point->z) * (plot_x - o_point->x)) / (n_point->x - o_point->x)) + o_point->z;
-
+//		plot_z = (((n_point->z - o_point->z) * (plot_x - o_point->x)) 
+//									/
+//			(n_point->x - o_point->x)) + o_point->z;
 int	get_length()
 {
 	return (1900);
@@ -103,7 +103,8 @@ int	get_width()
 	return (980);
 }
 
-t_coordinates	*find(t_coordinates *points, int x, int y, char	option)
+// n = next to, b = below
+t_coordinates	*find_adjacent(t_coordinates *points, int x, int y, char option)
 {
 	t_coordinates *current;
 	t_coordinates *next;
@@ -129,29 +130,6 @@ t_coordinates	*find(t_coordinates *points, int x, int y, char	option)
 	return (current);
 }
 
-// void	link_points(t_coordinates *points, int	x_offset, int	y_offset, int debug_link)
-// {
-// 	t_coordinates *current;
-// 	t_coordinates *finder;
-
-// 	current = points;
-// 	while (current)
-// 	{
-// 		printf("Linking..\n");
-// 		finder = find(points, (current->coord[X] + x_offset), (current->coord[Y] + y_offset));
-// 		if (!finder)
-// 		{
-// 			current = current->next; 
-// 			continue;
-// 		}
-// 		if (debug_link == 1)
-// 			current->debug_link = finder;
-// 		else
-// 			current->debug_link2 = finder;
-// 		current = current->next;
-// 	}
-// }
-
 void	link_below(t_coordinates *points)
 {
 	t_coordinates *current;
@@ -161,20 +139,16 @@ void	link_below(t_coordinates *points)
 	int	i = 0;
 	while (current)
 	{
-		finder = find(current, current->coord[X], (current->coord[Y] + 1), 'b');
+		finder = find_adjacent(current, current->coord[X], (current->coord[Y] + 1), 'b');
 		current->below = finder;
-		finder = find(current, (current->coord[X] + 1), current->coord[Y], 'n');
+		finder = find_adjacent(current, (current->coord[X] + 1), current->coord[Y], 'n');
 		current->beside = finder;
-
 		current = current->next;
 		i++;
 	}
-	printf("Linked %d points\n", i);
 }
 
-// i dont know what the fuck i am doing lmao
-
-int	get_shit(t_mlx *mlx)
+int	hook_values(t_mlx *mlx)
 {
 	if (mlx->key_press.kbrd[W_KEY])
 		mlx->attributes.y_translation += 1;
@@ -184,11 +158,9 @@ int	get_shit(t_mlx *mlx)
 		mlx->attributes.y_translation -= 1;
 	if (mlx->key_press.kbrd[D_KEY])
 		mlx->attributes.x_translation += 1;
-
 	mlx->attributes.rot[X] += mlx->key_press.lmse_diff[Y] * SENS * -1;
 	mlx->attributes.rot[Y] += mlx->key_press.lmse_diff[X] * SENS;
 	mlx->attributes.rot[Z] += mlx->key_press.rmse_diff[X] * SENS;
-	// printf("ROT = %f, %f, %f\n", mlx->attributes.rot[X], mlx->attributes.rot[Y], mlx->attributes.rot[Z]);
 }
 
 int		**z_buffer(t_mlx mlx)
@@ -204,13 +176,12 @@ int		**z_buffer(t_mlx mlx)
 		ret[x] = malloc (sizeof(int) * mlx.width);
 		x++;
 	}
-
 	return (ret);
 }
 
 void	freebuffer(int **tab, t_mlx mlx)
 {
-	int x;
+	int	x;
 
 	x = 0;
 	while (x < mlx.length)
@@ -224,40 +195,31 @@ void	freebuffer(int **tab, t_mlx mlx)
 
 int	render_next_frame(t_mlx *mlx)
 {
-	get_shit(mlx);
-
+	hook_values(mlx);
 	mlx->image.img = mlx_new_image(mlx->info, mlx->length, mlx->width);
 	mlx->image.addr = mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
 	mlx->image.length = mlx->length;
 	mlx->image.width = mlx->width;
 	mlx->image.z_buff = mlx->z_buff;
-
 	project(mlx, mlx->attributes.type);
-
 	fill_image(mlx, mlx->points);
-
 	if (mlx->window)
 		mlx_put_image_to_window(mlx->info, mlx->window, mlx->image.img, 0, 0);
-
 	mlx_destroy_image(mlx->info, mlx->image.img);
 }
 
 void	init_attri(t_mlx mlx, t_attri *attr, t_coordinates *coordinate)
 {
 	attr->light_dis = LIGHT_DIS;
-
 	attr->rot[X] = 0;
 	attr->rot[Y] = 0;
 	attr->rot[Z] = 0;
-
 	attr->line_size = LINE_SIZE;
 	attr->x_translation = mlx.length / 2;
 	attr->y_translation = mlx.width / 2;
-
 	attr->x_mid = highest_x(coordinate) / 2;
 	attr->y_mid = highest_y(coordinate) / 2;
 	attr->z_mid = 0;
-
 	attr->z_multiplier = Z_MULTI;
 	attr->color_intens = MULITIPLIER;
 	attr->type = 'o';
@@ -281,15 +243,13 @@ void	init_keys(t_keypress *key_press)
 
 void	free_coordinate(t_coordinates **stuff)
 {
-	t_coordinates *current;
-	t_coordinates *temp;
+	t_coordinates	*current;
+	t_coordinates	*temp;
 
 	current = *(stuff);
-
 	while (current)
 	{
 		temp = current->next;
-
 		current->beside = NULL;
 		current->below = NULL;
 		free(current);
@@ -304,34 +264,21 @@ int main(int ac, char **av)
 
 	if (ac != 2)
 		return(write(2, "plz gibe nem\n", 14));
-
-	// initialize the things. yes.
 	read_file_fd = open(av[1], O_RDWR);
 	if (read_file_fd == -1)
 		return(write(2, "no exists file\n", 16));
-
-	printf("Getting points..\n");
+	write(1, "Getting points..\n", 17);
 	mlx.points = get_points(read_file_fd);
-	printf("Linking points...\n");
+	write(1, "Linking points...\n", 18);
 	link_below(mlx.points);
-	// link_points(mlx.points, 1, 1, 1);
-	// link_points(mlx.points, -1, 1, 2);
-
-	// init windows
 	mlx.length = get_length();
 	mlx.width = get_width();
 	mlx.info = mlx_init();
 	mlx.window = mlx_new_window(mlx.info, mlx.length, mlx.width, "Look At These Points");
 	mlx.z_buff = z_buffer(mlx);
-
-	// init necessary stuff
 	init_attri(mlx, &mlx.attributes, mlx.points);
 	init_keys(&mlx.key_press);
-
-	// hooks and stuff
 	hook_me_up(&mlx);
-
-	// fill image
 	mlx_loop_hook(mlx.info, render_next_frame, (void *)&mlx);
 	mlx_loop(mlx.info);
 }
