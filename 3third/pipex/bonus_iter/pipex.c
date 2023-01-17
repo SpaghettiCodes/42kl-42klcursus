@@ -95,8 +95,8 @@ void	forkchilds(t_pipex pipex)
 		else
 		{
 			if (i != 0)
-				usedp2++;
-			usedp1++;
+				++usedp2;
+			++usedp1;
 			if (usedp1 == 2)
 				close_and_repipe(pfd, &usedp1);
 			if (usedp2 == 2)

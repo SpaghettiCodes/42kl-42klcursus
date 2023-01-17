@@ -14,13 +14,13 @@
 # define PIPEX_H
 
 # include "ft_split.h"
+# include "get_next_line.h"
 # include <string.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/types.h>
-# include "get_next_line.h"
 # include <sys/types.h>
 # include <sys/wait.h>
 
