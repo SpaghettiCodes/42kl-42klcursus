@@ -28,6 +28,10 @@ typedef	struct s_philo
 
 	int			forks;
 	status		is_thinking;
+	status		writing_data;
+	status		reading_data;
+	status		updating_eat;
+	status		is_dead;
 
 	pthread_mutex_t	*r_hand;
 	pthread_mutex_t	*l_hand;
@@ -50,7 +54,13 @@ typedef struct s_data
 	// freeable
 	t_philo			*philo;
 	// freeable
+
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*death_check;
+	pthread_mutex_t	*eat_check;
+
+	pthread_mutex_t	check_status;
+	pthread_mutex_t	read_data;
 	pthread_mutex_t	write_data;
 	pthread_mutex_t	death;
 } t_data;
@@ -117,6 +127,6 @@ int				*init_eatcount(int n_philo, int eat_count);
 int				eprint(char *str);
 
 // wait for sim start
-void			waitforsignal(t_data *data);
+int				waitforsignal(t_data *data);
 
 #endif

@@ -10,24 +10,36 @@ void	philo_init(t_philo	*philo_data, t_data	*data, int id)
 		philo_data->r_hand = &data->forks[0];
 	else
 		philo_data->r_hand = &data->forks[id];
+	philo_data->writing_data = 0;
 }
 
 void	run_sim(t_philo *philo_data, t_data *data)
 {
+	int	run_sim;
 	if (philo_data->id % 2)
 	{
 		philothink(philo_data, data);
-		usleep(data->time_to_sleep / 2);
+		usleep(data->time_to_eat / 2);
 	}
-	while (data->start_sim)
+	while (1)
+	{
+		pthread_mutex_lock(&data->check_status);
+		run_sim = data->start_sim;
+		pthread_mutex_unlock(&data->check_status);
+		if (!run_sim)
+			break;
 		philo_action(philo_data, data);
+	}
 }
 
-void	waitforsignal(t_data *data)
+int	waitforsignal(t_data *data)
 {
-	while (!data->start_sim)
-		if (data->start_sim)
-			return ;
+	int	return_val;
+
+	pthread_mutex_lock(&data->check_status);
+	return_val = data->start_sim;
+	pthread_mutex_unlock(&data->check_status);
+	return (return_val);
 }
 
 int	philo(t_data *data)
@@ -42,8 +54,13 @@ int	philo(t_data *data)
 	philo_data = &data->philo[id - 1];
 	philo_init(philo_data, data, id);
 
-	waitforsignal(data);
+	while (!waitforsignal(data)) {};
 	philo_data->start_time = gettime();
+
+	// pthread_mutex_lock(&data->write_data);
+	// printf("%ld\n", philo_data->start_time);
+	// pthread_mutex_unlock(&data->write_data);
+
 	philo_data->last_eaten = philo_data->start_time;
 	run_sim(philo_data, data);
 	release_locks(philo_data, data);

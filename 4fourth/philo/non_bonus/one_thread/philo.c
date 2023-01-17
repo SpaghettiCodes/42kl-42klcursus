@@ -1,18 +1,18 @@
 #include "philo.h"
 
-pthread_mutex_t	*init_forks(int n_philo)
+pthread_mutex_t *init_mutex_table(int count)
 {
-	pthread_mutex_t	*fork_table;
+	pthread_mutex_t	*table;
 	int		i;
 
-	fork_table = malloc (sizeof(pthread_mutex_t) * n_philo);
+	table = malloc (sizeof(pthread_mutex_t) * count);
 	i = 0; 
-	while (i < n_philo)
+	while (i < count)
 	{
-		pthread_mutex_init(&fork_table[i], NULL);
+		pthread_mutex_init(&table[i], NULL);
 		i++;
 	}
-	return (fork_table);
+	return (table);
 }
 
 int	*init_eatcount(int n_philo, int eat_count)
@@ -51,28 +51,40 @@ int	init_data(t_data *data, int ac, char **av)
 		eat_count = -1;
 	data->philo = malloc (sizeof(t_philo) * data->n_philo);
 	data->eat_count = init_eatcount(data->n_philo, eat_count);
-	data->forks = init_forks(data->n_philo);
+	data->forks = init_mutex_table(data->n_philo);
+	data->death_check = init_mutex_table(data->n_philo);
+	data->eat_check = init_mutex_table(data->n_philo);
 	data->start_sim = FALSE;
 	data->philo_id = malloc ((sizeof(pthread_t) * data->n_philo));
-
+	pthread_mutex_init(&data->check_status, NULL);
+	pthread_mutex_init(&data->read_data, NULL);
 	pthread_mutex_init(&data->death, NULL);
 	pthread_mutex_init(&data->write_data, NULL);
 	return (0);
 }
 
+void	free_mutex_table(pthread_mutex_t *table, int count)
+{
+	int	i;
+	
+	i = 0;
+	while (i < count)
+	{
+		pthread_mutex_destroy(&table[i]);
+		++i;
+	}
+	free(table);
+}
+
 void	free_alldata(t_data *data)
 {
-	int	i; 
-
-	i = 0;
-	while (i < data->n_philo)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		i++;
-	}
+	free_mutex_table(data->death_check, data->n_philo);
+	free_mutex_table(data->eat_check, data->n_philo);
+	free_mutex_table(data->forks, data->n_philo);
+	pthread_mutex_destroy(&data->check_status);
+	pthread_mutex_destroy(&data->read_data);
 	pthread_mutex_destroy(&data->death);
 	pthread_mutex_destroy(&data->write_data);
-	free(data->forks);
 	free(data->eat_count);
 	free(data->philo_id);
 	free(data->philo);
@@ -95,7 +107,11 @@ int	main(int ac, char **av)
 		pthread_create(&data.philo_id[i], NULL, (void *) philo, (void *) &data);
 		i++;
 	}	
+
+	pthread_mutex_lock(&data.check_status);
 	data.start_sim = TRUE;
+	pthread_mutex_unlock(&data.check_status);
+
 	usleep(data.time_to_die);
 	check_cond(&data);
 	i = 0;

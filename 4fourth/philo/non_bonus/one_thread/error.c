@@ -7,8 +7,14 @@ int	eprint(char *str)
 
 void	release_locks(t_philo *philo_data, t_data *data)
 {
-	pthread_mutex_unlock(philo_data->l_hand);
-	pthread_mutex_unlock(philo_data->r_hand);
-	pthread_mutex_unlock(&data->write_data);
-	pthread_mutex_unlock(&data->death);
+	if (philo_data->forks > 0)
+	{
+		pthread_mutex_unlock(philo_data->l_hand);
+		if (philo_data->forks == 2)
+			pthread_mutex_unlock(philo_data->r_hand);
+	}
+	if (philo_data->writing_data)
+		pthread_mutex_unlock(&data->write_data);
+	if (philo_data->reading_data)
+		pthread_mutex_unlock(&data->read_data);
 }
