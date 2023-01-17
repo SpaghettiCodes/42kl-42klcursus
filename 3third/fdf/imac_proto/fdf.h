@@ -205,6 +205,11 @@ int	handle_pressed2(int keycode, t_mlx *mlx);
 int	handle_pressed(int keycode, t_mlx *mlx);
 int	handle_released(int keycode, t_keypress *key_press);
 
+// z_buffer functions
+int		**z_buffer(t_mlx mlx);
+void	freebuffer(int **tab, t_mlx mlx);
+void	set(int **tab, t_mlx *mlx);
+
 void	reset_rot(t_mlx *mlx);
 
 void	color_type(t_mlx *mlx);

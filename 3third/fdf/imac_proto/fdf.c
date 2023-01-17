@@ -59,35 +59,6 @@ void	link_below(t_coordinates *points)
 	}
 }
 
-int		**z_buffer(t_mlx mlx)
-{
-	int	**ret;
-	int	x;
-	int	y;
-
-	ret = malloc (sizeof(int *) * mlx.length);
-	x = 0;
-	while (x < mlx.length)
-	{
-		ret[x] = malloc (sizeof(int) * mlx.width);
-		x++;
-	}
-	return (ret);
-}
-
-void	freebuffer(int **tab, t_mlx mlx)
-{
-	int	x;
-
-	x = 0;
-	while (x < mlx.length)
-	{
-		free(tab[x]);
-		x++;
-	}
-	free(tab);
-}
-
 int	render_next_frame(t_mlx *mlx)
 {
 	hook_values(mlx);

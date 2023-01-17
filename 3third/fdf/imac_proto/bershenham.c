@@ -189,24 +189,6 @@ void	draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *ml
 	}
 }
 
-void	set(int **tab, t_mlx *mlx)
-{
-	int x;
-	int y; 
-
-	x = 0;
-	while (x < mlx->length)
-	{
-		y = 0;
-		while (y < mlx->width)
-		{
-			tab[x][y] = INT_MIN;
-			y++;
-		}
-		x++;
-	}
-}
-
 void	fill_image(t_mlx *mlx, t_coordinates *points)
 {
 	t_coordinates	*current;
