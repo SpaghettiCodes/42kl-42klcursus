@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:05:57 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 11:12:22 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:30:15 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ void	next_child(t_pipex pipex, int *next_pipe, int index)
 		exit(eprint("fork", "fork failed"));
 	}
 	else
-	{
 		close(next_pipe[1]);
-		waitpid(next_childfd, 0, 0);
-	}
 }
 
 void	child(t_pipex pipex, int index, int out)
