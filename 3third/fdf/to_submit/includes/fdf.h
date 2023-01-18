@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:01:54 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/18 13:20:21 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:24:06 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 # define X_LINE_LENGTH 50
 # define Y_LINE_LENGTH 50
 # define MULITIPLIER 5
+# define SENS 0.05
+# define LIGHT_DIS 800
+# define TRANS_X 800
+# define TRANS_Y 384
+# define LINE_SIZE 25
+# define Z_MULTI 1
 
 # define X 0
 # define Y 1
@@ -110,8 +116,6 @@ typedef struct s_attri {
 	int		color_type;
 }	t_attri;
 
-# define SENS 0.05
-
 typedef struct s_keypress {
 	int		mse[2];
 	int		kbrd[4];
@@ -154,13 +158,6 @@ typedef struct s_lineutils
 	int	yi;
 	int	xi;
 }	t_lineutils;
-
-// recommended = 1600
-# define LIGHT_DIS 800
-# define TRANS_X 800
-# define TRANS_Y 384
-# define LINE_SIZE 25
-# define Z_MULTI 1
 
 // get file contents
 t_coordinates	*get_points(int read_file_fd);
