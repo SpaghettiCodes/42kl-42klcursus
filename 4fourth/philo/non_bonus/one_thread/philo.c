@@ -66,7 +66,7 @@ int	init_data(t_data *data, int ac, char **av)
 void	free_mutex_table(pthread_mutex_t *table, int count)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < count)
 	{
@@ -106,13 +106,10 @@ int	main(int ac, char **av)
 	{
 		pthread_create(&data.philo_id[i], NULL, (void *) philo, (void *) &data);
 		i++;
-	}	
-
+	}
 	pthread_mutex_lock(&data.check_status);
 	data.start_sim = TRUE;
 	pthread_mutex_unlock(&data.check_status);
-
-	usleep(data.time_to_die);
 	check_cond(&data);
 	i = 0;
 	while (i < data.n_philo)

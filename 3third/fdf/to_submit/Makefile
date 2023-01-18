@@ -8,7 +8,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-all : a_san
+all : $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $(NAME)

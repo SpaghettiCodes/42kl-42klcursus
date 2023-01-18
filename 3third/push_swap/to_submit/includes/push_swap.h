@@ -21,13 +21,7 @@
 
 // the struct
 
-typedef struct s_instructions
-{
-	char					*move;
-	struct s_instructions	*next;
-}	t_instructions;
-
-typedef unsigned int	t_bool;
+typedef unsigned char	t_bool;
 # define TRUE 1
 # define FALSE 0
 
@@ -151,18 +145,6 @@ void			rotate_to_correct(t_pushswap *stack,
 void			go_to_last_chunk(t_pushswap *stack,
 					int last_stack_smallest_loc);
 
-// structure stuff
-// count number of instructions to sort data
-int				count_instruct(t_instructions *instruct);
-// delete and free all of instructions
-void			del_all(t_instructions **instructions);
-// initialize instructions
-t_instructions	*init_instruction(void);
-// returns the pointer to the last node in a linked list
-t_instructions	*last_node(t_instructions *instruction);
-// adds a new node at the last node in a linked list
-void			add_node(t_instructions *instruction, char *move);
-
 // array utils
 // copys one int array to another int array and returns
 // a pointer to the copied int array
@@ -170,9 +152,8 @@ int				*int_dup(int *source, int source_size);
 // duplicates a string and returns a pointer to the duplicated string
 char			*str_dup(char *str);
 
-//print
+//utils
 int				str_len(char *str);
-void			print_instruction(t_instructions *instruction);
 
 // error
 int				error(t_pushswap *stack, char **free_me, int *free_me_2);
@@ -181,8 +162,6 @@ int				error(t_pushswap *stack, char **free_me, int *free_me_2);
 // initialize chunk (pushing 2 elements from b to a to
 // have a start element and end element)
 int				init_chunk(t_pushswap *stack);
-// initialize a new instruction node
-t_instructions	*init_instruct_node(void);
 // initalize stacks a and b and also instructions
 void			init_stacks(t_pushswap *stack);
 // initalize push_swap structure

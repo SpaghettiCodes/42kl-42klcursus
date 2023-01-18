@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.h                                         :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 16:47:12 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/18 16:47:13 by cshi-xia         ###   ########.fr       */
+/*   Created: 2022/07/04 12:10:53 by cshi-xia          #+#    #+#             */
+/*   Updated: 2022/07/17 18:49:46 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SPLIT_H
-# define FT_SPLIT_H
+#include "ft_printf.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/types.h>
+int	ft_atoi(const char *str)
+{
+	int	result;
+	int	i;
 
-int		ft_strlen(const char *s);
-char	*ft_strdup(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	**ft_split(char const *s, char c);
-
-#endif
+	i = 0;
+	result = 0;
+	while (str[i] <= '9' && str[i] >= '0')
+	{
+		result = (result * 10) + (str[i] - '0');
+		i++;
+	}
+	return (result);
+}

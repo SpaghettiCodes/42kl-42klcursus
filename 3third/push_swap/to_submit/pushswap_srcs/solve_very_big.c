@@ -39,7 +39,7 @@ void	push_to_b(t_pushswap *stack, int start_loc, int end_loc, int chunk_size)
 	while (chunk_size)
 	{
 		find_and_push(stack, max, min);
-		chunk_size--;
+		--chunk_size;
 	}
 }
 

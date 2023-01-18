@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/17 12:50:39 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 12:50:43 by cshi-xia         ###   ########.fr       */
+/*   Created: 2023/01/18 16:47:15 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/18 16:47:16 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define PIPEX_H
 
 # include "ft_split.h"
-# include "get_next_line.h"
 # include <string.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/types.h>
+# include "get_next_line.h"
 # include <sys/types.h>
 # include <sys/wait.h>
 

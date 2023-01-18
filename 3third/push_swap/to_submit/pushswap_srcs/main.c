@@ -19,8 +19,10 @@ int	checkdup(t_pushswap *stack)
 
 	i = -1;
 	while (++i < (stack->total_size - 1))
+	{
 		if (stack->sorted[i] == stack->sorted[i + 1])
 			return (error(stack, NULL, NULL));
+	}
 	return (1);
 }
 
@@ -30,8 +32,10 @@ int	is_solved(int *tab, int tab_size)
 
 	i = -1;
 	while (++i < (tab_size - 1))
+	{
 		if (tab[i] > tab[i + 1])
 			return (0);
+	}
 	return (1);
 }
 

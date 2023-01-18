@@ -13,8 +13,4 @@ void	release_locks(t_philo *philo_data, t_data *data)
 		if (philo_data->forks == 2)
 			pthread_mutex_unlock(philo_data->r_hand);
 	}
-	if (philo_data->writing_data)
-		pthread_mutex_unlock(&data->write_data);
-	if (philo_data->reading_data)
-		pthread_mutex_unlock(&data->read_data);
 }

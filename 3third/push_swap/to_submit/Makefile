@@ -16,7 +16,9 @@ NAME = push_swap
 
 BONUS = checker
 
-all : $(NAME)
+all : manda bonus
+
+manda : $(NAME)
 
 bonus : $(BONUS)
 
