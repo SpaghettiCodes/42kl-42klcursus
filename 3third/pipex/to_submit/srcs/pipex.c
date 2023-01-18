@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:06:27 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 11:07:03 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:48:27 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,26 @@ int	fork_child(t_pipex pipex)
 	return (0);
 }
 
+char	**set_paths(char **envp)
+{
+	char	*path_var;
+	char	**ret;
+
+	path_var = get_paths(envp);
+	if (!path_var)
+	{
+		eprint("PATH", "Who the hell unsetted path???");
+		return (NULL);
+	}
+	ret = ft_split((get_paths(envp)), ':');
+	if (!ret)
+	{
+		eprint("ft_split", "split failed");
+		return (NULL);
+	}
+	return (ret);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex	pipex;
@@ -54,7 +74,10 @@ int	main(int ac, char **av, char **envp)
 	if (ac < 5)
 		return (eprint("ARG", "not enough arguments"));
 	pipex.envp = envp;
-	if (ft_strfind (av[1], "here_doc"))
+	pipex.path = set_paths(envp);
+	if (!pipex.path)
+		return (20);
+	if (ft_strfind(av[1], "here_doc"))
 	{
 		if (pipe(h_d) == -1)
 			return (eprint("PIPE", "pipe failed"));
@@ -68,6 +91,5 @@ int	main(int ac, char **av, char **envp)
 		pipex.cmd = &av[2];
 		pipex.cmd_num = ac - 3;
 	}
-	pipex.path = ft_split((get_paths(envp)), ':');
 	return (fork_child(pipex));
 }
