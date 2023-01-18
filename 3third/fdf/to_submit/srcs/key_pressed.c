@@ -35,8 +35,6 @@ int	handle_pressed2(int keycode, t_mlx *mlx)
 		mlx->attributes.color_intens += 0.5;
 	else if (keycode == RIGHT_CODE)
 		mlx->attributes.color_intens -= 0.5;
-	else
-		printf("This button was pressed = %d\n", keycode);
 	return (keycode);
 }
 

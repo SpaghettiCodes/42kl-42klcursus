@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:14:43 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:15:06 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:15:02 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_attri(t_mlx mlx, t_attri *attr, t_coordinates *coordinate)
 	attr->y_mid = highest_y(coordinate) / 2;
 	attr->z_mid = 0;
 	attr->z_multiplier = Z_MULTI;
-	attr->color_intens = MULITIPLIER;
+	attr->color_intens = COL_MULTIPLIER;
 	attr->type = 'o';
 	attr->color_type = RG;
 }

@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:06:14 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 11:07:27 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:17:25 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	eprint_warn_heredoc(char *limiter)
 {
-	write(2, "\npipex: warning: here-document delimited by end-of-file", 56);
-	write(2, " (wanted '", 11);
+	write(2, "\npipex: warning: here-document delimited by end-of-file", 55);
+	write(2, " (wanted '", 10);
 	write(2, limiter, ft_strlen(limiter));
 	write(2, "')\n", 3);
 }
@@ -26,7 +26,7 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 
 	while (1)
 	{
-		write(in_file, "> ", 2);
+		write(in_file, "pipe heredoc> ", 14);
 		line = get_next_line(in_file, 0);
 		if (!line)
 		{

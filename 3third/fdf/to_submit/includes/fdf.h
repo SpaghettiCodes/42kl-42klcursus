@@ -13,151 +13,16 @@
 #ifndef FDF_H
 # define FDF_H
 
-# include "mlx.h"
-# include <fcntl.h>
+# include "fdf_struct.h"
+# include "fdf_const.h"
+
 # include "get_next_line.h"
 # include "ft_split.h"
+
+# include "mlx.h"
+# include <fcntl.h>
 # include <math.h>
 # include <limits.h>
-
-# define X_LINE_LENGTH 50
-# define Y_LINE_LENGTH 50
-# define MULITIPLIER 5
-# define SENS 0.05
-# define LIGHT_DIS 800
-# define TRANS_X 800
-# define TRANS_Y 384
-# define LINE_SIZE 25
-# define Z_MULTI 1
-
-# define X 0
-# define Y 1
-# define Z 2
-
-# define L_MSE 0
-# define R_MSE 1
-
-# define W_KEY 0
-# define A_KEY 1
-# define S_KEY 2
-# define D_KEY 3
-
-# define PRESSED 1
-# define RELEASED 0
-
-# define LENGTH 1980
-# define WIDTH 980
-
-// key codes
-enum {
-	W_CODE = 1,
-	A_CODE = 0,
-	S_CODE = 13,
-	D_CODE = 2,
-	O_CODE = 31,
-	P_CODE = 35,
-	C_CODE = 8,
-	LEFT_CODE = 123,
-	RIGHT_CODE = 124,
-	R_CODE = 15,
-	ESC_CODE = 53,
-	UP_CODE = 126,
-	DOWN_CODE = 125
-};
-
-// x_event numbers
-enum {
-	ON_KEYDOWN = 2,
-	ON_KEYUP = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
-	ON_DESTROY = 17
-};
-
-// color codes
-enum {
-	NO = 0,
-	RG = 1,
-	BG = 2,
-	RB = 3,
-	GR = 4,
-	YB = 5
-};
-
-typedef struct s_coordinates
-{
-	int						coord[3];
-	int						projected_coord[2];
-	float					trans_coord[3];
-	struct s_coordinates	*beside;
-	struct s_coordinates	*below;
-	struct s_coordinates	*next;
-}	t_coordinates;
-
-typedef struct s_attri {
-	double	rot[3];
-	int		x_translation;
-	int		y_translation;
-
-	float	line_size;
-	int		light_dis;
-
-	float	x_mid;
-	float	y_mid;
-	float	z_mid;
-
-	float	z_multiplier;
-	float	z_diff;
-	char	type;
-
-	float	color_intens;
-	int		color_type;
-}	t_attri;
-
-typedef struct s_keypress {
-	int		mse[2];
-	int		kbrd[4];
-	int		lmse_coord[2];
-	float	lmse_diff[2];
-	int		rmse_coord[2];
-	float	rmse_diff[2];
-}	t_keypress;
-
-typedef struct s_img {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		length;
-	int		width;
-	int		**z_buff;
-}	t_data;
-
-typedef struct s_mlx {
-	void			*info;
-	void			*window;
-	t_data			image;
-	t_coordinates	*points;
-	t_attri			attributes;
-	t_keypress		key_press;
-	int				length;
-	int				width;
-	int				**z_buff;
-}	t_mlx;
-
-typedef struct s_lineutils
-{
-	int	dx;
-	int	dy;
-	int	diff;
-	int	x;
-	int	y;
-	int	yi;
-	int	xi;
-}	t_lineutils;
 
 // get file contents
 t_coordinates	*get_points(int read_file_fd);

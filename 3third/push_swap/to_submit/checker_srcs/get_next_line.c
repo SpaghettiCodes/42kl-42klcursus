@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:47:21 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 17:26:31 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 14:08:25 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	has_sep(char *content)
 	i = 0;
 	while (content[i])
 	{
-		i++;
 		if (content[i] == '\n')
 			return (1);
+		i++;
 	}
 	return (0);
 }

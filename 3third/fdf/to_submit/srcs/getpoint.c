@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:14:17 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/18 12:34:04 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:14:50 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,18 @@ t_coordinates	*process_line(char *line, int y,
 	return (current);
 }
 
+void	write_num(unsigned int n)
+{
+	if (n >= 10)
+		write_num(n / 10);
+	write(1, &"0123456789"[n % 10], 1);
+}
+
 t_coordinates	*get_points(int read_file_fd)
 {
 	char			*line;
 	int				y;
-	int				total;
+	unsigned int	total;
 	t_coordinates	*ret;
 	t_coordinates	*current;
 
@@ -70,6 +77,8 @@ t_coordinates	*get_points(int read_file_fd)
 		freeall(line, NULL);
 		y++;
 	}
-	printf("Got all points = %d\n", total);
+	write(1, "Got all points = ", 17);
+	write_num(total);
+	write(1, "\n", 1);
 	return (ret);
 }
