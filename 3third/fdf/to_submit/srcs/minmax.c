@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:15:42 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:15:59 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:55:04 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	highest_x(t_coordinates *coordinates)
 
 int	highest_y(t_coordinates *coordinates)
 {
-	t_coordinates *current;
+	t_coordinates	*current;
 
 	current = coordinates;
 	while (current->below)

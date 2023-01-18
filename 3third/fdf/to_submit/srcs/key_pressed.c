@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:15:09 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:15:10 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:12:51 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ int	handle_pressed2(int keycode, t_mlx *mlx)
 		if (mlx->attributes.z_multiplier > 0)
 			mlx->attributes.z_multiplier -= 0.005;
 	}
-	else if (keycode == 65361)
+	else if (keycode == LEFT_CODE)
 		mlx->attributes.color_intens += 0.5;
-	else if (keycode == 65363)
+	else if (keycode == RIGHT_CODE)
 		mlx->attributes.color_intens -= 0.5;
+	else
+		printf("This button was pressed = %d\n", keycode);
 	return (keycode);
 }
 
@@ -43,15 +45,7 @@ int	handle_pressed2(int keycode, t_mlx *mlx)
 int	handle_pressed(int keycode, t_mlx *mlx)
 {
 	if (keycode == ESC_CODE)
-	{
-		write(1, "Exit Window\n", 13);
-		mlx_destroy_window(mlx->info, mlx->window);
-		mlx->window = NULL;
-		freebuffer(mlx->z_buff, *mlx);
-		free(mlx->info);
-		free_coordinate(&mlx->points);
-		exit(0);
-	}
+		clean_exit(mlx);
 	else if (keycode == D_CODE)
 		mlx->key_press.kbrd[D_KEY] = PRESSED;
 	else if (keycode == W_CODE)
@@ -60,12 +54,13 @@ int	handle_pressed(int keycode, t_mlx *mlx)
 		mlx->key_press.kbrd[A_KEY] = PRESSED;
 	else if (keycode == S_CODE)
 		mlx->key_press.kbrd[S_KEY] = PRESSED;
-	else if (keycode == 114)
+	else if (keycode == R_CODE)
 		reset_rot(mlx);
-	else if (keycode == 99)
+	else if (keycode == C_CODE)
 		color_type(mlx);
 	else
 		return (handle_pressed2(keycode, mlx));
+	return (keycode);
 }
 
 int	handle_released(int keycode, t_keypress *key_press)

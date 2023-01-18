@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:15:17 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:15:32 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:54:56 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ void	link_below(t_coordinates *points)
 {
 	t_coordinates	*current;
 	t_coordinates	*finder;
+	int				i;
 
 	current = points;
-	int	i = 0;
+	i = 0;
 	while (current)
 	{
 		finder = find_adjacent(current, current->coord[X],

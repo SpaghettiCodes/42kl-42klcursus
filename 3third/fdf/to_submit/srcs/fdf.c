@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:12:17 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:12:55 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:19:39 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@
 //		plot_z = (((n_point->z - o_point->z) * (plot_x - o_point->x)) 
 //									/
 //			(n_point->x - o_point->x)) + o_point->z;
-int	get_length(void)
-{
-	return (1900);
-}
-
-int	get_width(void)
-{
-	return (980);
-}
 
 int	render_next_frame(t_mlx *mlx)
 {
@@ -41,6 +32,7 @@ int	render_next_frame(t_mlx *mlx)
 	if (mlx->window)
 		mlx_put_image_to_window(mlx->info, mlx->window, mlx->image.img, 0, 0);
 	mlx_destroy_image(mlx->info, mlx->image.img);
+	return (1);
 }
 
 void	free_coordinate(t_coordinates **stuff)
@@ -73,8 +65,8 @@ int	main(int ac, char **av)
 	mlx.points = get_points(read_file_fd);
 	write(1, "Linking points...\n", 18);
 	link_below(mlx.points);
-	mlx.length = get_length();
-	mlx.width = get_width();
+	mlx.length = LENGTH;
+	mlx.width = WIDTH;
 	mlx.info = mlx_init();
 	mlx.window = mlx_new_window(mlx.info, mlx.length,
 			mlx.width, "Look At These Points");

@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:16:40 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:17:46 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:01:52 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,20 @@
 // assumme light source at (0,0,D)
 void	perspective_projection(t_coordinates *current, int light_dis)
 {
-	float	d_Dz;
+	float	d_dz;
 
-	d_Dz = light_dis - current->trans_coord[Z];
-	if (d_Dz <= 0)
-		d_Dz = 1;
+	d_dz = light_dis - current->trans_coord[Z];
+	if (d_dz <= 0)
+		d_dz = 1;
+	current->projected_coord[X] = (light_dis * current->trans_coord[X]) / d_dz;
+	current->projected_coord[Y] = (light_dis * current->trans_coord[Y]) / d_dz;
+}
 
-	current->projected_coord[X] = ((light_dis * current->trans_coord[X])
-			/ d_Dz);
-	current->projected_coord[Y] = ((light_dis * current->trans_coord[Y])
-			/ d_Dz);
+void	set_rot(t_coordinates *current, t_attri *attr)
+{
+	rotate_x(current, attr->rot[X]);
+	rotate_y(current, attr->rot[Y]);
+	rotate_z(current, attr->rot[Z]);
 }
 
 void	project(t_mlx *mlx, char type)
@@ -43,9 +47,7 @@ void	project(t_mlx *mlx, char type)
 			* attr->line_size;
 		current->trans_coord[Z] = (current->coord[Z] - attr->z_mid)
 			* attr->line_size * attr->z_multiplier;
-		rotate_x(current, attr->rot[X]);
-		rotate_y(current, attr->rot[Y]);
-		rotate_z(current, attr->rot[Z]);
+		set_rot(current, attr);
 		if (type == 'o')
 		{
 			current->projected_coord[X] = current->trans_coord[X];

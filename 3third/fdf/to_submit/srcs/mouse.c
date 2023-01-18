@@ -6,13 +6,13 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:16:06 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:16:07 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 13:09:16 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	mouse_press(int	keycode, int x, int y, t_mlx *mlx)
+int	mouse_press(int keycode, int x, int y, t_mlx *mlx)
 {
 	if (keycode == 1)
 	{
@@ -20,7 +20,7 @@ int	mouse_press(int	keycode, int x, int y, t_mlx *mlx)
 		mlx->key_press.lmse_coord[X] = x;
 		mlx->key_press.lmse_coord[Y] = y;
 	}
-	else if (keycode == 3)
+	else if (keycode == 2)
 	{
 		mlx->key_press.mse[R_MSE] = PRESSED;
 		mlx->key_press.rmse_coord[X] = x;
@@ -38,6 +38,8 @@ int	mouse_press(int	keycode, int x, int y, t_mlx *mlx)
 
 int	mouse_released(int keycode, int x, int y, t_keypress *key_press)
 {
+	(void)x;
+	(void)y;
 	if (keycode == 1)
 	{
 		key_press->mse[L_MSE] = RELEASED;
@@ -76,4 +78,5 @@ int	mouse_movement(int x, int y, t_keypress *key_press)
 		key_press->rmse_coord[X] = x;
 		key_press->rmse_coord[Y] = y;
 	}
+	return (1);
 }

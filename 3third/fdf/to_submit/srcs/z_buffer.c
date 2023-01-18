@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:18:16 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:18:41 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:38:52 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	**z_buffer(t_mlx mlx)
 {
 	int	**ret;
 	int	x;
-	int	y;
 
 	ret = malloc (sizeof(int *) * mlx.length);
 	x = 0;
@@ -57,4 +56,14 @@ void	set(int **tab, t_mlx *mlx)
 		}
 		x++;
 	}
+}
+
+int	check_z_buff(t_data *data, int x, int y, int z)
+{
+	if (data->z_buff[x][y] < z)
+	{
+		data->z_buff[x][y] = z;
+		return (1);
+	}
+	return (0);
 }

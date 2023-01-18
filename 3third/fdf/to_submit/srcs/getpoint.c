@@ -6,13 +6,13 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 22:14:17 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 22:14:38 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:34:04 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_coordinates	*fill_node(t_coordinates *current, int x, int y, int z)
+void	fill_node(t_coordinates *current, int x, int y, int z)
 {
 	current->coord[X] = x;
 	current->coord[Y] = y;
