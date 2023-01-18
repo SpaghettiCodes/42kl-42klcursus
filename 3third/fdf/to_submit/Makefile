@@ -1,8 +1,6 @@
-SRCS = $(wildcard *.c)
- 
-OBJ = $(SRCS:.c=.o)
+SRCS = $(wildcard ./srcs/*.c)
 
-MAP = map.fdf
+OBJ = $(SRCS:.c=.o)
 
 NAME = test
 
@@ -20,7 +18,7 @@ a_san: $(OBJ)
 	$(CC) $(OBJ) -Lmlx -lmlx -fsanitize=address -framework OpenGL -framework AppKit -o $(NAME)
 
 %.o : %.c
-	$(CC) -I. -Imlx -c $< -o $@
+	$(CC) -Iincludes -Imlx -c $< -o $@
 
 clean :
 	rm -rf *.o
@@ -30,6 +28,3 @@ fclean : clean
 	rm -rf $(NAME)
 
 re : fclean all
-
-run	: $(NAME)
-	./$(NAME) $(MAP)

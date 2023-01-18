@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   z_buffer.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 22:18:16 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 22:18:41 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-int		**z_buffer(t_mlx mlx)
+int	**z_buffer(t_mlx mlx)
 {
 	int	**ret;
 	int	x;
@@ -31,8 +43,8 @@ void	freebuffer(int **tab, t_mlx mlx)
 
 void	set(int **tab, t_mlx *mlx)
 {
-	int x;
-	int y; 
+	int	x;
+	int	y;
 
 	x = 0;
 	while (x < mlx->length)

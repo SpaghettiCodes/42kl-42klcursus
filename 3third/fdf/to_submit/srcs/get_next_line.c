@@ -6,12 +6,11 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:47:21 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/11 18:47:13 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:14:10 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int	has_sep(char *content)
 {
@@ -82,7 +81,7 @@ char	*buff_to_content(char *buff, int fd, char *content)
 			break ;
 	}
 	free(buff);
-	return (content) ;
+	return (content);
 }
 
 char	*get_next_line(int fd)

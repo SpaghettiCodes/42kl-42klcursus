@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_images.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 22:06:57 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 22:07:10 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y)
@@ -5,8 +17,7 @@ int	calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y)
 	int	z;
 
 	if (n_point && n_point->projected_coord[Y] - o_point->projected_coord[Y])
-		z = (((n_point->coord[Z] - o_point->coord[Z]) * (plot_y - o_point->projected_coord[Y])) / 
-				(n_point->projected_coord[Y] - o_point->projected_coord[Y])) + o_point->coord[Z];
+		z = (((n_point->coord[Z] - o_point->coord[Z]) * (plot_y - o_point->projected_coord[Y])) / (n_point->projected_coord[Y] - o_point->projected_coord[Y])) + o_point->coord[Z];
 	else
 		z = o_point->coord[Z];
 	return (z);
@@ -34,7 +45,8 @@ int	trans_z_calc(t_coordinates *n_point, t_coordinates *o_point, int plot_y)
 	return (z);
 }
 
-// funny formula to calculate memory offset = (y * line_length + x * (bits_per_pixel / 8));
+// funny formula to calculate memory offset
+// (y * line_length + x * (bits_per_pixel / 8));
 void	placepixel(t_data *data, int x, int y, int z, int color)
 {
 	char	*dst;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 22:11:25 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 22:12:10 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	swap(int *a, int *b)
@@ -9,9 +21,10 @@ void	swap(int *a, int *b)
 	*b = temp;
 }
 
-int	set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_attri attr)
+int	set_color(int plot_y, t_coordinates *o_point,
+	t_coordinates *n_point, t_attri attr)
 {
-	float z;
+	float	z;
 
 	z = calc_z(n_point, o_point, plot_y);
 	z *= attr.color_intens;
@@ -23,10 +36,10 @@ int	set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_attr
 
 void	color_choice(int *r, int *g, int *b, t_attri attr)
 {
-	int temp;
+	int	temp;
 
 	if (attr.color_type == RG)
-		return;
+		return ;
 	else if (attr.color_type == NO)
 	{
 		*r = 255;
@@ -47,9 +60,11 @@ void	color_choice(int *r, int *g, int *b, t_attri attr)
 	}
 }
 
-int		det_color_p(int z, t_attri attr)
+int	det_color_p(int z, t_attri attr)
 {
-	int	r, g, b;
+	int	r;
+	int	g;
+	int	b;
 	int	diff;
 
 	diff = 0;
@@ -71,9 +86,11 @@ int		det_color_p(int z, t_attri attr)
 	return (putcolor(0, r, g, b));
 }
 
-int		det_color_n(int z, t_attri attr)
+int	det_color_n(int z, t_attri attr)
 {
-	int	r, g, b;
+	int	r;
+	int	g;
+	int	b;
 	int	diff;
 
 	z *= -1;

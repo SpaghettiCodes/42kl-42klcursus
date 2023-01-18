@@ -6,13 +6,14 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:13:14 by cshi-xia          #+#    #+#             */
-/*   Updated: 2022/07/06 18:03:47 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:13:51 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_split.h"
 
-// returns a MALLOCED substring that starts at "start" and with the length of "len"
+/* returns a MALLOCED substring that starts at
+** "start" and with the length of "len" */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;

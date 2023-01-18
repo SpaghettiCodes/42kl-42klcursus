@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 22:12:17 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 22:12:55 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 // FORMULA TO CALCULATE THE COLOR FOR LINES
 //		plot_z = (((n_point->z - o_point->z) * (plot_x - o_point->x)) 
 //									/
 //			(n_point->x - o_point->x)) + o_point->z;
-int	get_length()
+int	get_length(void)
 {
 	return (1900);
 }
 
-int	get_width()
+int	get_width(void)
 {
 	return (980);
 }
@@ -18,7 +30,9 @@ int	render_next_frame(t_mlx *mlx)
 {
 	hook_values(mlx);
 	mlx->image.img = mlx_new_image(mlx->info, mlx->length, mlx->width);
-	mlx->image.addr = mlx_get_data_addr(mlx->image.img, &mlx->image.bits_per_pixel, &mlx->image.line_length, &mlx->image.endian);
+	mlx->image.addr = mlx_get_data_addr(mlx->image.img,
+			&mlx->image.bits_per_pixel,
+			&mlx->image.line_length, &mlx->image.endian);
 	mlx->image.length = mlx->length;
 	mlx->image.width = mlx->width;
 	mlx->image.z_buff = mlx->z_buff;
@@ -45,7 +59,7 @@ void	free_coordinate(t_coordinates **stuff)
 	}
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_mlx	mlx;
 	int		read_file_fd;
@@ -62,7 +76,8 @@ int main(int ac, char **av)
 	mlx.length = get_length();
 	mlx.width = get_width();
 	mlx.info = mlx_init();
-	mlx.window = mlx_new_window(mlx.info, mlx.length, mlx.width, "Look At These Points");
+	mlx.window = mlx_new_window(mlx.info, mlx.length,
+			mlx.width, "Look At These Points");
 	mlx.z_buff = z_buffer(mlx);
 	init_attri(mlx, &mlx.attributes, mlx.points);
 	init_keys(&mlx.key_press);

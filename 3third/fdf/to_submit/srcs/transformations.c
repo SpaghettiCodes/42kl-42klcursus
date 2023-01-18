@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   transformations.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 22:16:40 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 22:17:46 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 // apparantly should work
@@ -10,8 +22,10 @@ void	perspective_projection(t_coordinates *current, int light_dis)
 	if (d_Dz <= 0)
 		d_Dz = 1;
 
-	current->projected_coord[X] = ((light_dis * current->trans_coord[X]) / d_Dz);
-	current->projected_coord[Y] = ((light_dis * current->trans_coord[Y]) / d_Dz);
+	current->projected_coord[X] = ((light_dis * current->trans_coord[X])
+			/ d_Dz);
+	current->projected_coord[Y] = ((light_dis * current->trans_coord[Y])
+			/ d_Dz);
 }
 
 void	project(t_mlx *mlx, char type)
@@ -23,9 +37,12 @@ void	project(t_mlx *mlx, char type)
 	attr = &mlx->attributes;
 	while (current)
 	{
-		current->trans_coord[X] = (current->coord[X] - attr->x_mid ) * attr->line_size;
-		current->trans_coord[Y] = (current->coord[Y] - attr->y_mid ) * attr->line_size;
-		current->trans_coord[Z] = (current->coord[Z] - attr->z_mid ) * attr->line_size * attr->z_multiplier;
+		current->trans_coord[X] = (current->coord[X] - attr->x_mid)
+			* attr->line_size;
+		current->trans_coord[Y] = (current->coord[Y] - attr->y_mid)
+			* attr->line_size;
+		current->trans_coord[Z] = (current->coord[Z] - attr->z_mid)
+			* attr->line_size * attr->z_multiplier;
 		rotate_x(current, attr->rot[X]);
 		rotate_y(current, attr->rot[Y]);
 		rotate_z(current, attr->rot[Z]);

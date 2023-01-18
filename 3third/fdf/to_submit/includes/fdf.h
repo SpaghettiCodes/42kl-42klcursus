@@ -1,33 +1,43 @@
-#ifndef TEST_H
-#define TEST_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 22:01:54 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 22:08:13 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "./mlx/mlx.h"
-#include <fcntl.h>
-#include "get_next_line.h"
-#include "ft_split.h"
-#include <math.h>
-#include <limits.h>
+#ifndef FDF_H
+# define FDF_H
 
-#define X_LINE_LENGTH 50
-#define Y_LINE_LENGTH 50
-#define MULITIPLIER 5
+# include "mlx.h"
+# include <fcntl.h>
+# include "get_next_line.h"
+# include "ft_split.h"
+# include <math.h>
+# include <limits.h>
 
-int	ft_atoi(const char *str);
+# define X_LINE_LENGTH 50
+# define Y_LINE_LENGTH 50
+# define MULITIPLIER 5
 
-#define X 0
-#define Y 1
-#define Z 2
+# define X 0
+# define Y 1
+# define Z 2
 
-#define L_MSE 0
-#define R_MSE 1
+# define L_MSE 0
+# define R_MSE 1
 
-#define W_KEY 0
-#define A_KEY 1
-#define S_KEY 2
-#define D_KEY 3
+# define W_KEY 0
+# define A_KEY 1
+# define S_KEY 2
+# define D_KEY 3
 
-#define PRESSED 1
-#define RELEASED 0
+# define PRESSED 1
+# define RELEASED 0
 
 // key codes
 enum {
@@ -71,18 +81,15 @@ typedef struct s_coordinates
 	struct s_coordinates	*beside;
 	struct s_coordinates	*below;
 	struct s_coordinates	*next;
-} t_coordinates;
+}	t_coordinates;
 
-typedef	struct	s_attri {
-	// 0 = x rotation, 1 = y rotation, 2 = z rotation
+typedef struct s_attri {
 	double	rot[3];
+	int		x_translation;
+	int		y_translation;
 
-	int	x_translation;
-	int	y_translation;
-	
 	float	line_size;
-	// D = light source Distance btw (0, 0, D)
-	int	light_dis;
+	int		light_dis;
 
 	float	x_mid;
 	float	y_mid;
@@ -94,20 +101,20 @@ typedef	struct	s_attri {
 
 	float	color_intens;
 	int		color_type;
-} t_attri;
+}	t_attri;
 
-#define SENS 0.05
+# define SENS 0.05
 
-typedef	struct	s_keypress {
+typedef struct s_keypress {
 	int		mse[2];
 	int		kbrd[4];
 	int		lmse_coord[2];
 	float	lmse_diff[2];
 	int		rmse_coord[2];
 	float	rmse_diff[2];
-} t_keypress;
+}	t_keypress;
 
-typedef struct	s_img {
+typedef struct s_img {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -118,8 +125,7 @@ typedef struct	s_img {
 	int		**z_buff;
 }	t_data;
 
-typedef struct	s_mlx
-{
+typedef struct s_mlx {
 	void			*info;
 	void			*window;
 	t_data			image;
@@ -129,7 +135,7 @@ typedef struct	s_mlx
 	int				length;
 	int				width;
 	int				**z_buff;
-} t_mlx;
+}	t_mlx;
 
 typedef struct s_lineutils
 {
@@ -139,38 +145,47 @@ typedef struct s_lineutils
 	int	x;
 	int	y;
 	int	yi;
-	int xi;
-} t_lineutils;
+	int	xi;
+}	t_lineutils;
 
 // recommended = 1600
-#define LIGHT_DIS 800
-#define TRANS_X 800
-#define TRANS_Y 384
-#define LINE_SIZE 25
-#define Z_MULTI 1
+# define LIGHT_DIS 800
+# define TRANS_X 800
+# define TRANS_Y 384
+# define LINE_SIZE 25
+# define Z_MULTI 1
 
+int				ft_atoi(const char *str);
 void			project(t_mlx *mlx, char type);
 int				highest_x(t_coordinates *coordinates);
 int				highest_y(t_coordinates *coordinates);
 int				highest_z(t_coordinates *coordinates);
 int				lowest_z(t_coordinates *coordinates);
 int				hook_me_up(t_mlx *mlx);
-int				set_color(int plot_y, t_coordinates *o_point, t_coordinates *n_point, t_attri attr);
+int				set_color(int plot_y, t_coordinates *o_point,
+					t_coordinates *n_point, t_attri attr);
 
-int				putcolor(unsigned char trans, unsigned char r, unsigned char g, unsigned char b);
+int				putcolor(unsigned char trans, unsigned char r,
+					unsigned char g, unsigned char b);
 
 // bersenham line algo
 void			next_ll(t_lineutils *line);
 void			next_hl(t_lineutils *line);
-void			draw_low_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx);
-void			draw_high_line(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx);
-void			draw_vertical(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx);
-void			draw_line_handler(t_coordinates *o_point, t_coordinates *n_point, t_mlx *mlx);
+void			draw_low_line(t_coordinates *o_point,
+					t_coordinates *n_point, t_mlx *mlx);
+void			draw_high_line(t_coordinates *o_point,
+					t_coordinates *n_point, t_mlx *mlx);
+void			draw_vertical(t_coordinates *o_point,
+					t_coordinates *n_point, t_mlx *mlx);
+void			draw_line_handler(t_coordinates *o_point,
+					t_coordinates *n_point, t_mlx *mlx);
 
 // mouse
-int				mouse_press(int	keycode, int x, int y, t_mlx *mlx);
-int				mouse_released(int keycode, int x, int y, t_keypress *key_press);
-int				mouse_movement(int x, int y, t_keypress *key_press);
+int				mouse_press(int keycode, int x, int y, t_mlx *mlx);
+int				mouse_released(int keycode, int x, int y,
+					t_keypress *key_press);
+int				mouse_movement(int x, int y,
+					t_keypress *key_press);
 
 // colors
 void			color_choice(int *r, int *g, int *b, t_attri attr);
@@ -193,10 +208,10 @@ int				out_of_bounds2(t_coordinates *coord, t_data img);
 // init
 void			init_attri(t_mlx mlx, t_attri *attr, t_coordinates *coordinate);
 void			init_keys(t_keypress *key_press);
-t_coordinates	*init();
+t_coordinates	*init(void);
 
 // get file contents
-t_coordinates	*get_points(int	read_file_fd);
+t_coordinates	*get_points(int read_file_fd);
 
 // free
 void			freeall(char *line, char **coordinates);
@@ -214,12 +229,15 @@ void			freebuffer(int **tab, t_mlx mlx);
 void			set(int **tab, t_mlx *mlx);
 
 // link points
-t_coordinates	*find_adjacent(t_coordinates *points, int x, int y, char option);
+t_coordinates	*find_adjacent(t_coordinates *points,
+					int x, int y, char option);
 void			link_below(t_coordinates *points);
 
 // z calculators
-int				calc_z(t_coordinates *n_point, t_coordinates *o_point, int plot_y);
-int				trans_z_calc(t_coordinates *n_point, t_coordinates *o_point, int plot_y);
+int				calc_z(t_coordinates *n_point,
+					t_coordinates *o_point, int plot_y);
+int				trans_z_calc(t_coordinates *n_point,
+					t_coordinates *o_point, int plot_y);
 
 // fill image
 void			placepixel(t_data *data, int x, int y, int z, int color);

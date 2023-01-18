@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 22:14:43 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/17 22:15:06 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	init_attri(t_mlx mlx, t_attri *attr, t_coordinates *coordinate)
@@ -33,12 +45,12 @@ void	init_keys(t_keypress *key_press)
 	key_press->rmse_diff[Y] = 0;
 }
 
-t_coordinates *init()
+t_coordinates	*init(void)
 {
-	t_coordinates *ret;
+	t_coordinates	*ret;
 
-	ret = (t_coordinates *) malloc ( sizeof( t_coordinates ) );
-	ret->next = NULL; 
+	ret = (t_coordinates *) malloc (sizeof(t_coordinates));
+	ret->next = NULL;
 	ret->below = NULL;
 	return (ret);
 }
