@@ -53,7 +53,7 @@ typedef struct s_val
 	char	*define;
 
 	struct s_val *next;
-} t_val;
+}	t_val;
 
 typedef struct s_token
 {
@@ -62,7 +62,7 @@ typedef struct s_token
 	int		type;
 
 	struct s_token *next;
-} t_token;
+}	t_token;
 
 typedef struct s_cmd
 {
@@ -72,7 +72,7 @@ typedef struct s_cmd
 	t_token *tokens;
 
 	struct s_cmd *next;
-} t_cmd;
+}	t_cmd;
 
 typedef struct s_cmd_info
 {
@@ -82,19 +82,19 @@ typedef struct s_cmd_info
 
 	t_val *global_var;
 	t_val *private_var;
-} t_cmd_info;
+}	t_cmd_info;
 
-int		search_element(char *input, char to_search, int start);
+int			search_element(char *input, char to_search, int start);
 
-t_val	*init_val();
+t_val		*init_val();
 
-t_val	*get_envval(char **envp);
-void	fill_val(t_val *current, char *keyword, char *define);
-bool	new_variable(char *input, t_val *private_val);
+t_val		*get_envval(char **envp);
+void		fill_val(t_val *current, char *keyword, char *define);
+bool		new_variable(char *input, t_val *private_val);
 
 t_token		*init_token(int	token_no);
-void	delete_token_node(t_token **current);
-void	delete_tokens(t_token **stuff);
-void	replace_variable(char *cmd, t_val *global_var, t_val *private_val);
+void		delete_token_node(t_token **current);
+void		delete_tokens(t_token **stuff);
+void		replace_variable(char *cmd, t_val *global_var, t_val *private_val);
 
 #endif

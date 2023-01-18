@@ -6,22 +6,22 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:06:31 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 11:06:40 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:01:13 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_strfind(char *str1, char *str2)
+int	ft_strfind(char *haystack, char *needle)
 {
 	int	i;
 
 	i = 0;
-	if (!str1 || !str2)
+	if (!haystack || !needle)
 		return (0);
-	while (str1[i] == str2[i])
+	while (haystack[i] == needle[i])
 	{
-		if (!str2[i + 1])
+		if (!needle[i + 1])
 			return (1);
 		i++;
 	}
