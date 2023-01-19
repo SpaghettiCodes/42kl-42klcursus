@@ -32,7 +32,7 @@ long int	gettime()
 
 int	eprint(char	*str)
 {
-	return(write(2, str, str_len(str)));
+	return (write(2, str, str_len(str)));
 }
 
 void	open_sem(t_data *data)
@@ -73,15 +73,38 @@ void	init_philo(t_philo *philo, t_data *data, int id)
 	philo->is_writing = FALSE;
 }
 
+void	check_death(void *arg)
+{
+	t_philo	*philo;
+	t_data	*data;
+
+	philo = (t_philo *)arg;
+	data = philo->data;
+	while (data->start_sim)
+	{
+		usleep(data->time_to_die);
+		if ((gettime() - philo->last_eaten) > data->time_to_die)
+		{
+			print_timestamp(data, philo, "died\n");
+			sem_post(data->end);
+			sem_wait(data->start);
+			return ;
+		}
+	}
+}
+
 void	run_sim(t_philo *philo)
 {
 	t_data *data;
+	pthread_t death_thread;
 
 	data = philo->data;
 	sem_wait(data->start);
 	data->start_sim = TRUE;
 	philo->start_time = gettime();
 	philo->last_eaten = philo->start_time;
+	pthread_create(&death_thread, 0, (void *)check_death, philo);
+	pthread_detach(death_thread);
 	if (philo->id > (data->n_philo / 2))
 	{
 		philothink(philo, data);
@@ -91,40 +114,13 @@ void	run_sim(t_philo *philo)
 		philo_action(philo, data);
 }
 
-void	wait_sig(t_data *data)
-{
-	while (!data->start_sim)
-		if (data->start_sim)
-			break;
-}
-
-int	check_death(t_philo *philo, t_data *data)
-{
-	// printf("hyok\n");
-	wait_sig(data);
-	usleep(10000);
-	while (data->start_sim)
-	{
-		if (gettime() - philo->last_eaten > data->time_to_die)
-		{
-			print_timestamp(data, philo, "died\n");
-			data->start_sim = FALSE;
-			sem_wait(data->start);
-			sem_post(data->end);
-			exit (1);
-		}
-	}
-}
-
 int philo(int id, t_data *data)
 {
-	t_philo philo;
-	pthread_t sim;
+	t_philo		philo;
 
 	++id;
 	init_philo(&philo, data, id);
-	pthread_create(&sim, 0, (void *)run_sim, &philo);
-	check_death(&philo, data);
+	run_sim(&philo);
 }
 
 void	killallchild(t_data data)
@@ -158,10 +154,10 @@ void	full_check(t_data *data)
 	while (done_eating < data->n_philo)
 	{
 		sem_wait(data->full);
-		done_eating++;
+		++done_eating;
 	}
 	sem_post(data->end);
-	exit(10);
+	return ;
 }
 
 void	death_check(t_data *data, pthread_t *checker)
@@ -206,7 +202,7 @@ int	main(int ac, char **av)
 			exit(10);
 		}
 		else
-			i++;
+			++i;
 	}
 	i = -1;
 	while (++i < data.n_philo)

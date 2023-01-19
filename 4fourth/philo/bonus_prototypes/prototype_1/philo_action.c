@@ -8,7 +8,7 @@ void	philoeat(t_philo *philo, t_data *data)
 	// philo->start_time = philo->last_eaten;
 	if (data->eat_count > 0)
 	{
-		data->eat_count--;
+		--data->eat_count;
 		if (data->eat_count == 0)
 			sem_post(data->full);
 	}
