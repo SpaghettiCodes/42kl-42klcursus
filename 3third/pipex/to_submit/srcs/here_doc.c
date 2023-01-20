@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:06:14 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/18 13:17:25 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:31:39 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	fill_in_pipe(int in_file, int out_fd, char *limiter)
 void	here_doc(t_pipex *fd_list, char **av, int ac, int p[2])
 {
 	fd_list->outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd_list->outfile == -1)
+		exit(eprint(av[1], "File creation failed"));
 	fill_in_pipe(STDIN_FILENO, p[1], av[2]);
 	close(p[1]);
 	fd_list->infile = p[0];
@@ -55,8 +57,10 @@ void	here_doc(t_pipex *fd_list, char **av, int ac, int p[2])
 
 void	get_fd(t_pipex *fd_list, char **av, int ac)
 {
+	fd_list->outfile = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd_list->outfile == -1)
+		exit(eprint(av[1], "File creation failed"));
 	fd_list->infile = open(av[1], O_RDONLY);
 	if (fd_list->infile == -1)
 		exit(eprint(av[1], "No such file or directory"));
-	fd_list->outfile = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 }

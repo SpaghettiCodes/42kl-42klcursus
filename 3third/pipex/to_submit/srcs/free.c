@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:06:06 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 11:06:08 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:33:04 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,4 @@ void	free_double_arr(char **to_free)
 		i++;
 	}
 	free(to_free);
-}
-
-int	free_all(char **item1, char **item2)
-{
-	if (item1)
-		free_double_arr(item1);
-	if (item2)
-		free_double_arr(item2);
-	return (6);
 }

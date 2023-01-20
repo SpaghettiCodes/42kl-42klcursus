@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:06:01 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/18 13:17:45 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:25:48 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 int	eprint(char *element, char *msg)
 {
-	write(2, "pipex: ", 7);
-	if (element)
-		write(2, element, ft_strlen(element));
-	write(2, ": ", 2);
-	if (msg)
-		write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	return (11 + ft_strlen(element) + ft_strlen(msg));
+	int		ret_val;
+	char	*error_msg;
+
+	error_msg = n_append("pipex : ", element);
+	error_msg = append(error_msg, " : ");
+	error_msg = append(error_msg, msg);
+	error_msg = append(error_msg, "\n");
+	ret_val = ft_strlen(error_msg);
+	write (2, error_msg, ret_val);
+	free(error_msg);
+	return (ret_val);
 }

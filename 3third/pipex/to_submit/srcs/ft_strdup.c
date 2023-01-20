@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 12:12:48 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/17 11:08:57 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:23:35 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*ft_strdup(const char *s)
 	int		i;
 	int		slen;
 
+	if (!s)
+		return (NULL);
 	slen = ft_strlen(s);
 	dup = (char *) malloc ((slen + 1) * sizeof(char));
 	if (!dup)

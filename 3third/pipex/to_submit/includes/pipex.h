@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 16:47:15 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/18 16:47:16 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:33:07 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_pipex{
 	char	**cmd;
 	char	**envp;
 	char	**path;
+	char	**binary_paths;
 }	t_pipex;
 
 void	fill_in_pipe(int in_file, int out_fd, char *limiter);
@@ -42,10 +43,9 @@ int		ft_strcmp_nl(char *str1, char *str2);
 char	*append(char *str1, char *str2);
 char	*n_append(char *str1, char *str2);
 int		eprint(char *element, char *msg);
-int		execute_command(char **path, char *cmd, char **envp);
 void	child(t_pipex pipex, int index, int in);
-char	*get_binarypath(char *command, char **paths);
+void	parse_path(t_pipex *data);
 
-int		free_all(char **item1, char **item2);
+void	free_double_arr(char **to_free);
 
 #endif

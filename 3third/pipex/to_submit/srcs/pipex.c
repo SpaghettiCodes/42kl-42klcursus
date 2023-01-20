@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:06:27 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/18 14:48:27 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:32:31 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int	fork_child(t_pipex pipex)
 	first_childpid = fork();
 	if (first_childpid == -1)
 	{
-		free_all(NULL, pipex.path);
+		free_double_arr(pipex.binary_paths);
 		return (eprint("FORK", "fork failed"));
 	}
 	else if (first_childpid == 0)
 		child(pipex, 0, pipex.outfile);
 	else
 	{
-		free_all(NULL, pipex.path);
+		free_double_arr(pipex.binary_paths);
 		waitpid(first_childpid, NULL, 0);
 	}
 	return (0);
@@ -57,7 +57,7 @@ char	**set_paths(char **envp)
 		eprint("PATH", "Who the hell unsetted path???");
 		return (NULL);
 	}
-	ret = ft_split((get_paths(envp)), ':');
+	ret = ft_split(path_var, ':');
 	if (!ret)
 	{
 		eprint("ft_split", "split failed");
@@ -91,5 +91,7 @@ int	main(int ac, char **av, char **envp)
 		pipex.cmd = &av[2];
 		pipex.cmd_num = ac - 3;
 	}
+	parse_path(&pipex);
+	free_double_arr(pipex.path);
 	return (fork_child(pipex));
 }
