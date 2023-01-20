@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:05:57 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/21 00:33:18 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:38:36 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	child_error(char **binary_path, char *asp, char *msg)
 	return (eprint(asp, msg));
 }
 
-int	execute_command(char *cmd_path, char *cmd, char **envp)
+int	exe_cmd(char *cmd_path, char *cmd, char **envp)
 {
 	char	**command;
 
@@ -58,7 +58,7 @@ void	child(t_pipex pipex, int index, int out)
 	char	*binary_paths;
 	int		next_pipe[2];
 
-	index++;
+	++index;
 	if (dup2(out, STDOUT_FILENO) == -1)
 		exit(child_error(pipex.binary_paths, "dup2", "output redirection failed"));
 	close(out);
@@ -79,7 +79,6 @@ void	child(t_pipex pipex, int index, int out)
 	}
 	binary_paths = ft_strdup(pipex.binary_paths[pipex.cmd_num - index]);
 	free_double_arr(pipex.binary_paths);
-	if (execute_command(binary_paths,
-			pipex.cmd[pipex.cmd_num - index], pipex.envp))
+	if (exe_cmd(binary_paths, pipex.cmd[pipex.cmd_num - index], pipex.envp))
 		exit(1);
 }
