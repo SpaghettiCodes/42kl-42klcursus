@@ -28,11 +28,10 @@ void	print_timestamp(t_data *data, t_philo *philo_data, char *msg)
 	id = philo_data->id;
 	time = (gettime() - philo_data->start_time) / 1000;
 
+	pthread_mutex_lock(&data->write_data);
 	pthread_mutex_lock(&data->check_status);
 	start_sim = data->start_sim;
 	pthread_mutex_unlock(&data->check_status);
-
-	pthread_mutex_lock(&data->write_data);
 	if (start_sim)
 	{
 		write_nbr(time);

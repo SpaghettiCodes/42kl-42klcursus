@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_check.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/20 14:17:23 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/20 14:20:28 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	check_count(t_data *data)
@@ -82,7 +94,6 @@ void	check_cond(t_data *data)
 {
 	pthread_t	death_check;
 	pthread_t	eat_check;
-	int			start_sim;
 
 	pthread_create(&death_check, NULL, (void *) check_death, (void *) data);
 	pthread_detach(death_check);
