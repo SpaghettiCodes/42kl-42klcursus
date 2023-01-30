@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:16:17 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/22 12:03:37 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:07:21 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	philoeat(t_philo *philo, t_data *data)
 	}
 }
 
-void	philosleep(t_philo *philo,  t_data *data)
+void	philosleep(t_philo *philo, t_data *data)
 {
 	print_timestamp(data, philo, "is sleeping\n");
 	usleep(data->time_to_sleep);

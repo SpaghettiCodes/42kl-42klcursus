@@ -6,13 +6,13 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:16:32 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/20 14:16:33 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:04:38 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		str_len(char *msg)
+int	str_len(char *msg)
 {
 	int	i;
 

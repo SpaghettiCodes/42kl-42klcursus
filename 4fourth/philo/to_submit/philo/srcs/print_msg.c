@@ -6,13 +6,13 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:30 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/21 17:14:14 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:14:41 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		str_len(char *msg)
+int	str_len(char *msg)
 {
 	int	i;
 
@@ -37,7 +37,6 @@ void	print_timestamp(t_data *data, t_philo *philo_data, char *msg)
 
 	id = philo_data->id;
 	time = (gettime() - philo_data->start_time) / 1000;
-
 	pthread_mutex_lock(&data->write_data);
 	pthread_mutex_lock(&data->check_status);
 	start_sim = data->start_sim;

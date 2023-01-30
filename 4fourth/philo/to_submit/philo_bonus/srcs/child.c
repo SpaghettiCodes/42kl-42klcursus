@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/30 17:01:39 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/30 17:08:39 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	run_sim(t_philo *philo)
 {
-	t_data *data;
-	pthread_t death_thread;
+	t_data		*data;
+	pthread_t	death_thread;
 
 	data = philo->data;
 	sem_wait(data->start);

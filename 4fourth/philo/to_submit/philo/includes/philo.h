@@ -6,43 +6,43 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:39:44 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/23 15:56:53 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:19:15 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <sys/time.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <limits.h>
+# include <sys/time.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <limits.h>
 
 // defines
 
-#define TRUE 1
-#define FALSE 0
+# define TRUE 1
+# define FALSE 0
 
 // m yes typedef
 
-typedef	unsigned char status;
+typedef unsigned char	t_status;
 
 // structures
 
-typedef	struct s_philo
+typedef struct s_philo
 {
-	int			id;
-	long int	start_time;
-	long int	last_eaten;
+	int				id;
+	long int		start_time;
+	long int		last_eaten;
 
-	int			forks;
+	int				forks;
 
 	pthread_mutex_t	*r_hand;
 	pthread_mutex_t	*l_hand;
-} t_philo;
+}	t_philo;
 
 typedef struct s_data
 {
@@ -57,8 +57,8 @@ typedef struct s_data
 
 	pthread_t		*philo_id;
 
-	status			start_sim;
-	status			error;
+	t_status		start_sim;
+	t_status		error;
 
 	t_philo			*philo;
 
@@ -70,12 +70,12 @@ typedef struct s_data
 	pthread_mutex_t	read_data;
 	pthread_mutex_t	write_data;
 	pthread_mutex_t	death;
-} t_data;
+}	t_data;
 
 // print timestamps
 
 // get current time
-long int		gettime();
+long int		gettime(void);
 // print the message in the format - [timestamp] [id] [msg]
 void			print_timestamp(t_data *data, t_philo *philo_data, char *msg);
 
@@ -91,7 +91,7 @@ int				str_len(char *msg);
 // philosopher eats
 void			philoeat(t_philo *philo_data, t_data *data);
 // philosopher sleeps
-void			philosleep(t_philo *philo_data,  t_data *data);
+void			philosleep(t_philo *philo_data, t_data *data);
 // philosopher thinks
 void			philothink(t_philo *philo_data, t_data *data);
 // philosopher tries to get fork

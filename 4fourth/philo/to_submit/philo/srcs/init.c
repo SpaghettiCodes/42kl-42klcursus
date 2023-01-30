@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/30 16:50:58 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/30 17:19:00 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 pthread_mutex_t	*init_mutex_table(int count)
@@ -11,7 +23,7 @@ pthread_mutex_t	*init_mutex_table(int count)
 		write(2, "malloc failed\n", 14);
 		return (NULL);
 	}
-	i = 0; 
+	i = 0;
 	while (i < count)
 	{
 		if (init_mutex(&table[i]))
@@ -61,9 +73,8 @@ int	init_mutexes(t_data *data)
 	data->forks = init_mutex_table(data->n_philo);
 	data->death_check = init_mutex_table(data->n_philo);
 	data->eat_check = init_mutex_table(data->n_philo);
-
 	if (!data->forks || !data->death_check || !data->eat_check
-		|| init_mutex(&data->check_status) || init_mutex(&data->read_data) 
+		|| init_mutex(&data->check_status) || init_mutex(&data->read_data)
 		|| init_mutex(&data->death) || init_mutex(&data->write_data))
 	{
 		free_alldata(data, 0);

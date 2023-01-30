@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:21 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/20 23:04:50 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:13:40 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	philoeat(t_philo *philo_data, t_data *data)
 
 	index = philo_data->id - 1;
 	print_timestamp(data, philo_data, "is eating\n");
-
 	pthread_mutex_lock(&data->death_check[index]);
 	philo_data->last_eaten = gettime();
 	pthread_mutex_unlock(&data->death_check[index]);
@@ -55,7 +54,6 @@ void	get_fork(t_philo *philo_data, t_data *data)
 
 void	philo_action(t_philo *philo_data, t_data *data)
 {
-	// get fork
 	if (!philo_data->forks)
 	{
 		get_fork(philo_data, data);
@@ -64,11 +62,9 @@ void	philo_action(t_philo *philo_data, t_data *data)
 	else if (philo_data->forks == 2)
 	{
 		philoeat(philo_data, data);
-		// return fork
 		pthread_mutex_unlock(philo_data->l_hand);
 		pthread_mutex_unlock(philo_data->r_hand);
 		philo_data->forks = 0;
-		// sleep and think
 		philosleep(philo_data, data);
 		philothink(philo_data, data);
 		return ;

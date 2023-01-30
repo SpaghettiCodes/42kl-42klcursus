@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:27 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/22 14:51:39 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:14:00 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	main(int ac, char **av)
 	i = -1;
 	while (++i < data.n_philo)
 	{
-		if (pthread_create(&data.philo_id[i], NULL, (void *) philo, (void *) &data))
+		if (pthread_create(&data.philo_id[i], NULL,
+				(void *) philo, (void *) &data))
 		{
 			data.error = TRUE;
 			join_threads(&data, i);

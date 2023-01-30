@@ -6,13 +6,13 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:34 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/21 23:53:17 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:10:37 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long int	gettime()
+long int	gettime(void)
 {
 	struct timeval	time;
 

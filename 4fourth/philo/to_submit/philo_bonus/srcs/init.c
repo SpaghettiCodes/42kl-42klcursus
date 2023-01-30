@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/30 17:01:53 by cshi-xia          #+#    #+#             */
+/*   Updated: 2023/01/30 17:08:21 by cshi-xia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	init_data(t_data *data, int ac, char **av)
@@ -6,7 +18,7 @@ int	init_data(t_data *data, int ac, char **av)
 	data->time_to_die = ft_atoi(av[2]) * 1000;
 	data->time_to_eat = ft_atoi(av[3]) * 1000;
 	data->time_to_sleep = ft_atoi(av[4]) * 1000;
-	if (data->time_to_die <= 0 || data->time_to_eat <= 0 
+	if (data->time_to_die <= 0 || data->time_to_eat <= 0
 		|| data->time_to_sleep <= 0)
 		return (eprint("Invalid Arguments\n"));
 	data->eat_count = -1;
@@ -29,6 +41,6 @@ void	init_philo(t_philo *philo, t_data *data, int id)
 	philo->data = data;
 	philo->id = id;
 	philo->forks = 0;
-	philo->is_eating = FALSE; 
+	philo->is_eating = FALSE;
 	philo->is_writing = FALSE;
 }
