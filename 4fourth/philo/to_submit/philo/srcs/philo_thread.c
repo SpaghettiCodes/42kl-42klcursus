@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:25 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/20 14:20:38 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:56:16 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 void	philo_init(t_philo	*philo_data, t_data	*data, int id)
 {
 	philo_data->id = id;
-	philo_data->is_thinking = FALSE;
 	philo_data->forks = 0;
 	philo_data->l_hand = &data->forks[id - 1];
 	if (id == data->n_philo)
 		philo_data->r_hand = &data->forks[0];
 	else
 		philo_data->r_hand = &data->forks[id];
-	philo_data->writing_data = 0;
 }
 
 void	run_sim(t_philo *philo_data, t_data *data)
@@ -48,32 +46,37 @@ void	run_sim(t_philo *philo_data, t_data *data)
 int	waitforsignal(t_data *data)
 {
 	int	return_val;
+	int	err_val;
 
 	pthread_mutex_lock(&data->check_status);
 	return_val = data->start_sim;
+	err_val = data->error;
 	pthread_mutex_unlock(&data->check_status);
+	if (err_val)
+		return (-1);
 	return (return_val);
 }
 
 int	philo(t_data *data)
 {
 	t_philo	*philo_data;
+	int		ret_val;
 	int		id;
 
 	pthread_mutex_lock(&data->write_data);
 	id = ++data->id;
 	pthread_mutex_unlock(&data->write_data);
-
 	philo_data = &data->philo[id - 1];
 	philo_init(philo_data, data, id);
-
-	while (!waitforsignal(data))
+	while (1)
 	{
+		ret_val = waitforsignal(data);
+		if (ret_val == -1)
+			return (-1);
+		else if (ret_val)
+			break ;
 	}
 	philo_data->start_time = gettime();
-	// pthread_mutex_lock(&data->write_data);
-	// printf("%ld\n", philo_data->start_time);
-	// pthread_mutex_unlock(&data->write_data);
 	philo_data->last_eaten = philo_data->start_time;
 	run_sim(philo_data, data);
 	release_locks(philo_data);

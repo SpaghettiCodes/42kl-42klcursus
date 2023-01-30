@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:39:44 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/20 14:39:45 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:56:53 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ typedef	struct s_philo
 	long int	last_eaten;
 
 	int			forks;
-	status		is_thinking;
-	status		writing_data;
-	status		reading_data;
-	status		updating_eat;
-	status		is_dead;
 
 	pthread_mutex_t	*r_hand;
 	pthread_mutex_t	*l_hand;
@@ -63,6 +58,7 @@ typedef struct s_data
 	pthread_t		*philo_id;
 
 	status			start_sim;
+	status			error;
 
 	t_philo			*philo;
 
@@ -106,7 +102,7 @@ void			philo_action(t_philo *philo_data, t_data *data);
 // condition checkers
 
 // condition checker
-void			check_cond(t_data *data);
+int				check_cond(t_data *data);
 // checks if [eat count] is fulfilled for each philospher
 int				check_count(t_data *data);
 // check if philosopher is dead for every death time
@@ -128,7 +124,7 @@ pthread_mutex_t	*init_forks(int n_philo);
 // initialize the philo structure
 void			philo_init(t_philo	*philo_data, t_data	*data, int id);
 // initalize data struct based on argc and argv
-int				init_data(t_data *data, int ac, char **av);
+int				get_data(t_data *data, int ac, char **av);
 // initalize the eat count table
 int				*init_eatcount(int n_philo, int eat_count);
 
@@ -139,5 +135,11 @@ int				eprint(char *str);
 
 // wait for sim start
 int				waitforsignal(t_data *data);
+
+int				init_mutex(pthread_mutex_t *to_init);
+
+void			free_mutex_table(pthread_mutex_t *table, int count);
+
+void			free_alldata(t_data *data, char mutex_inited);
 
 #endif

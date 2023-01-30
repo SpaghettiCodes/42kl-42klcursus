@@ -13,12 +13,12 @@ namespace ft
 	class array
 	{
 		public:
-			typedef T _type;
-			typedef std::size_t size_type;
-			typedef std::ptrdiff_t difference_type;
-			typedef _type& reference;
-			typedef _type* pointer; 
-			typedef ft::random_iterator<_type> iterator;
+			typedef T							_type;
+			typedef std::size_t					size_type;
+			typedef std::ptrdiff_t				difference_type;
+			typedef _type&						reference;
+			typedef _type*						pointer; 
+			typedef ft::random_iterator<_type>	iterator;
 
 			array() : _size(_elem_no)
 			{ _content  = alloc.allocate(_size); }

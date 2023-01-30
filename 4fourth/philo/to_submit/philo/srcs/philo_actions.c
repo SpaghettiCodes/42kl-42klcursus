@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:21 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/20 14:17:22 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:04:50 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	philoeat(t_philo *philo_data, t_data *data)
 	pthread_mutex_lock(&data->death_check[index]);
 	philo_data->last_eaten = gettime();
 	pthread_mutex_unlock(&data->death_check[index]);
-	// debug purposes
-	// philo_data->start_time = philo_data->last_eaten;
 	usleep(data->time_to_eat);
 	pthread_mutex_lock(&data->eat_check[index]);
 	if (data->eat_count[index] > 0)

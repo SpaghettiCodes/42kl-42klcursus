@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:34 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/20 14:17:35 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/21 23:53:17 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ long int	gettime()
 {
 	struct timeval	time;
 
-	gettimeofday(&time, NULL);
+	if (gettimeofday(&time, NULL) == -1)
+	{
+		eprint("Error = unable to get time");
+		return (0);
+	}
 	return ((time.tv_sec * 1000000) + time.tv_usec);
 }

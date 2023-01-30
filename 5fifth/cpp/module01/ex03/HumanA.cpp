@@ -5,7 +5,7 @@
 // weapon is a reference, so inintialize it at constructor initialize list (weapon HAS to be assigned to something)
 
 // Initializer List - used to initialize the data member of a class
-// i think its used specifically by constructors? not sure
+// used specifically by constructors
 
 // list of memebrs to be initialize is indicated with constructor as a comma-seperated list followed by a colon
 

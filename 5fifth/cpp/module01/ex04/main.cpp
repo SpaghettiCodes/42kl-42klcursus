@@ -21,6 +21,7 @@
 // 		std::string start;
 // };
 
+// I WAS PROUD WITH THIS FUNCTION :(((((((
 // int		find(std::string &content, std::string &toreplace, int start)
 // {
 // 	if (!toreplace.length())
@@ -58,20 +59,12 @@
 
 void	read_and_replace(std::ifstream &in, std::ofstream &out, std::string &toreplace, std::string &replacewith)
 {
-	std::string buff;
 	std::string content;
 
-	while (!in.eof())
-	{
-		getline(in, buff);
+	for (std::string buff; getline(in , buff); )
 		content.append(buff.append("\n"));
-	}
 
-	int i, found = content.find(toreplace);
-	i = 0;
-	
-	while (i < (int) content.length())
-	{
+	for (int i = 0, found = content.find(toreplace); i < (int) content.length(); ) {
 		if (i == found)
 		{
 			out << replacewith;
@@ -81,9 +74,17 @@ void	read_and_replace(std::ifstream &in, std::ofstream &out, std::string &torepl
 		else
 		{
 			out << content[i];
-			i++;
+			++i;
 		}
 	}
+}
+
+void	copy_to(std::ifstream &infile, std::ofstream &outfile)
+{; 
+	std::cerr << "Warning: Replacing Nothing" << std::endl;
+	for (std::string buff; getline(infile, buff); )
+		outfile << buff << "\n";
+	return ;
 }
 
 // av[1] = filename
@@ -91,25 +92,29 @@ void	read_and_replace(std::ifstream &in, std::ofstream &out, std::string &torepl
 // av[3] = replace with
 int main(int ac, char **av)
 {
-	std::ifstream infile;
-	std::ofstream outfile;
+	std::ifstream	infile;
+	std::ofstream	outfile;
+
+	std::string		filename = av[1];
+	std::string		toreplace = av[2];
+	std::string		replacewith = av[3];
 
 	if (ac < 4)
 	{
-		std::cout << "Not enough arguments" << std::endl;
+		std::cerr << "Not enough arguments" << std::endl;
 		return (4);
 	}
 	infile.open(av[1], std::ios::in);
 	if (!infile)
 	{
-		std::cout << "File cant be opened" << std::endl;
+		std::cerr << "File cant be opened" << std::endl;
 		return (-1);
 	}
-	std::string filename = av[1];
 	filename.append(".replace");
 	outfile.open(filename.c_str(), std::ios::out | std::ios::trunc);
-
-	std::string toreplace = av[2];
-	std::string replacewith = av[3];
-	read_and_replace(infile, outfile, toreplace, replacewith);
+	if (!toreplace.size())
+		copy_to(infile, outfile);
+	else
+		read_and_replace(infile, outfile, toreplace, replacewith);
+	return (0);
 }

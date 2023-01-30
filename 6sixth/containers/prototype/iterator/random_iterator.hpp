@@ -10,48 +10,32 @@ namespace ft
 			random_iterator() {};
 
 			random_iterator(_type *ptr_loc) 
-			{
-				ptr = ptr_loc;
-			}
+			{ ptr = ptr_loc; }
 
 			random_iterator(random_iterator const &ori) 
-			{ 
-				ptr = ori.ptr;
-			}
+			{ ptr = ori.ptr; }
 
 			~random_iterator() {};
 
 			random_iterator &operator=(random_iterator const &ori) { ptr = ori.ptr; return (*this); };
 
 			bool		operator==(random_iterator const &ori) 
-			{ 
-				return (ptr == ori.ptr); 
-			}
+			{ return (ptr == ori.ptr); }
 			
 			bool		operator!=(random_iterator const &ori) 
-			{ 
-				return (ptr != ori.ptr); 
-			}
+			{ return (ptr != ori.ptr); }
 			
 			bool		operator<=(random_iterator const &ori) 
-			{ 
-				return (ptr <= ori.ptr); 
-			}
+			{ return (ptr <= ori.ptr); }
 
 			bool		operator>=(random_iterator const &ori) 
-			{ 
-				return (ptr >= ori.ptr); 
-			}
+			{ return (ptr >= ori.ptr); }
 
 			bool		operator<(random_iterator const &ori) 
-			{ 
-				return (ptr < ori.ptr); 
-			}
+			{ return (ptr < ori.ptr); }
 
 			bool		operator>(random_iterator const &ori) 
-			{ 
-				return (ptr > ori.ptr); 
-			}
+			{ return (ptr > ori.ptr); }
 
 			random_iterator &operator++() 
 			{ 
@@ -112,14 +96,10 @@ namespace ft
 			}
 
 			_type &operator[](int n)
-			{
-				return (*(ptr + n));
-			}
+			{ return (*(ptr + n)); }
 
 			_type		&operator*() 
-			{ 
-				return (*ptr); 
-			};
+			{ return (*ptr); }
 
 		private:
 			_type *ptr;

@@ -10,28 +10,20 @@ namespace ft
 			forward_iterator() {};
 
 			forward_iterator(_type *ptr_loc) 
-			{
-				ptr = ptr_loc;
-			}
+			{ ptr = ptr_loc; }
 
 			forward_iterator(forward_iterator const &ori) 
-			{ 
-				ptr = ori.ptr;
-			}
+			{  ptr = ori.ptr;  }
 
 			~forward_iterator() {};
 
 			forward_iterator &operator=(forward_iterator const &ori) { ptr = ori.ptr; return (*this); };
 
 			bool		operator==(forward_iterator const &ori) 
-			{ 
-				return (ptr == ori.ptr); 
-			}
+			{ return (ptr == ori.ptr); }
 			
 			bool		operator!=(forward_iterator const &ori) 
-			{ 
-				return (ptr != ori.ptr); 
-			}
+			{ return (ptr != ori.ptr); }
 			
 			forward_iterator &operator++() 
 			{ 
@@ -48,9 +40,7 @@ namespace ft
 			}
 			
 			_type		&operator*() 
-			{ 
-				return (*ptr); 
-			};
+			{ return (*ptr); }
 
 		private:
 			_type *ptr;

@@ -24,7 +24,7 @@ Fixed::~Fixed()
 ** Also, cant return a Fixed object because it will cause destructor and constructor to be called
 */
 
-Fixed &Fixed::operator=(Fixed &ori)
+Fixed &Fixed::operator=(const Fixed &ori)
 {
 	std::cout << "Copy assignment operator called" << std::endl;
 	this->raw_val = ori.getRawBits();
@@ -36,7 +36,7 @@ Fixed::Fixed() : raw_val(0)
 	std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(Fixed &ori)
+Fixed::Fixed(const Fixed &ori)
 {
 	std::cout << "Copy constructor called" << std::endl;
 	raw_val = ori.getRawBits();

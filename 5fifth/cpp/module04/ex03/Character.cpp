@@ -48,7 +48,7 @@ void Character::equip(AMateria *m)
 			// shallow copy
 			// any changes on m would be reflected in here
 			// since no changes can be applied on AMateriaaaa
-			equipped++;
+			++equipped;
 			return ;
 		}
 	}
@@ -58,6 +58,8 @@ void Character::equip(AMateria *m)
 void Character::unequip(int idx)
 {
 	// TODO: figure out how to delete the unequiped thing without deleting it
+	// i guess i can return the dropped item?
+	// maybemaybemaybe
 	if (idx >= invent_size || idx < 0 || !inventory[idx])
 	{
 		std::cout << "Nothing equipped there" << std::endl;

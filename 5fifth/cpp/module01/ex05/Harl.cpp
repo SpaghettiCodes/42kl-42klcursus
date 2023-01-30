@@ -7,8 +7,18 @@ typedef void (Harl::*func_ptr)(void) ;
 void Harl::complain(std::string level)
 {
 	// them function pointer array
-	func_ptr functions[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
-	std::string option[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+	func_ptr functions[4] = {
+		&Harl::debug, 
+		&Harl::info, 
+		&Harl::warning, 
+		&Harl::error
+	};
+	std::string option[4] = {
+		"DEBUG",
+		"INFO",
+		"WARNING",
+		"ERROR"
+	};
 
 	int i = 0;
 	while (i < 5)
