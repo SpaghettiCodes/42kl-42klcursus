@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 17:01:53 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/30 17:08:21 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/31 17:54:03 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int	init_data(t_data *data, int ac, char **av)
 {
+	if (ac < 5)
+		return (eprint("Not enough arguments\n"));
+	else if (ac > 6)
+		return (eprint("Too much arguments\n"));
 	data->n_philo = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]) * 1000;
 	data->time_to_eat = ft_atoi(av[3]) * 1000;

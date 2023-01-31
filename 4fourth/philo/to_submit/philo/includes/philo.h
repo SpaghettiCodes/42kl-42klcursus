@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:39:44 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/30 17:19:15 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/31 16:15:56 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,9 @@ int				init_mutex(pthread_mutex_t *to_init);
 void			free_mutex_table(pthread_mutex_t *table, int count);
 
 void			free_alldata(t_data *data, char mutex_inited);
+
+int				init_mutexes(t_data *data);
+
+int				init_args(t_data *data, int ac, char **av);
 
 #endif

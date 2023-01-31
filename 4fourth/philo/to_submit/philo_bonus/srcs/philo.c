@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:16:29 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/22 12:02:06 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/31 17:53:58 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ int	main(int ac, char **av)
 	int			i;
 
 	unlink_sems();
-	if (ac < 5)
-		return (eprint("Not enough arguments\n"));
-	else if (ac > 6)
-		return (eprint("Too much arguments\n"));
 	if (init_data(&data, ac, av))
 		return (-1);
 	i = 0;
