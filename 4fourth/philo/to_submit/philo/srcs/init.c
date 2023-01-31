@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:50:58 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/30 17:19:00 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:45:59 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,20 +105,4 @@ int	init_args(t_data *data, int ac, char **av)
 	if (!data->eat_count)
 		return (1);
 	return (0);
-}
-
-int	get_data(t_data *data, int ac, char **av)
-{
-	data->id = 0;
-	data->error = FALSE;
-	if (init_args(data, ac, av))
-		return (1);
-	data->start_sim = FALSE;
-	data->philo = malloc (sizeof(t_philo) * data->n_philo);
-	if (!data->philo)
-		return (eprint("malloc failed\n"));
-	data->philo_id = malloc ((sizeof(pthread_t) * data->n_philo));
-	if (!data->philo_id)
-		return (eprint("malloc failed\n"));
-	return (init_mutexes(data));
 }

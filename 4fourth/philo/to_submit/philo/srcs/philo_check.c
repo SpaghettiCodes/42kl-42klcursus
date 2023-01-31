@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:23 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/30 17:13:38 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:34:54 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,17 @@ int	check_count(t_data *data)
 
 int	philodeath(t_data *data)
 {
-	int	i;
-	int	start_sim;
-	int	last_eaten;
+	int			i;
+	long int	last_eaten;
 
 	i = 0;
 	usleep(data->time_to_die);
 	while (i < data->n_philo)
 	{
-		pthread_mutex_lock(&data->check_status);
-		start_sim = data->start_sim;
-		pthread_mutex_unlock(&data->check_status);
 		pthread_mutex_lock(&data->death_check[i]);
 		last_eaten = data->philo[i].last_eaten;
 		pthread_mutex_unlock(&data->death_check[i]);
-		if (start_sim && (gettime() - last_eaten) > data->time_to_die)
+		if ((gettime() - last_eaten) > data->time_to_die)
 		{
 			print_timestamp(data, &data->philo[i], "died\n");
 			pthread_mutex_lock(&data->check_status);

@@ -6,11 +6,29 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:17:27 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/30 17:14:00 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:05:33 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	get_data(t_data *data, int ac, char **av)
+{
+	if (ac < 5 || ac > 6)
+		return (eprint("Arguments Error\n"));
+	data->id = 0;
+	data->error = FALSE;
+	if (init_args(data, ac, av))
+		return (1);
+	data->start_sim = FALSE;
+	data->philo = malloc (sizeof(t_philo) * data->n_philo);
+	if (!data->philo)
+		return (eprint("malloc failed\n"));
+	data->philo_id = malloc ((sizeof(pthread_t) * data->n_philo));
+	if (!data->philo_id)
+		return (eprint("malloc failed\n"));
+	return (init_mutexes(data));
+}
 
 void	join_threads(t_data *data, int num_threads)
 {
@@ -39,8 +57,6 @@ int	main(int ac, char **av)
 	t_data	data;
 	int		i;
 
-	if (ac < 5 || ac > 6)
-		return (eprint("Arguments Error\n"));
 	init_data(&data);
 	if (get_data(&data, ac, av))
 		return (-1);
