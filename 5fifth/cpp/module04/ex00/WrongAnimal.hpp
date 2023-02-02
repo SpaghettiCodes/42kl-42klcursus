@@ -9,6 +9,22 @@
 	wtf does this mean
 */
 
-// you know what i think about this tmr fuck this sheit
+#include <string>
+
+class WrongAnimal
+{
+	public :
+		WrongAnimal();
+		// https://stackoverflow.com/questions/461203/when-to-use-virtual-destructors
+		virtual ~WrongAnimal();
+		WrongAnimal &operator=(WrongAnimal &ori);
+		WrongAnimal(WrongAnimal &ori);
+
+		// basically no virtual lmao
+		void makeSound() const;
+		std::string getType() const;
+	protected :
+		std::string type;
+};
 
 #endif
