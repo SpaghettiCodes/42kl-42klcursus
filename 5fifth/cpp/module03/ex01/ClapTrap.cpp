@@ -13,7 +13,7 @@ ClapTrap::ClapTrap(std::string name) : hitpoint(10), erpoint(10), atkdmg(10)
 	std::cout << this->name << " has arrived!" << std::endl;
 }
 
-ClapTrap::ClapTrap(ClapTrap &ori) : hitpoint(10), erpoint(10), atkdmg(10)
+ClapTrap::ClapTrap(const ClapTrap &ori) : hitpoint(10), erpoint(10), atkdmg(10)
 {
 	this->name = ori.name;
 	std::cout << "A duplicate of " << this->name << " is created!" << std::endl;

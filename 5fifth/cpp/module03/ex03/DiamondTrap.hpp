@@ -4,6 +4,10 @@
 #include "FragTrap.hpp"
 #include "ScavTrap.hpp"
 
+// it changed.
+// wtf.
+#define	GET_VAR_NAME(var) (#var)
+
 // multiple inheritance
 
 // thanks https://www.cprogramming.com/tutorial/multiple_inheritance.html very cool
@@ -17,7 +21,7 @@ class DiamondTrap: public FragTrap, public ScavTrap
 		void attack(const std::string name);
 		void whoAmI();
 	private:
-		std::string priv_name;
+		std::string name;
 };
 
 // oh, -Wshadow doesnt like it when your variable name is the exact same with another variable
