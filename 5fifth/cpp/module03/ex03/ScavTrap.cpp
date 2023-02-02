@@ -14,7 +14,7 @@ ScavTrap::ScavTrap(std::string new_name)
 
 ScavTrap::ScavTrap()
 {
-	this->name = "Unamed";
+	this->name = "Unnamed";
 	hitpoint = 100;
 	erpoint = 50;
 	atkdmg = 20;

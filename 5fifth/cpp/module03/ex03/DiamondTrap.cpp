@@ -28,10 +28,10 @@ DiamondTrap::~DiamondTrap()
 }
 
 // that ScavTrap::attack() tells the program to run the ScavTrap version of attack
-void DiamondTrap::attack(const std::string atk_name)
-{
-	ScavTrap::attack(atk_name);
-}
+// void DiamondTrap::attack(const std::string atk_name)
+// {
+// 	ScavTrap::attack(atk_name);
+// }
 
 void DiamondTrap::whoAmI()
 {
