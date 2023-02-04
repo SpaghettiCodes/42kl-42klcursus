@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:16:29 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/31 17:53:58 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:11:53 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,6 @@ int	main(int ac, char **av)
 		sem_post(data.start);
 	pthread_create(&checker, NULL, (void *)full_check, &data);
 	death_check(&data, &checker);
+	pthread_join(&checker, NULL);
+	freedata(&data);
 }

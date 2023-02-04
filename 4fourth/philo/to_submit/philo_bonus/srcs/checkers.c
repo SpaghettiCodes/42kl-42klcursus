@@ -6,7 +6,7 @@
 /*   By: cshi-xia <cshi-xia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 17:01:43 by cshi-xia          #+#    #+#             */
-/*   Updated: 2023/01/30 17:04:57 by cshi-xia         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:11:42 by cshi-xia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ void	death_check(t_data *data, pthread_t *checker)
 {
 	sem_wait(data->end);
 	killallchild(*data);
-	pthread_join(*checker, NULL);
-	freedata(data);
-	exit(10);
 }
 
 void	check_death(void *arg)
