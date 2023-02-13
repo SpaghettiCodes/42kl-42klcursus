@@ -3,7 +3,9 @@ char	*gnl()
 {
 	char	*ret;
 
-	ret = readline("\033[0;31mminis-hell\033[0;37m: ");
+	printf("\033[0;31mminis-hell\033[0;37m:");
+	// ret = readline("\033[0;31mminis-hell\033[0;37m: ");
+	ret = readline(" ");
 	if (ret && *ret)
 		add_history(ret);
 	return (ret);
@@ -35,39 +37,26 @@ t_token		*init_token(int	token_no)
 int	partoftoken(char x)
 {
 	// remember to replace the space here
-	char *dict = "><|\'\"_\0";
-	int	i = 0;
+	char	*dict = "><|\'\"_\0";
+	int		i;
 
+	i = 0;
 	while (i < SYMBOL_COUNT)
 	{
 		if (x == dict[i])
 			return (i + 1);
-		i++;
+		++i;
 	}
 	return (0);
-}
-
-int	search_element(char *input, char to_search, int start)
-{
-	while (input[start])
-	{
-		if (input[start] == to_search)
-			return (start);
-		start++;
-	}
-
-	return (-1);
 }
 
 bool	skip_space(char *input, int *i)
 {
 	// skip spaces
 	while (input[*i] == SPACE_sym)
-		(*i)++;
-
+		++(*i);
 	if (!input[*i] || input[*i] == '|')
 		return (0);
-
 	return (1);
 }
 
@@ -77,12 +66,15 @@ t_token	*make_token(char *input, t_token *current, int start, int end)
 
 	current->type = 0;
 
+	if (search_element(current->string, '/', 0, MAX_SIZE) != -1)
+		current->type = current->type | FILE_PATH;
+
 	if (current->string[0] == '\'' || current->string[0] == '\"')
 		current->type = current->type | ((current->string[0] == '\'') * SINGLE) | BUNNY_EAR;
 
-	if (search_element(current->string, '=', 0) != -1 && !(current->type & BUNNY_EAR))
+	if (search_element(current->string, '=', 0, MAX_SIZE) != -1 && !(current->type & BUNNY_EAR))
 		current->type = current->type | VAR_ASSIGN;
-	if (search_element(current->string, '$', 0) != -1 && !(current->type & SINGLE))
+	if (search_element(current->string, '$', 0, MAX_SIZE) != -1 && !(current->type & SINGLE))
 		current->type = current->type | VAR_USE;
 
 	printf("Token found %s\n", current->string);
@@ -125,7 +117,7 @@ t_token	*extract(char *input, int *index, int max_size)
 			else if (input[i] == '\'' || input[i] == '\"')
 			{
 				initial = i;
-				i = search_element(input, input[initial], initial + 1);
+				i = search_element(input, input[initial], initial + 1, MAX_SIZE);
 				if (i == -1)
 				{
 					i = ++initial;
@@ -164,7 +156,7 @@ void	redirect_fd(t_token **current, t_cmd *command)
 }
 
 
-t_token	*del_token_node(t_token **token, t_token *find)
+t_token	*del_specific_token(t_token **token, t_token *find)
 {
 	t_token *current;
 	t_token *next;
@@ -194,11 +186,11 @@ t_token	*del_token_node(t_token **token, t_token *find)
 void	process_tokens(t_cmd *command, t_val *global_var, t_val *private_val)
 {
 	t_token *current;
-	int		tkn_found;
+	int		cmd_found;
 
 	printf("in processing tokens\n");
 
-	tkn_found = 0;
+	cmd_found = 0;
 	current = command->tokens;
 	while ( current )
 	{
@@ -206,16 +198,18 @@ void	process_tokens(t_cmd *command, t_val *global_var, t_val *private_val)
 		if (current->type & VAR_USE)
 		{
 			printf("replacing variables\n");
-			replace_variable(current->string, global_var, private_val);
+			replace_variable(&(current->string), global_var, private_val);
 		}
-		if ((current->type & VAR_ASSIGN) && !tkn_found)
+		if ((current->type & VAR_ASSIGN) && !cmd_found)
 		{
 			printf("assigning var\n");
 			if (new_variable(current->string, private_val))
 			{
-				current = del_token_node(&command->tokens, current);
+				current = del_specific_token(&command->tokens, current);
+				printf("done..?\n");
 				continue ;
 			}
+			printf("mm yes not added\n");
 		}
 		if (current->type & REDIRECT)
 		{
@@ -223,7 +217,7 @@ void	process_tokens(t_cmd *command, t_val *global_var, t_val *private_val)
 			redirect_fd(&current, command);
 		}
 		printf("one token done\n");
-		++tkn_found;
+		++cmd_found;
 		current = current->next;
 	}
 }
@@ -269,22 +263,129 @@ void	parse(char *input, t_cmd_info *cmd_info)
 	cmd_info->cmd = cmd;
 }
 
-// reconstruct processed token back to a usable cmd string to dump it into execve
-char	*token_to_string(t_cmd	*current)
+unsigned int	count_token(t_token *in)
+{
+	unsigned int	i;
+	t_token			*cur;
+
+	i = 0;
+	cur = in;
+	while (cur)
+	{
+		cur = cur->next;
+		++i;
+	}
+	return (i);
+}
+
+char	*trim_symbols(char	*string)
 {
 	char	*ret;
-	t_token	*cur;
+	int		start;
+	int		end;
 
-	// too lazy to restructure append LMAO
-	ret = malloc (sizeof(char));
-	ret[0] = '\0';
-	cur = current->tokens;
+	start = 0;
+	end = ft_strlen(string) - 1;
+
+	if (string[end] == '_')
+		--end;
+	if ((string[start] == '\'' && string[end] == '\'') || 
+			string[start] == '\"' && string[end] == '\"')
+	{
+		++start;
+		--end;
+	}
+	ret = ft_substr2(string, start, end);
+	free(string);
+	return (ret);
+}
+
+char	**init_darray(unsigned int size)
+{
+	char	**ret;
+	int		i;
+
+	i = 0;
+	ret = malloc(sizeof(char *) * size);
+	while (i < size)
+	{
+		ret[i] = NULL;
+		++i;
+	}
+	return (ret);
+}
+
+// reconstruct token to a double array (dump into execve)
+char	**token_to_darray(t_token *in)
+{
+	char				**ret;
+	char				*temp;
+	t_token				*cur;
+	unsigned int		size;
+	unsigned int		i;
+
+	i = 0;
+	size = count_token(in);
+	cur = in;
+	ret = init_darray(size);
+	while (cur->string)
+	{
+		if (!ret[i])
+			ret[i] = trim_symbols(ft_strdup(cur->string));
+		else
+		{
+			temp = trim_symbols(ft_strdup(cur->string));
+			ret[i] = append(ret[i], temp);
+			free(temp);
+		}
+		printf("%s\n", ret[i]);
+		if ((cur->string[ft_strlen(cur->string) - 1] == SPACE_sym) || !cur->next->string)
+			++i;
+		cur = cur->next;
+	}
+	ret[i] = 0;
+	return (ret);
+}
+
+// reconstruct processed token back to a string
+char	*token_to_string(t_token *cur)
+{
+	char	*ret;
+
+	ret = NULL;
 	while (cur && cur->string)
 	{
 		ret = append(ret, cur->string);
 		cur = cur->next;
 	}
 	return (ret);
+}
+
+void	print_sarray(char **str)
+{
+	printf("in string array (final array)\n");
+	for (int i = 0; str[i]; ++i)
+	{
+		printf("%s\n", str[i]);
+	}
+	printf("NULL\n");
+}
+
+void	free_cmd(t_cmd **cmd)
+{
+	t_cmd	*temp;
+	while (*cmd)
+	{
+		temp = (*cmd)->next;
+		free_darray(&(*cmd)->final_cmd_line);
+		free(*cmd);
+		(*cmd) = temp;
+	}
+}
+
+void	free_cmd_info(t_cmd_info *info)
+{
+	free_cmd(&info->cmd);
 }
 
 void	process(char *input, t_val *global_var, t_val *private_var)
@@ -300,10 +401,14 @@ void	process(char *input, t_val *global_var, t_val *private_var)
 	while (current)
 	{
 		process_tokens(current, cmd_main.global_var, cmd_main.private_var);
-		current->final_cmd_line = token_to_string(current);
-		printf("final cmd line = %s\n", current->final_cmd_line);
+		current->final_cmd_line = token_to_darray(current->tokens);
+		print_sarray(current->final_cmd_line);
+		remove_all_token(&current->tokens);
+		printf("deleted all tokens\n");
 		current = current->next;
 	}
+	execute(&cmd_main);
+	free_cmd_info(&cmd_main);
 }
 
 int	get_input(t_val *global_var, t_val *private_var)
@@ -312,54 +417,27 @@ int	get_input(t_val *global_var, t_val *private_var)
 
 	input = gnl();
 	if (!input)
-		exit(3);
+		return (3);
 	else if (*input)
 	{
 		process(input, global_var, private_var);
 		free(input);
 	}
+	return (0);
 }
-
-void new_line()
-{
-	// new line
-	printf("\n");
-
-	rl_on_new_line();
-
-	// clears the input
-	rl_replace_line("", 0);
-	
-	// displays the empty input
-	rl_redisplay();
-}
-
-void	terminate()
-{
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	signal_handler(int	signo)
-{
-	if (signo == SIGINT)
-		new_line();
-	else if (signo == SIGQUIT)
-		terminate();
-} 
 
 void print_val(t_val *local_val)
 {
-	t_val *current;
+	t_val	*current;
 
 
 	printf("current val = \n");
 	current = local_val;
-	if (current->keyword == NULL)
-	{
-		printf("empty!\n");
-		return ;
-	}
+	// if (current->keyword == NULL)
+	// {
+	// 	printf("empty!\n");
+	// 	return ;
+	// }
 	while (current)
 	{
 		printf("key = %s, define = %s\n", current->keyword, current->define);
@@ -367,35 +445,60 @@ void print_val(t_val *local_val)
 	}
 }
 
+// global variable to store the previous terminal attributes
+struct termios saved;
+
+void	restore(void)
+{
+	tcsetattr(STDIN_FILENO, TCSANOW, &saved);
+}
+
 int main(int ac, char *av, char **envp)
 {
 	t_val	*global_var;
 	t_val	*local_var;
-	// struct sigaction s_sigaction;
+	struct	sigaction s_sigaction;
+	struct	termios attr;
+
+	// get terminal attribute (man stty) (init the saved attribute)
+	tcgetattr(STDIN_FILENO, &saved);
+	// at exit, restore all terminal attribute to default
+	atexit(restore);
 
 	// // signal actions and stuff
-
 	// s_sigaction.sa_handler = signal_handler;
-	// // yep, no idea how sigempty set works at all
 	// sigemptyset(&s_sigaction.sa_mask);
 	// // ctrl + c
 	// sigaction(SIGINT, &s_sigaction, 0);
 	// // ctrl + backslash ( not working :( )
 	// sigaction(SIGQUIT, &s_sigaction, 0);
 
+	// just to remove the ^C and ^\ 
+	// get terminal attribute
+	tcgetattr(STDIN_FILENO, &attr);
+	// enable -echoctl
+	attr.c_lflag &= ~ECHOCTL;
+	// set terminal attribute
+	tcsetattr(STDIN_FILENO, TCSANOW, &attr);
+
+
 	global_var = get_envval(envp);
 	local_var = init_val();
-	// t_val *current = global_var;
-	// while (current)
-	// {
-	// 	printf("%s = %s\n", current->keyword, current->define);
-	// 	current = current->next;
-	// }
+
+	t_val *current = global_var;
+	while (current)
+	{
+		printf("%s=%s\n", current->keyword, current->define);
+		current = current->next;
+	}
 	printf("amogus\n");
 	printf("Terminal Name = %s\n", ttyname(STDIN));
 	while (1)
 	{
-		print_val(local_var);
-		get_input(global_var, local_var);
+		if (get_input(global_var, local_var))
+			break ;
 	}
+	delete_all_var(&global_var);
+	delete_all_var(&local_var);
+	rl_clear_history();
 }

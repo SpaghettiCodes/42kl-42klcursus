@@ -1,23 +1,6 @@
 #include "minishell.h"
 
-unsigned int	count_var_use(char *cmd)
-{
-	int	i;
-	int	ret;
-
-	i = 0;
-	ret = 0;
-	while (cmd[i])
-	{
-		if (cmd[i] == '$')
-		{
-			++ret;
-			++i;
-		}
-		++i;
-	}
-	return (ret);
-}
+// variable use is put on hold because what the fuck? am i doing
 
 t_token	*new_assignvar_node(char *cmd, int start, int end, t_token *current)
 {
@@ -78,7 +61,8 @@ void	replace_variable(char *cmd, t_val *global_var, t_val *private_val)
 		}
 		else if (cmd[i] == '\0' || cmd[i] == SPACE_sym)
 		{
-			current = new_assignvar_node(cmd, start, (i - 1), current);
+			if (start - i)
+				current = new_assignvar_node(cmd, start, (i - 1), current);
 			break ;
 		}
 		++i;
@@ -91,7 +75,6 @@ void	replace_variable(char *cmd, t_val *global_var, t_val *private_val)
 		else
 			printf("%s\n", current->string);
 	}
-
 	delete_tokens(&funny);
 	printf("replace_var tokens deleted\n");
 }

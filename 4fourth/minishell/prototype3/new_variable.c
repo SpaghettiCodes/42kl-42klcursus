@@ -32,6 +32,8 @@ int	ft_strcmp(char *str1, char *str2)
 	int	i;
 
 	i = 0;
+	if (!str1 || !str2)
+		return (-1);
 	while (str1[i] == str2[i])
 	{
 		if (str1[i] == '\0' && str2[i] == '\0')
@@ -41,22 +43,22 @@ int	ft_strcmp(char *str1, char *str2)
 	return (str1[i] - str2[i]);
 }
 
-t_val	*add_back(t_val *local_var)
+t_val	*add_back_local(t_val *local_var)
 {
 	t_val *current;
 
 	current = local_var;
-	while (current->next)
+	while (current->define && current->next)
 		current = current->next;
 	current->next = init_val();
-	return (current->next);
+	return (current);
 }
 
-t_val	*search_variable(char *keyword, t_val *local_var)
+t_val	*search_variable(char *keyword, t_val *var)
 {
 	t_val	*current;
 
-	current = local_var;
+	current = var;
 	if (current->keyword)
 	{
 		while (current)
@@ -65,8 +67,9 @@ t_val	*search_variable(char *keyword, t_val *local_var)
 				break;
 			current = current->next;
 		}
+		return (current);
 	}
-	return (current);
+	return (NULL);
 }
 
 bool	new_variable(char *input, t_val *local_var)
@@ -76,18 +79,23 @@ bool	new_variable(char *input, t_val *local_var)
 	char	*keyword;
 	t_val	*current;
 
-	equal_loc = search_element(input, '=', 0);
-	if (equal_loc == 0)
+	equal_loc = search_element(input, '=', 0, MAX_SIZE);
+	// keyword cant have /
+	if (equal_loc == 0 && search_element(input, '/', 0, equal_loc))
 		return FALSE;
 	length = ft_strlen(input);
 	length = length - (input[length - 1] == SPACE_sym);
 	keyword = ft_substr2(input, 0, (equal_loc - 1));
 	current = search_variable(keyword, local_var);
 	if (!current)
-		current = add_back(local_var);
+	{
+		printf("nope not found\n");
+		current = add_back_local(local_var);
+	}
 
 	free_internal_val(current);
 	fill_val(current, keyword, ft_substr2(input, equal_loc + 1, (length - 1)));
+	printf("is this garbage working %s = %s\n", current->keyword, current->define);
 	return (TRUE);
 }
 
@@ -103,7 +111,7 @@ t_val	*get_envval(char **envp)
 	current = ret;
 	while (envp[i])
 	{
-		equal_loc = search_element(envp[i], '=', 0);
+		equal_loc = search_element(envp[i], '=', 0, MAX_SIZE);
 		fill_val(current, ft_substr2(envp[i], 0, equal_loc - 1), ft_substr2(envp[i], equal_loc + 1, -1));
 		if (envp[i + 1])
 		{
