@@ -92,6 +92,12 @@ void	copy_to(std::ifstream &infile, std::ofstream &outfile)
 // av[3] = replace with
 int main(int ac, char **av)
 {
+	if (ac < 4)
+	{
+		std::cerr << "Not enough arguments \n\nUsage : \n./test <file name> <phrase to replace> <phrase to replace with>" << std::endl;
+		return (4);
+	}
+
 	std::ifstream	infile;
 	std::ofstream	outfile;
 
@@ -99,11 +105,6 @@ int main(int ac, char **av)
 	std::string		toreplace = av[2];
 	std::string		replacewith = av[3];
 
-	if (ac < 4)
-	{
-		std::cerr << "Not enough arguments" << std::endl;
-		return (4);
-	}
 	infile.open(av[1], std::ios::in);
 	if (!infile)
 	{

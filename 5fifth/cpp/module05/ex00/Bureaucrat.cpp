@@ -12,22 +12,15 @@ Bureaucrat::Bureaucrat(Bureaucrat const &ori): name(ori.name), grade(ori.grade)
 
 Bureaucrat::Bureaucrat(std::string new_name, int new_grade): name(new_name), grade(new_grade)
 {
-	try 
+	if (grade < 1)
 	{
-		if (grade < 1)
-		{
-			grade = 1;
-			throw Bureaucrat::GradeTooHighException();
-		}
-		else if (grade > 150)
-		{
-			grade = 150;
-			throw Bureaucrat::GradeTooLowException();
-		}
+		grade = 1;
+		throw Bureaucrat::GradeTooHighException();
 	}
-	catch (std::exception &e)
+	else if (grade > 150)
 	{
-		std::cout << e.what() << std::endl;
+		grade = 150;
+		throw Bureaucrat::GradeTooLowException();
 	}
 	std::cout << "Bureaucrat is created" << std::endl;
 }
@@ -45,32 +38,18 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &ori)
 
 void	Bureaucrat::increment()
 {
-	try
-	{
-		if (grade <= 1)
-			throw Bureaucrat::GradeTooHighException();
-		grade--;
-		std::cout << "Incremented " << name << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	if (grade <= 1)
+		throw Bureaucrat::GradeTooHighException();
+	grade--;
+	std::cout << "Incremented " << name << std::endl;
 }
 
 void	Bureaucrat::decrement()
 {
-	try
-	{
-		if (grade >= 150)
-			throw Bureaucrat::GradeTooLowException();
-		grade++;
-		std::cout << "Decremented " << name << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	if (grade >= 150)
+		throw Bureaucrat::GradeTooLowException();
+	grade++;
+	std::cout << "Decremented " << name << std::endl;
 }
 
 std::string const &Bureaucrat::getName() const

@@ -23,10 +23,6 @@ class Bureaucrat
 		void				signForm(AForm &to_sign);
 		void				executeForm(AForm const &form);
 
-	private:
-		std::string const name;
-		int grade;
-
 		class GradeTooHighException : public std::exception
 		{
 			public: 
@@ -44,6 +40,10 @@ class Bureaucrat
 					return ("Error: Grade too Low");
 				}
 		};
+
+	private:
+		std::string const name;
+		int grade;
 };
 
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &bureu);

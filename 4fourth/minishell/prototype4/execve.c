@@ -80,14 +80,42 @@ int	run_execve(t_cmd *cmd, t_val *global_var)
 		perror(strerror(errno));
 }
 
-// test code will reformat everything later
-int	execute(t_cmd_info *cmd_info)
+int	builtin(t_cmd	*cmd_info, t_cmd_info	*shell_info)
 {
-	int		pid;
-	t_cmd	*cmd;
+	if (!ft_strcmp(cmd_info->final_cmd_line[0], "echo"))
+		return (echo(cmd_info->final_cmd_line, shell_info));
+	else if (!ft_strcmp(cmd_info->final_cmd_line[0], "cd"))
+		return (change_dir(cmd_info->final_cmd_line, shell_info));
+	else if (!ft_strcmp(cmd_info->final_cmd_line[0], "pwd"))
+		return (pwd(shell_info));
+	else if (!ft_strcmp(cmd_info->final_cmd_line[0], "export"))
+		return (export(cmd_info->final_cmd_line, shell_info));
+	else if (!ft_strcmp(cmd_info->final_cmd_line[0], "unset"))
+		return (0);
+	// else if (!ft_strcmp(cmd_info->final_cmd_line[0], "env"))
+		// exit (0);
+	else if (!ft_strcmp(cmd_info->final_cmd_line[0], "exit"))
+		return (clean_exit(shell_info));
+	else
+		return (1);
+}
 
-	pid = 0;
-	cmd = cmd_info->cmd;
+void	ignore_allsignal()
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	update_last_exit(int last_exit, t_cmd_info *cmd_info)
+{
+	cmd_info->last_exit = last_exit;
+}
+
+void	do_pumbling(t_cmd *cmd, t_cmd_info *cmd_info)
+{
+	int	pid;
+	int	exit_status;
+
 	while (cmd)
 	{
 		if (cmd->final_cmd_line)
@@ -97,18 +125,53 @@ int	execute(t_cmd_info *cmd_info)
 			{
 				perror(strerror(errno));
 				write(2, "forked failed\n", 14);
-				return (1);
+				exit (-1);
 			}
 			else if (!pid)
 			{
+				exit_status = builtin(cmd, cmd_info);
+				if (!exit_status)
+					clean_exit(cmd_info);
 				run_execve(cmd, cmd_info->global_var);
-				exit(1);
+				exit (126);
 			}
 			else
 			{
-				waitpid(pid, 0, 0);
-				cmd = cmd->next;
+				ignore_allsignal();
+				waitpid(pid, &exit_status, 0);
+				update_last_exit(exit_status, cmd_info);
 			}
+			cmd = cmd->next;
 		}
 	}
+}
+
+// test code will reformat everything later
+int	execute(t_cmd_info *cmd_info)
+{
+	int		exit_status;
+	int		pid;
+	t_cmd	*cmd;
+
+	pid = 0;
+	cmd = cmd_info->cmd;
+	if (cmd_info->no_cmd == 1)
+	{
+		if (builtin(cmd, cmd_info))
+		{
+			pid = fork();
+			if (pid == 0)
+				exit (run_execve(cmd, cmd_info->global_var));
+			else
+			{
+				ignore_allsignal();
+				waitpid(pid, &exit_status, 0);
+				update_last_exit(exit_status, cmd_info);
+			}
+		}
+		else
+			printf("built-in successfully launched\n");
+	}
+	else
+		do_pumbling(cmd, cmd_info);
 }

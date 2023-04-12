@@ -25,7 +25,7 @@ typedef unsigned char bool;
 #define SPACE_sym '_'
 #define EXE_NAME "/test"
 
-#define SYMBOL_COUNT 7
+#define SYMBOL_COUNT 8
 
 // 0000001
 #define CMD 0
@@ -50,7 +50,7 @@ typedef struct s_val
 	char	*theline;
 
 	// rest is fine
-	bool	alloced;
+	bool	alloced:1;
 	int		equalloc;
 
 	struct s_val *next;
@@ -85,14 +85,16 @@ typedef struct s_cmd
 
 typedef struct s_cmd_info
 {
-	int	no_cmd;
+	int				no_cmd;
 
 	// ofc this is freeable
-	struct s_cmd *cmd;
+	struct s_cmd	*cmd;
 
 	// DO NOT FREE THIS 2
-	t_val *global_var;
-	t_val *private_var;
+	t_val			*global_var;
+	t_val			*private_var;
+	// amogus
+	int				last_exit;
 }	t_cmd_info;
 
 #define MAX_SIZE -1
@@ -116,7 +118,7 @@ void		fill_val(t_val *current, bool is_alloc, char *string, int equalloc);
 bool		new_variable(char *input, t_val *local_var, t_val *global_var, bool alloc);
 
 t_token		*init_token(int	token_no);
-void		replace_variable(char **cmd, t_val *global_var, t_val *private_val);
+void		replace_variable(char **cmd, t_cmd_info *minishell);
 
 char		*token_to_string(t_token *current);
 t_val		*search_variable(char *keyword, t_val *var);
@@ -128,7 +130,9 @@ int			execute(t_cmd_info *cmd_info);
 
 int			ft_strncmp(char *haystack, char *needle, int word_len);
 int			ft_strcmp(char *str1, char *str2);
-void		free_internal_val(t_val *current);
+void		free_current_val(t_val *current);
+
+char		**variable_to_darray(t_val *in);
 
 // be free my child
 void		remove_all_token(t_token **stuff);
@@ -138,4 +142,15 @@ void		free_darray(char **paths);
 void		free_cmd(t_cmd **cmd);
 void		free_cmd_info(t_cmd_info *info);
 
+void		shell_signal();
+
+t_val		*add_back_variable(t_val *local_var);
+
+unsigned int	count_arg(char **arg);
+
+int			export(char	**arg, t_cmd_info *shell_info);
+int			change_dir(char	**arg, t_cmd_info *shell_info);
+int			echo(char **arg, t_cmd_info *shell_info);
+int			pwd(t_cmd_info *cmd_main);
+int			clean_exit(t_cmd_info *to_free_2);
 #endif

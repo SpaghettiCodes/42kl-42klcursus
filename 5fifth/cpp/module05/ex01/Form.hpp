@@ -21,12 +21,6 @@ class Form
 		bool				getIs_Signed();
 		std::string			beSigned(Bureaucrat const &signer);
 
-	private:
-		bool				is_signed;
-		std::string const	name;
-		int const			req_sign;
-		int	const			req_execute;
-
 		class GradeTooHighException : public std::exception
 		{
 			public: 
@@ -53,6 +47,12 @@ class Form
 					return ("Error: Form is already Signed");
 				}
 		};
+
+	private:
+		bool				is_signed;
+		std::string const	name;
+		int const			req_sign;
+		int	const			req_execute;
 };
 
 std::ostream &operator<<(std::ostream &out, Form &form);

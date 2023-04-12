@@ -36,11 +36,18 @@ int main()
 		delete BobForm;
 	}
 
-	BobForm = Bob.makeForm("hyok hyok hyok ", "Amogus");
-	if (BobForm)
+	try
 	{
-		std::cout << (*BobForm) << std::endl;
-		delete BobForm;
+		BobForm = Bob.makeForm("hyok hyok hyok ", "Amogus");
+		if (BobForm)
+		{
+			std::cout << (*BobForm) << std::endl;
+			delete BobForm;
+		}
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
 	}
 
 	BobForm = Bob.makeForm("ShRubBery CREation", "Susses");

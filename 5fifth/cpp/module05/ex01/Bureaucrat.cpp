@@ -11,25 +11,13 @@ Bureaucrat::Bureaucrat(Bureaucrat const &ori): name(ori.name), grade(ori.grade)
 	std::cout << "Bureaucrat is copied" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(std::string new_name, int new_grade): name(new_name), grade(new_grade)
+Bureaucrat::Bureaucrat(std::string new_name, int new_grade): name(new_name)
 {
-	try 
-	{
-		if (grade < 1)
-		{
-			grade = 1;
-			throw Bureaucrat::GradeTooHighException();
-		}
-		else if (grade > 150)
-		{
-			grade = 150;
-			throw Bureaucrat::GradeTooLowException();
-		}
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	if (grade < 1)
+		throw Bureaucrat::GradeTooHighException();
+	else if (grade > 150)
+		throw Bureaucrat::GradeTooLowException();
+	this->grade = new_grade;
 	std::cout << "Bureaucrat is created" << std::endl;
 }
 
@@ -46,32 +34,18 @@ Bureaucrat &Bureaucrat::operator=(Bureaucrat const &ori)
 
 void	Bureaucrat::increment_grade()
 {
-	try
-	{
-		if (grade <= 1)
-			throw Bureaucrat::GradeTooHighException();
-		grade--;
-		std::cout << "Incremented " << name << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	if (grade <= 1)
+		throw Bureaucrat::GradeTooHighException();
+	grade--;
+	std::cout << "Incremented " << name << std::endl;
 }
 
 void	Bureaucrat::decrement_grade()
 {
-	try
-	{
-		if (grade >= 150)
-			throw Bureaucrat::GradeTooLowException();
-		grade++;
-		std::cout << "Decremented " << name << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	if (grade >= 150)
+		throw Bureaucrat::GradeTooLowException();
+	grade++;
+	std::cout << "Decremented " << name << std::endl;
 }
 
 std::string const &Bureaucrat::getName() const
@@ -84,9 +58,18 @@ int Bureaucrat::getGrade() const
 	return (grade);
 }
 
-void	Bureaucrat::signForm(Form &to_sign)
+void	Bureaucrat::signForm(Form &form)
 {
-	std::cout << to_sign.beSigned((*this)) << std::endl;
+	try
+	{
+		form.beSigned((*this));
+	}
+	catch (std::exception &e)
+	{
+		std::cout << name << " couldn't sign " << form.getName() << " because " << e.what() << std::endl;
+		return ;
+	}
+	std::cout << name << "successfully signed" << form.getName() << std::endl;
 }
 
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &bureu)

@@ -10,7 +10,7 @@ t_token	*new_assignvar_node(char *cmd, int start, int end, t_token *current)
 	return (current->next);
 }
 
-void	replace_token_var(t_token **tokens, t_val *global_var, t_val *private_val)
+void	replace_token_var(t_token **tokens, t_cmd_info *minishell)
 {
 	int	index;
 	t_token *cur;
@@ -32,15 +32,21 @@ void	replace_token_var(t_token **tokens, t_val *global_var, t_val *private_val)
 			(prev) ? (prev->next = temp) : ((*tokens) = temp);
 			cur = temp;
 			printf("Deleted\n");
-			search = search_variable(cur->string, global_var);
-			if (!search)
-				search = search_variable(cur->string, private_val);
-			if (cur->string)
-				free(cur->string);
-			if (!search)
-				cur->string = ft_strdup("");
+
+			if (!ft_strcmp("?", cur->string))
+				cur->string = ft_itoa(minishell->last_exit);
 			else
-				cur->string = ft_strdup(&search->theline[search->equalloc + 1]);
+			{			
+				search = search_variable(cur->string, minishell->global_var);
+				if (!search)
+					search = search_variable(cur->string, minishell->private_var);
+				if (cur->string)
+					free(cur->string);
+				if (!search)
+					cur->string = ft_strdup("");
+				else
+					cur->string = ft_strdup(&search->theline[search->equalloc + 1]);
+			}
 		}
 		printf("Done one\n");
 		++index;
@@ -64,7 +70,7 @@ void	printtoken(t_token *stuff)
 	}
 }
 
-void	replace_variable(char **cmd, t_val *global_var, t_val *private_val)
+void	replace_variable(char **cmd, t_cmd_info *minishell)
 {
 	t_token	*sub_token;
 	t_token *current;
@@ -99,7 +105,8 @@ void	replace_variable(char **cmd, t_val *global_var, t_val *private_val)
 
 	// debug
 	printtoken(sub_token);
-	replace_token_var(&sub_token, global_var, private_val);
+
+	replace_token_var(&sub_token, minishell);
 
 	// debug
 	printf("Done all\n");

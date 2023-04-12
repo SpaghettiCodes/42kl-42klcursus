@@ -37,6 +37,7 @@ void	Intern::format_str(std::string &str)
 	for (int i = 0; i < (int) str.size(); i++)
 	{
 		str[i] = tolower(str[i]);
+		// remove spaces
 		if (str[i] == ' ')
 		{
 			str.erase(i, 1);
@@ -64,15 +65,8 @@ AForm *Intern::makeForm(std::string name, std::string target)
 			break;
 		}
 	}
+	if (!ret)
+		throw (Intern::NoSuchForm());
 
-	try
-	{
-		if (!ret)
-			throw (Intern::NoSuchForm());
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
 	return (ret);
 }

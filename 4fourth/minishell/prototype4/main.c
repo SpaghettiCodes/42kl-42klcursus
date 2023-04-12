@@ -153,7 +153,7 @@ t_token		*init_token(int	token_no)
 int	partoftoken(char x)
 {
 	// remember to replace the space here
-	char	*dict = "><|\'\"_\0";
+	char	*dict = "?><|\'\"_\0";
 	int		i;
 
 	i = 0;
@@ -248,7 +248,7 @@ t_token	*extract(char *input, int *index, int max_size)
 				token_current = make_token(input, token_current, start, (i + (input[i + 1] == SPACE_sym)));
 				++i;
 			}
-			else if (input[i] == SPACE_sym)
+			else if (input[i] == SPACE_sym || input[i] == '?')
 				token_current = make_token(input, token_current, start, i);
 			else if (input[i] == '\0' || input[i] == '|')
 			{
@@ -256,6 +256,7 @@ t_token	*extract(char *input, int *index, int max_size)
 					make_token(input, token_current, start, (i - 1));
 				break;
 			}
+			i = i + (input[i] == '?');
 			if (!skip_space(input, &i))
 				break;
 			start = i;
@@ -294,7 +295,7 @@ t_token	*del_specific_token(t_token **token, t_token *find)
 		return ((*token));
 }
 
-void	process_tokens(t_cmd *command, t_val *global_var, t_val *private_val)
+void	process_tokens(t_cmd *command, t_cmd_info *minishell)
 {
 	t_token *current;
 	int		cmd_found;
@@ -308,12 +309,12 @@ void	process_tokens(t_cmd *command, t_val *global_var, t_val *private_val)
 		if (current->type & VAR_USE)
 		{
 			printf("replacing variables\n");
-			replace_variable(&(current->string), global_var, private_val);
+			replace_variable(&(current->string), minishell);
 		}
 		if ((current->type & VAR_ASSIGN) && !cmd_found)
 		{
 			printf("assigning var\n");
-			if (new_variable(current->string, private_val, global_var, 1))
+			if (new_variable(current->string, minishell->global_var, minishell->private_var, 1))
 			{
 				current = del_specific_token(&command->tokens, current);
 				printf("done..?\n");
@@ -349,7 +350,7 @@ int	parse(char *input, t_cmd_info *cmd_info)
 	{
 		current->tokens = extract(input, &i, end + 1);
 	
-		process_tokens(current, cmd_info->global_var, cmd_info->private_var);
+		process_tokens(current, cmd_info);
 	
 		current->final_cmd_line = token_to_darray(current->tokens);
 
@@ -370,7 +371,7 @@ int	parse(char *input, t_cmd_info *cmd_info)
 			{
 				cmd_info->cmd = cmd;
 				free_cmd_info(cmd_info);
-				return (eprint("Expected character after \'|\'", "parser"));
+				return (eprint("parser", "expected characters after | symbol"));
 			}
 			current->next = init_cmd();
 			current = current->next;
@@ -395,22 +396,19 @@ int	parse(char *input, t_cmd_info *cmd_info)
 	return (0);
 }
 
-void	process(char *input, t_val *global_var, t_val *private_var)
+void	process(char *input, t_cmd_info *cmd_main)
 {
-	t_cmd_info	cmd_main;
 	t_cmd		*current;
 
-	cmd_main.no_cmd = 0;
-	cmd_main.global_var = global_var;
-	cmd_main.private_var = private_var;
-	if ( parse(input, &cmd_main) )
+	cmd_main->no_cmd = 0;
+	if ( parse(input, cmd_main) )
 		return ;
 	printf("executing\n");
-	execute(&cmd_main);
-	free_cmd_info(&cmd_main);
+	execute(cmd_main);
+	free_cmd_info(cmd_main);
 }
 
-int	get_input(t_val *global_var, t_val *private_var)
+int	get_input(t_cmd_info *cmd_main)
 {
 	char	*input;
 
@@ -419,7 +417,7 @@ int	get_input(t_val *global_var, t_val *private_var)
 		return (3);
 	else if (*input)
 	{
-		process(input, global_var, private_var);
+		process(input, cmd_main);
 		free(input);
 	}
 	return (0);
@@ -444,32 +442,24 @@ void print_val(t_val *local_val)
 	}
 }
 
-// global variable to store the previous terminal attributes
-struct termios saved;
+// void	shell_signal()
+// {
+// 	struct	sigaction sig_nl;
+// 	struct	sigaction sig_ign;
 
-void	restore(void)
-{
-	tcsetattr(STDIN_FILENO, TCSANOW, &saved);
-}
-
-void	handle_signal()
-{
-	struct	sigaction sig_nl;
-	struct	sigaction sig_ign;
-
-	// fuck sigaction
-	// signal actions and stuff
-	sig_nl.sa_handler = new_line;
-	sig_ign.sa_handler = SIG_IGN;
-	sig_nl.sa_flags = 0;
-	sig_ign.sa_flags = 0;
-	sigemptyset(&sig_nl.sa_mask);
-	sigemptyset(&sig_ign.sa_mask);
-	// ctrl + c
-	sigaction(SIGINT, &sig_nl, 0);
-	// ctrl + backslash
-	sigaction(SIGQUIT, &sig_ign, 0);
-}
+// 	// fuck sigaction
+// 	// signal actions and stuff
+// 	sig_nl.sa_handler = new_line;
+// 	sig_ign.sa_handler = SIG_IGN;
+// 	sig_nl.sa_flags = 0;
+// 	sig_ign.sa_flags = 0;
+// 	sigemptyset(&sig_nl.sa_mask);
+// 	sigemptyset(&sig_ign.sa_mask);
+// 	// ctrl + c
+// 	sigaction(SIGINT, &sig_nl, 0);
+// 	// ctrl + backslash
+// 	sigaction(SIGQUIT, &sig_ign, 0);
+// }
 
 void update_env(t_val *global_var)
 {
@@ -492,33 +482,40 @@ void update_env(t_val *global_var)
 
 int main(int ac, char *av, char **envp)
 {
-	t_val	*global_var;
-	t_val	*local_var;
-	struct	termios attr;
+	t_cmd_info	minishell;
 
-	// get terminal attribute (man stty) (init the saved attribute)
-	tcgetattr(STDIN_FILENO, &saved);
-	// at exit, restore all terminal attribute to default
-	atexit(restore);
+	struct termios	termios_new;
+
+	tcgetattr(STDIN_FILENO, &termios_new);
+	termios_new.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_new);
+	tcsetattr(0, 0, &termios_new);
+
+	// struct	termios	attr;
+	// // get terminal attribute (man stty) (init the saved attribute)
+	// tcgetattr(STDIN_FILENO, &saved);
+	// // at exit, restore all terminal attribute to default
+	// atexit(restore);
+
 	// just to remove the ^C and ^\ 
-	symbol_b_gone();
-
-	handle_signal();
-
-	global_var = get_envval(envp);
-	local_var = init_val();
-	update_env(global_var);
+	// symbol_b_gone();
+	minishell.last_exit = 42069;
+	minishell.global_var = get_envval(envp);
+	minishell.private_var = init_val();
+	update_env(minishell.global_var);
 	// print_val(global_var);
 
 	printf("amogus\n");
 	printf("Terminal Name = %s\n", ttyname(STDIN));
 	while (1)
 	{
+		signal(SIGINT, new_line);
+		signal(SIGQUIT, SIG_IGN);
 		// symbol_b_gone();
-		if (get_input(global_var, local_var))
+		if (get_input(&minishell))
 			break ;
 	}
-	delete_all_var(&global_var);
-	delete_all_var(&local_var);
+	delete_all_var(&minishell.global_var);
+	delete_all_var(&minishell.private_var);
 	rl_clear_history();
 }

@@ -18,9 +18,6 @@ class Bureaucrat
 		void decrement();
 		std::string const &getName() const;
 		int getGrade() const;
-	private:
-		std::string const name;
-		int grade;
 
 		class GradeTooHighException : public std::exception
 		{
@@ -42,6 +39,10 @@ class Bureaucrat
 					return ("Error: Grade too Low");
 				}
 		};
+
+	private:
+		std::string const name;
+		int grade;
 };
 
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &bureu);

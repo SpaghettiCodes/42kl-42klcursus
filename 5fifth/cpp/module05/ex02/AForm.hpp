@@ -26,12 +26,6 @@ class AForm
 		// congratulations, its a abstract class now
 		virtual void		action() const = 0;
 
-	private:
-		bool				is_signed;
-		std::string const	name;
-		int const			req_sign;
-		int	const			req_execute;
-
 		class GradeTooHighException : public std::exception
 		{
 			public: 
@@ -55,6 +49,12 @@ class AForm
 			public: 
 				const char *what() const throw() { return ("Error: Form is not yet Signed"); }
 		};
+
+	private:
+		bool				is_signed;
+		std::string const	name;
+		int const			req_sign;
+		int	const			req_execute;
 };
 
 std::ostream &operator<<(std::ostream &out, AForm &form);

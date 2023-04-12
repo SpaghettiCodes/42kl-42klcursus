@@ -2,7 +2,7 @@
 
 // variable use is put on hold because what the fuck? am i doing
 
-void	free_internal_val(t_val *current)
+void	free_current_val(t_val *current)
 {
 	if (current->alloced)
 		free(current->theline);
@@ -26,7 +26,7 @@ void	fill_val(t_val *current, bool is_alloc, char *string, int equalloc)
 	current->theline = string;
 }
 
-t_val	*add_back_local(t_val *local_var)
+t_val	*add_back_variable(t_val *local_var)
 {
 	t_val *current;
 
@@ -64,7 +64,7 @@ bool	new_variable(char *input, t_val *local_var, t_val *global_var, bool alloc)
 
 	equal_loc = search_character(input, '=', 0, MAX_SIZE);
 	// keyword cant have /
-	if (equal_loc == 0 && search_character(input, '/', 0, equal_loc))
+	if (equal_loc == 0 || search_character(input, '/', 0, equal_loc) != -1)
 		return FALSE;
 	length = ft_strlen(input);
 	length = length - (input[length - 1] == SPACE_sym);
@@ -78,13 +78,13 @@ bool	new_variable(char *input, t_val *local_var, t_val *global_var, bool alloc)
 	{
 		// debug
 		printf("nope not found\n");
-		current = add_back_local(local_var);
+		current = add_back_variable(local_var);
 	}
 
-	free_internal_val(current);
+	free_current_val(current);
 	fill_val(current, 1, ft_strdup(input), equal_loc);
 	// debug
-	printf("is this garbage working %s = %s\n", current->theline, &current->theline[current->equalloc + 1]);
+	printf("is this garbage working [the line {%s}, after equal location {%s}]\n", current->theline, &current->theline[current->equalloc + 1]);
 	return (TRUE);
 }
 

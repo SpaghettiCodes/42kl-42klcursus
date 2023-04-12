@@ -7,17 +7,10 @@ Form::Form() : is_signed(0), name("Unnamed"), req_sign(150), req_execute(150)
 
 Form::Form(std::string new_name, int _req_sign, int _req_execute) : is_signed(0), name(new_name), req_sign(_req_sign), req_execute(_req_execute)
 {
-	try 
-	{
-		if (req_sign < 1 || req_execute < 1)
-			throw Form::GradeTooHighException();
-		else if (req_sign > 150 || req_execute > 150)
-			throw Form::GradeTooLowException();
-	}
-	catch (std::exception &e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	if (req_sign < 1 || req_execute < 1)
+		throw Form::GradeTooHighException();
+	else if (req_sign > 150 || req_execute > 150)
+		throw Form::GradeTooLowException();
 	std::cout << "Form Created" << std::endl;
 }
 
@@ -58,21 +51,14 @@ bool	Form::getIs_Signed()
 
 std::string Form::beSigned(Bureaucrat const &signer)
 {
-	try 
+	if (signer.getGrade() > req_sign)
+		throw Form::GradeTooLowException();
+	else if (is_signed)
+		throw Form::AlreadySignedException();
+	else
 	{
-		if (signer.getGrade() > req_sign)
-			throw Form::GradeTooLowException();
-		else if (is_signed)
-			throw Form::AlreadySignedException();
-		else
-		{
-			is_signed = 1;
-			return ((std::string(signer.getName()).append(" signed ").append(name)));
-		}
-	}
-	catch (std::exception &e)
-	{
-		return ((std::string(signer.getName()).append(" couldn't sign ").append(name).append(" because ").append(e.what())));
+		is_signed = 1;
+		return ((std::string(signer.getName()).append(" signed ").append(name)));
 	}
 }
 
