@@ -10,7 +10,7 @@
 
 static void print_vals(char cval, int ival, float fval, double dval)
 {
-	if (dval < CHARMAX)
+	if (dval <= char_limits::max() && dval >= char_limits::min())
 	{
 		if (isprint(cval))
 			std::cout << "char : '" << cval << "'" << std::endl;
@@ -20,12 +20,12 @@ static void print_vals(char cval, int ival, float fval, double dval)
 	else
 		std::cout << "char : yeah bud no" << std::endl;
 
-	if (dval <= INTMAX && dval >= INTMIN)
+	if (dval <= int_limits::max() && dval >= int_limits::min())
 		std::cout << "int : " << ival << std::endl;
 	else
 		std::cout << "int : yeah bud no" << std::endl;
 
-	if (dval == (double) ival && ival < 1000000)
+	if (dval == (double) ival)
 	{
 		std::cout << "float : " << std::fixed << std::setprecision(1) << fval << "f" << std::endl;
 		std::cout << "double : " << std::fixed << std::setprecision(1) << dval << std::endl;
@@ -39,33 +39,25 @@ static void print_vals(char cval, int ival, float fval, double dval)
 
 void	conv_char(char *input)
 {
-	char val;
-
-	val = input[0];
+	char val = input[0];
 	print_vals(val, static_cast<int> (val), static_cast<float> (val), static_cast<double> (val));
 }
 
 void	conv_int(char *input)
 {
-	int val;
-
-	val = atoi(input);
+	int val = atoi(input);
 	print_vals(static_cast<char> (val), val, static_cast<float> (val), static_cast<double> (val));
 }
 
 void	conv_float(char *input)
 {
-	float val;
-
-	val = strtof(input, 0);
+	float val = strtof(input, 0);
 	print_vals(static_cast<char> (val), static_cast<int> (val), val, static_cast<double> (val));
 }
 
 void	conv_double(char *input)
 {
-	double val;
-
-	val = strtod(input, 0);
+	double val = strtod(input, 0);
 	print_vals(static_cast<char> (val), static_cast<int> (val), static_cast<float> (val), val);
 }
 

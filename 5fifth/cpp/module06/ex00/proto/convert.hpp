@@ -5,10 +5,18 @@
 #include <string>
 #include <stdlib.h>
 #include <iomanip>
+#include <limits>
 
-#define CHARMAX 255
-#define INTMAX 2147483647
-#define INTMIN -2147483648
+enum {
+	ERROR = 0,
+	CHAR = 1,
+	INT = 2,
+	FLOAT = 3,
+	DOUBLE = 4
+};
+
+typedef std::numeric_limits<int> int_limits;
+typedef std::numeric_limits<char> char_limits;
 
 void	conv_char(char *input);
 void	conv_int(char *input);

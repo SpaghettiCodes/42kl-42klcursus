@@ -3,53 +3,43 @@
 #include <stdlib.h>
 #include "convert.hpp"
 
-#define ERROR 0
-#define CHAR 1
-#define INT 2
-#define FLOAT 3
-#define DOUBLE 4
-
 int	eprint(std::string error_msg)
 {
 	std::cout << error_msg << std::endl;
 	return (error_msg.length());
 }
 
-bool	ismathsym(char ref)
-{
-	if (ref == '.' || ref == '-' || ref == '+')
-		return (1);
-	return (0); 
-}
+bool	issign(char	in)
+{ return (in == '+' || in == '-'); }
 
 bool	onlynumeric(std::string &str)
 {
 	bool has_dot = false;
 	int end = str.length() - (str[str.length() - 1] == 'f');
 
-	for (int i = 0; i < end; i++)
+	for (int i = issign(str[0]); i < end; i++)
 	{
-		if (!isdigit(str[i]) && !ismathsym(str[i]))
-			return (false);
-		if (str[i] == '.')
+		if (!isdigit(str[i]))
 		{
-			if (has_dot)
+			if (str[i] == '.')
+			{
+				if (has_dot)
+					return (false);
+				has_dot = true;
+			}
+			else
 				return (false);
-			has_dot = true;
 		}
 	}
 	return (true);
 }
 
-// integer overflowed
-// has a .
-// float will override this sooo
 bool	isdouble(std::string &input)
 {
 	// // im too lazy to reimplement atoi MAN PLEASE
 	double check = strtod(input.c_str(), 0);
 
-	if (check > INTMAX || check < INTMIN)
+	if (check > int_limits::max() || check < int_limits::min())
 		return (1);
 	if (input.find('.') != std::string::npos)
 		return (1);
@@ -69,11 +59,11 @@ int	parse_input(std::string &input, int pseudo)
 {
 	if (pseudo)
 		return pseudo;
-	if (input.length() == 1 && isalpha(input[0]))
+	else if (input.length() == 1 && isalpha(input[0]))
 		return CHAR;
-	if (!onlynumeric(input))
+	else if (!onlynumeric(input))
 		return ERROR;
-	if (input[input.length() - 1] == 'f')
+	else if (input[input.length() - 1] == 'f')
 		return FLOAT;
 	else if (isdouble(input))
 		return DOUBLE;
