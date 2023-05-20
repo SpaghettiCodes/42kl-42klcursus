@@ -10,3 +10,5 @@ a_san:
 
 clean:
 	rm ./test
+
+re: clean all

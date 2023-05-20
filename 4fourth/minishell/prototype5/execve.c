@@ -61,19 +61,13 @@ int	run_execve(t_cmd *cmd, t_val *global_var)
 {
 	char	*path;
 	char	**env;
-	dup2(cmd->infd, STDIN);
-	dup2(cmd->outfd, STDOUT);
 
 	if (!cmd->final_cmd_line)
 		exit(420);
 	if (!cmd->final_cmd_line[0])
 		exit(69);
-	// printf("getting paths\n");
 	path = get_binarypath(cmd->final_cmd_line[0], global_var);
-	printf("path = %s\n", path);
-	env = variable_to_darray(global_var);	
-	// printf("env = %s\n", env[0]);
-	// printf("executing\n");
+	env = variable_to_darray(global_var);
 	if (!path)
 		exit(eprint(cmd->final_cmd_line[0], "command does not exist"));
 	if (execve(path, &cmd->final_cmd_line[0], env) == -1)
@@ -111,38 +105,83 @@ void	update_last_exit(int last_exit, t_cmd_info *cmd_info)
 	cmd_info->last_exit = last_exit;
 }
 
-void	do_pumbling(t_cmd *cmd, t_cmd_info *cmd_info)
+void	fork_error()
 {
+	perror(strerror(errno));
+	write(2, "forked failed\n", 14);
+	exit (-1);
+}
+
+void	execute_child(t_cmd *cmd, t_cmd_info *cmd_info)
+{
+	dup2(cmd->infd, STDIN);
+	dup2(cmd->outfd, STDOUT);
+
+	if (!builtin(cmd, cmd_info))
+	{
+		close(cmd->infd);
+		close(cmd->outfd);
+		clean_exit(cmd_info);
+	}
+	run_execve(cmd, cmd_info->global_var);
+	exit (126);
+}
+
+int	fork_you(int no_cmd, int close_this, t_cmd *cmd, t_cmd_info *cmd_info)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		fork_error();
+	else if (!pid)
+	{
+		if (!(no_cmd == cmd_info->no_cmd - 1))
+			close(close_this);
+		execute_child(cmd, cmd_info);
+	}
+	else
+		return (0);
+}
+
+void	child_dispatcher(t_cmd *cmd, t_cmd_info *cmd_info)
+{
+	int	pipe_holder[2];
+	int	prev_pipe;
+	int	command_launched;
 	int	pid;
 	int	exit_status;
 
+	command_launched = 0;
 	while (cmd)
 	{
-		if (cmd->final_cmd_line)
+		if (command_launched)
+			cmd->infd = prev_pipe;
+		if (!(command_launched == cmd_info->no_cmd - 1))
 		{
-			pid = fork();
-			if (pid == -1)
-			{
-				perror(strerror(errno));
-				write(2, "forked failed\n", 14);
-				exit (-1);
-			}
-			else if (!pid)
-			{
-				exit_status = builtin(cmd, cmd_info);
-				if (!exit_status)
-					clean_exit(cmd_info);
-				run_execve(cmd, cmd_info->global_var);
-				exit (126);
-			}
-			else
-			{
-				ignore_allsignal();
-				waitpid(pid, &exit_status, 0);
-				update_last_exit(exit_status, cmd_info);
-			}
-			cmd = cmd->next;
+			pipe(pipe_holder);
+			cmd->outfd = pipe_holder[1];
 		}
+		if (!fork_you(command_launched, pipe_holder[0], cmd, cmd_info))
+		{
+			if (command_launched)
+				close(prev_pipe);
+			if (!(command_launched == cmd_info->no_cmd - 1))
+			{
+				close(pipe_holder[1]);
+				prev_pipe = pipe_holder[0];
+			}
+		}
+		++command_launched;
+		cmd = cmd->next;
+	}
+
+	command_launched = 0;
+	while (command_launched < cmd_info->no_cmd)
+	{
+		waitpid(-1, &exit_status, 0);
+		update_last_exit(exit_status, cmd_info);
+		++command_launched;
 	}
 }
 
@@ -173,5 +212,5 @@ int	execute(t_cmd_info *cmd_info)
 			printf("built-in successfully launched\n");
 	}
 	else
-		do_pumbling(cmd, cmd_info);
+		child_dispatcher(cmd, cmd_info);
 }

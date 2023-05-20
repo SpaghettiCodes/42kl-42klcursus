@@ -1,0 +1,50 @@
+
+void	make_them_pipes(int	cmd_no, int *pipe_holder, int prev_pipe, t_cmd *cmd, t_cmd_info *cmd_info)
+{
+	// if (command_launched)
+	// 	cmd->infd = prev_pipe;
+	// if (!(command_launched == cmd_info->no_cmd - 1))
+	// {
+	// 	pipe(pipe_holder);
+	// 	cmd->outfd = pipe_holder[1];
+	// }
+
+	// if (!cmd_no)
+	// {
+	// 	pipe(pipe_holder);
+	// 	cmd->outfd = pipe_holder[1];
+	// }
+	// else if (cmd_no == cmd_info->no_cmd - 1)
+	// 	cmd->infd = prev_pipe;
+	// else
+	// {
+	// 	cmd->infd = prev_pipe;
+	// 	pipe(pipe_holder);
+	// 	cmd->outfd = pipe_holder[1];
+	// }
+}
+
+void	clean_pipe(int	cmd_no, int *pipe_holder, int *prev_pipe, t_cmd *cmd, t_cmd_info *cmd_info)
+{
+	// if (cmd_no)
+	// 	close(*prev_pipe);
+	// if (!(cmd_no == cmd_info->no_cmd - 1))
+	// {
+	// 	close(pipe_holder[1]);
+	// 	*prev_pipe = pipe_holder[0];
+	// }
+
+	// if (!cmd_no)
+	// {
+	// 	close(pipe_holder[1]);
+	// 	*prev_pipe = pipe_holder[0];
+	// }
+	// else if (cmd_no == cmd_info->no_cmd - 1)
+	// 	close(*prev_pipe);
+	// else
+	// {
+	// 	close(pipe_holder[1]);
+	// 	close(*prev_pipe);
+	// 	*prev_pipe = pipe_holder[0];
+	// }
+}

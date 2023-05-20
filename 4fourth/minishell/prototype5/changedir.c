@@ -17,7 +17,6 @@ int	change_dir(char	**arg, t_cmd_info *shell_info)
 	searcher = search_variable("PWD", shell_info->global_var);
 	if (!searcher)
 		eprint("cd", "PWD is unset, PWD will not be updated");
-
 	if (searcher)
 		oldpwd = &searcher->theline[4];
 
@@ -25,7 +24,7 @@ int	change_dir(char	**arg, t_cmd_info *shell_info)
 		newpwd = arg[1];
 	else
 		newpwd = &search_variable("HOME", shell_info->global_var)->theline[5];
-	
+
 	if (chdir(newpwd) == -1)
 	{
 		shell_info->last_exit = eprint("cd", "directory does not exist");

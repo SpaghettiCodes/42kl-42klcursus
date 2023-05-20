@@ -6,6 +6,7 @@ void	free_val_content(t_val *current)
 {
 	if (current->alloced)
 		free(current->theline);
+	current->theline = NULL;
 }
 
 t_val	*init_val()
