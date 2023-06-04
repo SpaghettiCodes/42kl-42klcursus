@@ -13,6 +13,11 @@ int unset_variables(char **arg, t_val **val)
 	// 	(*val) = NULL;
 	// 	return 0;
 	// }
+	if (!ft_strcmp(arg[1], "_"))
+	{
+		printf("Yeah. no\n");
+		return (0);
+	}
 	while (arg[i])
 	{
 		current = (*val);

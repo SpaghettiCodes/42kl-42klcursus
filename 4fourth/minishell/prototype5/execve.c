@@ -144,13 +144,25 @@ int	fork_you(int no_cmd, int close_this, t_cmd *cmd, t_cmd_info *cmd_info)
 		return (0);
 }
 
-void	child_dispatcher(t_cmd *cmd, t_cmd_info *cmd_info)
+void	wait_for_children(t_cmd_info *cmd_info)
+{
+	int	exit_status;
+	int	i;
+
+	i = 0;
+	while (i < cmd_info->no_cmd)
+	{
+		waitpid(-1, &exit_status, 0);
+		update_last_exit(exit_status, cmd_info);
+		++i;
+	}
+}
+
+void	do_piping_and_send_child(t_cmd *cmd, t_cmd_info *cmd_info)
 {
 	int	pipe_holder[2];
 	int	prev_pipe;
 	int	command_launched;
-	int	pid;
-	int	exit_status;
 
 	command_launched = 0;
 	while (cmd)
@@ -175,14 +187,7 @@ void	child_dispatcher(t_cmd *cmd, t_cmd_info *cmd_info)
 		++command_launched;
 		cmd = cmd->next;
 	}
-
-	command_launched = 0;
-	while (command_launched < cmd_info->no_cmd)
-	{
-		waitpid(-1, &exit_status, 0);
-		update_last_exit(exit_status, cmd_info);
-		++command_launched;
-	}
+	wait_for_children(cmd_info);
 }
 
 // test code will reformat everything later
@@ -212,5 +217,5 @@ int	execute(t_cmd_info *cmd_info)
 			printf("built-in successfully launched\n");
 	}
 	else
-		child_dispatcher(cmd, cmd_info);
+		do_piping_and_send_child(cmd, cmd_info);
 }

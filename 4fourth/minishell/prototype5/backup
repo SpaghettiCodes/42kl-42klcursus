@@ -1,0 +1,16 @@
+int	scan_for_var_assign(char *input, t_token *current, int start, int end)
+{
+	int		strlen;
+	int		found_ears;
+
+	strlen = ft_strlen(input);
+	found_ears = (input[end] == '\"' || input[end] == '\'');
+	while (end < strlen)
+	{
+		++end;
+		if ((input[end] == '\"' || input[end] == '\'') && found_ears)
+			break;
+	}
+	make_token(input, current, start, end);
+	return (end);
+}

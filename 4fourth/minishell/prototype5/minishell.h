@@ -1,51 +1,51 @@
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <termios.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+# include <termios.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <errno.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
-#include "string_func.h"
+# include "string_func.h"
 
 typedef unsigned char bool;
-#define TRUE 1
-#define FALSE 0
+# define	TRUE 1
+# define	FALSE 0
 
-#define	STDIN 0
-#define	STDOUT 1
+# define	STDIN 0
+# define	STDOUT 1
 
 // temp
-#define SPACE_sym '_'
-#define EXE_NAME "/test"
+# define SPACE_sym '_'
+# define EXE_NAME "/test"
 
-#define SYMBOL_COUNT 8
+# define SYMBOL_COUNT 9
 
 // 0000001
-#define CMD 0
-#define ARG 1
+# define CMD 0
+# define ARG 1
 // 0000010
-#define VAR_ASSIGN 2
+# define VAR_ASSIGN 2
 // 0000100
-#define VAR_USE 4
+# define VAR_USE 4
 // 0001000
-#define FILE_PATH 8
+# define FILE_PATH 8
 // 0010000
-#define BUNNY_EAR 16
+# define BUNNY_EAR 16
 // 0100000
 // if that is 0 - double ears
-#define SINGLE 32
+# define SINGLE 32
 // 1000000
-#define REDIRECT 64
+# define REDIRECT 64
  
-#define ENV 1
-#define SELF 0
+# define ENV 1
+# define SELF 0
 typedef struct s_val
 {
 	// MAY OR MAY NOT BE FRREABLE, SEE ALLOCED
@@ -71,6 +71,16 @@ typedef struct s_token
 	struct s_token *next;
 }	t_token;
 
+// woohooo another day another structure
+typedef struct s_redir
+{
+	int				no;
+	int				type;
+	char			*file_name;
+
+	struct s_redir	*next;
+}	t_redir;
+
 typedef struct s_cmd
 {
 	// damn im lazy to do pipes :((((
@@ -83,6 +93,8 @@ typedef struct s_cmd
 	char	**final_cmd_line;
 
 	bool	redir:1;
+	t_redir	*redir_info;
+
 	struct s_cmd *next;
 }	t_cmd;
 
@@ -99,7 +111,12 @@ typedef struct s_cmd_info
 	int				last_exit;
 }	t_cmd_info;
 
-#define MAX_SIZE -1
+# define IN_DEF 1
+# define OUT_DEF 2
+# define HEREDOC 3
+# define OUT_APP 4
+
+# define MAX_SIZE -1
 
 int			eprint(char *element, char *msg);
 
@@ -123,8 +140,8 @@ t_val		*search_variable(char *keyword, t_val *var);
 
 void		symbol_b_gone();
 void		new_line();
-void		restore(void);
 int			execute(t_cmd_info *cmd_info);
+int			partoftoken(char x);
 
 char		**variable_to_darray(t_val *in);
 

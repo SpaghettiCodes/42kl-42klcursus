@@ -68,6 +68,10 @@ void	printtoken(t_token *stuff)
 	}
 }
 
+// dear past me
+// what the fuck is this
+// fix it
+// - future me
 void	replace_variable(char **cmd, t_cmd_info *minishell)
 {
 	t_token	*sub_token;
@@ -84,23 +88,25 @@ void	replace_variable(char **cmd, t_cmd_info *minishell)
 	printf("Seperating variables\n");
 	while (i <= total_length)
 	{
-		if ((*cmd)[i] == '$' || (*cmd)[i] == '=' || (*cmd)[i] == '\"' || 
-				(*cmd)[i] == SPACE_sym || (*cmd)[i] == '\'')
-		{
-			if (start - i)
-				current = new_assignvar_node(*cmd, start, (i - 1), current);
-			current = new_assignvar_node(((*cmd) + i), 0, 0, current);
-			start = (i + 1);
-		}
-		else if ((*cmd)[i] == '\0')
+		if ((*cmd)[i] == '\0')
 		{
 			if (start - i)
 				current = new_assignvar_node(*cmd, start, (i - 1), current);
 			break ;
 		}
+		else if ((*cmd)[i] == '$')
+		{
+			if (start - i)
+				current = new_assignvar_node(*cmd, start, (i - 1), current);
+			current = new_assignvar_node(((*cmd) + i), 0, 0, current);
+			start = (i + 1);
+			while (isalpha((*cmd)[++i]) && i <= total_length)
+				{};
+			current = new_assignvar_node(*cmd, start, (i - 1), current);
+			start = i;
+		}
 		++i;
 	}
-
 	// debug
 	printtoken(sub_token);
 

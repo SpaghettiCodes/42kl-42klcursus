@@ -135,6 +135,8 @@ t_cmd	*init_cmd()
 	new->final_cmd_line = NULL;
 	new->tokens = NULL; 
 	new->next = NULL;
+	new->redir = 0;
+	new->redir_info = NULL;
 	return (new);
 }
 
@@ -153,7 +155,7 @@ t_token		*init_token(int	token_no)
 int	partoftoken(char x)
 {
 	// remember to replace the space here
-	char	*dict = "?><|\'\"_\0";
+	char	*dict = "?><|\'\"_=\0";
 	int		i;
 
 	i = 0;
@@ -193,10 +195,44 @@ t_token	*make_token(char *input, t_token *current, int start, int end)
 		current->type = current->type | VAR_ASSIGN;
 	if (search_character(current->string, '$', 0, MAX_SIZE) != -1 && !(current->type & SINGLE))
 		current->type = current->type | VAR_USE;
+	// miiiight wanna reformat this
+	if (search_character(current->string, '>', 0, MAX_SIZE) != -1 
+		|| search_character(current->string, '<', 0, MAX_SIZE) != -1
+		&& !(current->type & BUNNY_EAR))
+		current->type = current->type | REDIRECT;
 
 	printf("Token found %s\n", current->string);
 	current->next = init_token(current->token_no + 1);
 	return (current->next);
+}
+
+int	scan_for_var_assign(char *input, t_token *current, int start, int end)
+{
+	int		equal_loc;
+	int		strlen;
+	int		found_ears;
+
+	strlen = ft_strlen(input);
+	found_ears = 0;
+	while (end < strlen)
+	{
+		++end;
+		if (partoftoken(input[end]))
+		{
+			if ((input[end] == '\"' || input[end] == '\''))
+			{
+				// TODO = worry about how to remove the fucking bunny ears here
+				if (input[end] == input[start])
+					found_ears = (found_ears == 0);
+				continue;
+			}
+			if (found_ears)
+				continue;
+			break;
+		}
+	}
+	make_token(input, current, start, end);
+	return (end + 1);
 }
 
 t_token	*extract(char *input, int *index, int max_size)
@@ -228,7 +264,6 @@ t_token	*extract(char *input, int *index, int max_size)
 				if (input[i] == input[i + 1])
 					++i;
 				token_current = make_token(input, token_current, start, i);
-				token_current->type = token_current->type | REDIRECT;
 				++i;
 			}
 			else if (input[i] == '\'' || input[i] == '\"')
@@ -256,7 +291,9 @@ t_token	*extract(char *input, int *index, int max_size)
 					make_token(input, token_current, start, (i - 1));
 				break;
 			}
-			i = i + (input[i] == '?');
+			else if (input[i] == '=')
+				i = scan_for_var_assign(input, token_current, start, i + 1);
+			// i = i + (input[i] == '?');
 			if (!skip_space(input, &i))
 				break;
 			start = i;
@@ -295,6 +332,125 @@ t_token	*del_specific_token(t_token **token, t_token *find)
 		return ((*token));
 }
 
+t_redir	*init_redir(char *file_name)
+{
+	t_redir *ret;
+
+	ret = malloc(sizeof(t_redir));
+	ret->file_name = file_name;
+	ret->type = 0;
+	return (ret);
+}
+
+t_redir	*add_back_redir(t_redir *list, t_redir *new)
+{
+	while (list->next)
+	{
+		list = list->next;
+	}
+	list->next = new;
+}
+
+int		determine_type(t_token *current)
+{
+	if (current->string[0] == '>')
+	{
+		if (ft_strlen(current->string) == 2)
+			return (OUT_APP);
+		return (OUT_DEF);
+	}
+	else if (current->string[0] == '<')
+	{
+		if (ft_strlen(current->string) == 2)
+			return (HEREDOC);
+		return (IN_DEF);
+	}
+	return (0);
+}
+
+t_token	*save_redir_info(t_cmd *command, t_token **main, t_token *current)
+{
+	t_token	*ret;
+	t_redir	*new;
+	t_token	*next;
+	int		type;
+
+	// set ups
+	command->redir = 1;
+	next = current->next;
+	ret = current->next->next;
+
+	// determine the type of redirection
+	type = determine_type((current));
+
+	// delete used token
+	(*main) = del_specific_token(main, current);
+
+	// determine the file_name // eof string
+	new = init_redir(ft_strdup(next->string));
+	if (!command->redir_info)
+		command->redir_info = new;
+	else
+		add_back_redir(command->redir_info, new);
+
+	// remove used token
+	(*main) = del_specific_token(main, next);
+
+	// return new place to be;
+	return (ret);
+}
+
+int	find_symbol(char *str, int to_match, int start)
+{
+	while (str[start])
+	{
+		if (str[start] == to_match)
+			return (start);
+		++start;
+	}
+	return (-1);
+}
+
+void	reassign_token_num(t_token *all)
+{
+	int	i;
+
+	i = 0;
+	while (all)
+	{
+		all->token_no = i;
+		++i;
+		all = all->next;
+	}
+}
+
+void	check_space_and_seperate(t_token *current, t_token *all)
+{
+	t_token	*new;
+	char	*storage[2];
+	int		start;
+	int		end;
+
+	start = 0;
+	while (1)
+	{
+		end = find_symbol(current->string, SPACE_sym , start);
+		if (end == -1)
+			return;
+		storage[0] = ft_substr2(current->string, start, end);
+		storage[1] = ft_substr2(current->string, end + 1, ft_strlen(current->string) - 1);
+		free(current->string);
+		current->string = storage[0];
+
+		new = init_token(-1);
+		new->string = storage[1];
+		new->next = current->next;
+		current->next = new;
+		current = current->next;
+	}
+	reassign_token_num(all);
+}
+
 void	process_tokens(t_cmd *command, t_cmd_info *minishell)
 {
 	t_token *current;
@@ -305,11 +461,12 @@ void	process_tokens(t_cmd *command, t_cmd_info *minishell)
 	current = command->tokens;
 	while ( current )
 	{
-		printf("token = %s\n", current->string);
 		if (current->type & VAR_USE)
 		{
 			printf("replacing variables\n");
 			replace_variable(&(current->string), minishell);
+			if (!(current->type & BUNNY_EAR))
+				check_space_and_seperate(current, command->tokens);
 		}
 		if ((current->type & VAR_ASSIGN) && !cmd_found)
 		{
@@ -317,20 +474,17 @@ void	process_tokens(t_cmd *command, t_cmd_info *minishell)
 			if (new_variable(current->string, &minishell->global_var, 1))
 			{
 				current = del_specific_token(&command->tokens, current);
-				printf("done..?\n");
 				continue ;
 			}
-			printf("mm yes not added\n");
-		}
-		// idt redirect should be here, will handle this later
-		if (current->type & REDIRECT)
-		{
-			command->redir = 1;
-			// printf("redirecting fd\n");
-			// redirect_fd(&current, command);
 		}
 		printf("one token done\n");
-		++cmd_found;
+		current = current->next;
+	}
+	current = command->tokens;
+	while (current)
+	{
+		if (current->type & REDIRECT)
+			current = save_redir_info(command, &command->tokens, current);
 		current = current->next;
 	}
 }
@@ -482,22 +636,23 @@ void update_env(t_val *global_var)
 	free(val);
 }
 
+struct termios	saved;
+
 int main(int ac, char *av, char **envp)
 {
 	t_cmd_info	minishell;
 
 	struct termios	termios_new;
 
+	// get terminal attribute (man stty) (init the saved attribute)
+	tcgetattr(STDIN_FILENO, &saved);
+	// // at exit, restore all terminal attribute to default
+	// atexit(restore);
+
 	tcgetattr(STDIN_FILENO, &termios_new);
 	termios_new.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_new);
 	tcsetattr(0, 0, &termios_new);
-
-	// struct	termios	attr;
-	// // get terminal attribute (man stty) (init the saved attribute)
-	// tcgetattr(STDIN_FILENO, &saved);
-	// // at exit, restore all terminal attribute to default
-	// atexit(restore);
 
 	// just to remove the ^C and ^\ 
 	// symbol_b_gone();
@@ -518,4 +673,5 @@ int main(int ac, char *av, char **envp)
 	}
 	delete_all_var(&minishell.global_var);
 	rl_clear_history();
+	clean_exit(NULL);
 }

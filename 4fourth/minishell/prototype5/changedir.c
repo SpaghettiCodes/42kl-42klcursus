@@ -17,14 +17,15 @@ int	change_dir(char	**arg, t_cmd_info *shell_info)
 	searcher = search_variable("PWD", shell_info->global_var);
 	if (!searcher)
 		eprint("cd", "PWD is unset, PWD will not be updated");
-	if (searcher)
-		oldpwd = &searcher->theline[4];
+	oldpwd = getcwd(NULL, 0);
 
-	if (arg_count == 2 && ft_strcmp(arg[1], "~"))
-		newpwd = arg[1];
-	else
+	if (!ft_strcmp(arg[1], "~"))
 		newpwd = &search_variable("HOME", shell_info->global_var)->theline[5];
-
+	else if (!ft_strcmp(arg[1], "-"))
+		newpwd = &search_variable("OLDPWD", shell_info->global_var)->theline[7];
+	else
+		newpwd = arg[1];
+		
 	if (chdir(newpwd) == -1)
 	{
 		shell_info->last_exit = eprint("cd", "directory does not exist");
@@ -33,7 +34,6 @@ int	change_dir(char	**arg, t_cmd_info *shell_info)
 
 	newpwd = getcwd(NULL, 0);	
 	printf("changed working dir from %s to %s\n", oldpwd, newpwd);
-
 	if (searcher)
 	{
 		free_val_content(searcher);
@@ -46,5 +46,7 @@ int	change_dir(char	**arg, t_cmd_info *shell_info)
 		searcher = add_back_variable(&shell_info->global_var);
 	fill_val(searcher, 1, n_append("OLDPWD=", oldpwd), 6);
 	searcher->type = ENV;
+	free(oldpwd);
+
 	return (0);
 }

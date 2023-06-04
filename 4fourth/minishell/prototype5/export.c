@@ -10,7 +10,7 @@ int	export_error(char *aspect)
 	char *msg;
 
 	msg = n_append("\'", aspect);
-	msg = append(msg, "\' not a valid i	dentifier");
+	msg = append(msg, "\' not a valid identifier");
 	eprint("export", msg);
 	free(msg);
 	return (1);
@@ -80,10 +80,6 @@ void	sort_variables(char **variables)
 	return ;
 }
 
-// whoops
-// write(1, temp[i], equal_loc);
-// write(1, " ", 1);
-// write(1, &temp[i][equal_loc + 1], ft_strlen(temp[i]) - equal_loc);
 int	export_print(t_val *global_variable)
 {
 	int		i;
@@ -100,9 +96,13 @@ int	export_print(t_val *global_variable)
 			equal_loc = ft_strlen(temp[i]);
 		write(1, "declare -x ", 11);
 		write(1, temp[i], equal_loc);
-		write(1, "=\"", 2);
-		write(1, &temp[i][equal_loc + 1], ft_strlen(temp[i]) - equal_loc);
-		write(1, "\"\n", 2);
+		if (ft_strlen(temp[i]) - equal_loc)
+		{
+			write(1, "=\"", 2);
+			write(1, &temp[i][equal_loc + 1], ft_strlen(temp[i]) - equal_loc);
+			write(1, "\"", 1);
+		}
+		write(1, "\n", 1);
 		++i;
 	}
 	free_darray(temp);
