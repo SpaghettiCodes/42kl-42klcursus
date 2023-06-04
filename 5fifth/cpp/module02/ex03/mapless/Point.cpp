@@ -16,8 +16,9 @@ Point::Point(Point const &ref) : x(ref.x), y(ref.y)
 
 Point &Point::operator=(Point const &ref)
 {
-	this->x = ref.x;
-	this->y = ref.y;
+	(void) ref;
+	// this->x = ref.x;
+	// this->y = ref.y;
 	return (*this);
 }
 

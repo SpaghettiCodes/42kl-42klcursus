@@ -21,8 +21,8 @@ class Point
 		~Point();
 
 	private:
-		Fixed x;
-		Fixed y;
+		Fixed const x;
+		Fixed const y;
 };
 
 std::ostream &operator<<(std::ostream &os, Point const &point);
