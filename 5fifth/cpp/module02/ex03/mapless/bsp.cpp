@@ -1,6 +1,5 @@
 #include "Fixed.hpp"
 #include "Point.hpp"
-#include <fstream>
 
 void	find_point( Point const a, Point const b, Point const c, Point const &point, bool &val)
 {
@@ -8,10 +7,11 @@ void	find_point( Point const a, Point const b, Point const c, Point const &point
 
 	if (midp == point)
 		val = 1;
-	if (((a == b) && (b == c)) || (midp == a) || (midp == b) || (midp == c) || val)
+	if ( val || ((a == b) && (b == c)) || (midp == a) || (midp == b) || (midp == c))
 		return ;
 	find_point( midp, a, c, point, val);
-	find_point( midp, a, b, point, val);
+	if (!val)
+		find_point( midp, a, b, point, val);
 }
 
 
@@ -30,5 +30,9 @@ bool bsp( Point const a, Point const b, Point const c, Point const point)
 	if (invalid(a, b, c, point))
 		return 0;
 	find_point(a, b, c, point, val);
+	if (!val)
+		find_point(c, b, a, point, val);
+	if (!val)
+		find_point(b, a, c, point, val);
 	return (val);
 }
