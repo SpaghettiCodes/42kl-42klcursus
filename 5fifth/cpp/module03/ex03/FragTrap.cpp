@@ -3,9 +3,9 @@
 FragTrap::FragTrap()
 {
 	this->name = "Unnamed";
-	hitpoint = 100;
-	erpoint = 100;
-	atkdmg = 30;
+	FragTrap::hitpoint = 100;
+	FragTrap::erpoint = 100;
+	FragTrap::atkdmg = 30;
 
 	std::cout << "For some reason, " << this->name << " became a FragTrap" << std::endl;
 }
@@ -13,9 +13,9 @@ FragTrap::FragTrap()
 FragTrap::FragTrap(std::string new_name)
 {
 	name = new_name;
-	hitpoint = 100;
-	erpoint = 100;
-	atkdmg = 30;
+	FragTrap::hitpoint = 100;
+	FragTrap::erpoint = 100;
+	FragTrap::atkdmg = 30;
 	
 	std::cout << "For some reason, " << this->name << " became a FragTrap" << std::endl;
 }

@@ -11,7 +11,11 @@ class FragTrap : public virtual ClapTrap
 		~FragTrap();
 
 		void highFivesGuys(void);
-	private:
+	protected:
+		std::string	name;
+		int			hitpoint;
+		int			erpoint;
+		int			atkdmg;
 };
 
 #endif

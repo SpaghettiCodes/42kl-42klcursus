@@ -4,7 +4,8 @@
 // halleluyah, i think i did it wrong;
 int main()
 {
-	DiamondTrap diamond("Fuck?");
+	DiamondTrap diamond("test");
+	diamond.print_stats();
 	diamond.beRepaired(10);
 	diamond.attack("amongus");
 	diamond.guardGate();

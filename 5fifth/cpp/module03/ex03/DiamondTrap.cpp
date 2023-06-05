@@ -3,9 +3,10 @@
 DiamondTrap::DiamondTrap()
 {
 	DiamondTrap::name = "Unnamed";
-	hitpoint = FragTrap::hitpoint;
-	erpoint = ScavTrap::erpoint;
-	atkdmg = ScavTrap::atkdmg;
+
+	DiamondTrap::hitpoint = FragTrap::hitpoint;
+	DiamondTrap::erpoint = ScavTrap::erpoint;
+	DiamondTrap::atkdmg = FragTrap::atkdmg;
 	ClapTrap::name = std::string(DiamondTrap::name).append("_clap_name");
 
 	std::cout << "A Rare Diamond Trap named " << DiamondTrap::name << " appeared!"  << std::endl;
@@ -14,9 +15,10 @@ DiamondTrap::DiamondTrap()
 DiamondTrap::DiamondTrap(std::string new_name)
 {
 	DiamondTrap::name = new_name;
-	hitpoint = FragTrap::hitpoint;
-	erpoint = ScavTrap::erpoint;
-	atkdmg = ScavTrap::atkdmg;
+
+	DiamondTrap::hitpoint = FragTrap::hitpoint;
+	DiamondTrap::erpoint = ScavTrap::erpoint;
+	DiamondTrap::atkdmg = FragTrap::atkdmg;
 	ClapTrap::name = std::string(DiamondTrap::name).append("_clap_name");
 
 	std::cout << "A Rare Diamond Trap named " << DiamondTrap::name << " appeared!"  << std::endl;

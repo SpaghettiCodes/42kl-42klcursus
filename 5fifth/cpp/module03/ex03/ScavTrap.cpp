@@ -5,9 +5,9 @@
 ScavTrap::ScavTrap(std::string new_name)
 {
 	name = new_name;
-	hitpoint = 100;
-	erpoint = 50;
-	atkdmg = 20;
+	ScavTrap::hitpoint = 100;
+	ScavTrap::erpoint = 50;
+	ScavTrap::atkdmg = 20;
 
 	std::cout << name << " upgraded to a ScavTrap" << std::endl;
 }
@@ -15,9 +15,9 @@ ScavTrap::ScavTrap(std::string new_name)
 ScavTrap::ScavTrap()
 {
 	this->name = "Unnamed";
-	hitpoint = 100;
-	erpoint = 50;
-	atkdmg = 20;
+	ScavTrap::hitpoint = 100;
+	ScavTrap::erpoint = 50;
+	ScavTrap::atkdmg = 20;
 
 	std::cout << name << " upgraded to a ScavTrap" << std::endl;
 }
