@@ -69,7 +69,7 @@ void	read_and_replace(std::ifstream &in, std::ofstream &out, std::string &torepl
 		{
 			out << replacewith;
 			i += toreplace.length();
-			found = content.find(toreplace, i);
+			found = content.find(toreplace, i + 1);
 		}
 		else
 		{
@@ -113,9 +113,9 @@ int main(int ac, char **av)
 	}
 	filename.append(".replace");
 	outfile.open(filename.c_str(), std::ios::out | std::ios::trunc);
-	if (!toreplace.size())
-		copy_to(infile, outfile);
-	else
+	// if (!toreplace.size())
+	// 	copy_to(infile, outfile);
+	// else
 		read_and_replace(infile, outfile, toreplace, replacewith);
 	return (0);
 }
