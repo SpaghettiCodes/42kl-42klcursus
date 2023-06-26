@@ -40,7 +40,6 @@
 // }
 
 
-// will not work
 template <typename X> 
 int afunction(X &a)
 {
@@ -64,9 +63,7 @@ int main()
 	int tab[] = {0, 1, 2, 3, 4};
 	int size = 5;
 
-	iter(tab, size, printstuff);
+	iter<int, void>(tab, size, printstuff);
 	iter(tab, size, multi_two);
-
-	// this will not work :(
-	// iter(tab, size, afunction);
+	iter(tab, size, afunction<int>);
 }

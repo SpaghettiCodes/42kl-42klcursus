@@ -67,11 +67,9 @@ int	Span::shortestSpan()
 
 	// the first result from adjacent_difference will be equal to first element of the array
 	diff.erase(diff.begin());
-	// sort from smallest to largest
-	std::sort(diff.begin(), diff.end());
 
 	// take the smallest
-	return (*diff.begin());
+	return (*(std::min_element(diff.begin(), diff.end())));
 }
 
 unsigned int	Span::longestSpan()

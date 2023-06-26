@@ -1,7 +1,7 @@
 #include "Fixed.hpp"
 #include "Point.hpp"
 #include <fstream>
-#define DEPTH 10
+#include "bsp.hpp"
 
 struct s_bsp
 {

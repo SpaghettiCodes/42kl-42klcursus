@@ -19,7 +19,7 @@ class RPN
 		int		ret_value();
 
 	private:
-		// thou shalnt use stack in future projects
+		// thou shalnt use stack (and deque) in future projects
 		std::stack<int>	numbers;
 
 		// token processing

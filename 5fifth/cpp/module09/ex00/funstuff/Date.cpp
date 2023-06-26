@@ -1,6 +1,13 @@
 #include "Date.hpp"
 
-Date::Date(float year, float month, float day) : error_val(false)
+Date::Date()
+{
+	value[0] = 69;
+	value[1] = 69;
+	value[2] = 69;
+}
+
+Date::Date(float year, float month, float day)
 {
 	value[0] = year;
 	value[1] = month;
@@ -10,25 +17,28 @@ Date::Date(float year, float month, float day) : error_val(false)
 // pre-req - must have 2 sep seperating the year, month and day
 Date::Date(std::string date, char sep)
 {
+	if (!Date::date_check(date, sep))
+		throw (Date::InvalidInput());
+
 	std::string::iterator	begin = date.begin();
 	std::string::iterator	end = date.end();
 	std::string::iterator	first = begin + date.find(sep);
 	std::string::iterator	second = begin + date.find_last_of(sep);
 
-	value[0] = std::stoi(std::string(begin, first));
-	value[1] = std::stoi(std::string(first + 1, second));
-	value[2] = std::stoi(std::string(second + 1, end));
+	value[0] = std::atoi(std::string(begin, first).c_str());
+	value[1] = std::atoi(std::string(first + 1, second).c_str());
+	value[2] = std::atoi(std::string(second + 1, end).c_str());
 };
-
-// for error handling, like a throwaway object
-Date::Date(bool error) : error_val(error)
-{ };
 
 Date::~Date()
 { };
 
-bool	Date::get_Error() const
-{ return (error_val); };
+bool		Date::date_check(std::string raw, char sep)
+{
+	raw.replace(raw.find(sep), 1, "");
+	raw.replace(raw.find(sep), 1, "");
+	return (raw.find_first_not_of("0123456789") == raw.npos);
+}
 
 float	Date::getYear() const
 { return(value[0]); };
@@ -77,6 +87,18 @@ bool	Date::operator<=(const Date &other) const
 	if (other == *(this))
 		return true;
 	return (*(this) < other);
+}
+
+std::string	Date::convt_string(char sep) const
+{
+	std::stringstream	stream;
+	std::string			ret;
+
+	stream << value[0] << sep ;
+	stream << std::setfill('0') << std::setw(2) << value[1] << sep;
+	stream << std::setfill('0') << std::setw(2) << value[2];
+	stream >> ret;
+	return (ret);
 }
 
 // one definition rule???

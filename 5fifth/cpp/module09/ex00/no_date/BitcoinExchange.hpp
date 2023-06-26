@@ -8,14 +8,12 @@
 #include <string>
 #include <iomanip>
 
-#include "Date.hpp"
-
 // mf this is just a parser fest :(((
 class BitCoinExchange
 {
 	public:
-		typedef	std::map<Date, float>			map_type;
-		typedef std::pair<Date, float>			pair_type;	
+		typedef	std::map<std::string, float>			map_type;
+		typedef std::pair<std::string, float>			pair_type;	
 		typedef std::string::iterator			str_iter;
 
 		bool	generate_dictionary();
@@ -29,13 +27,21 @@ class BitCoinExchange
 		pair_type	make_new_pair(std::string in);
 
 		void		process_line(std::string line);
-		Date		process_date(std::string date_chunk);
+		std::string	process_date(std::string date_chunk);
 		float		process_value(std::string value_chunk);
-		void		calculate(Date date, float value);
+		void		calculate(std::string, float value);
 		
 		bool		spewerror(std::string msg, std::string aspect);
 
 		bool		digit_check(std::string raw);
+		bool		date_check(std::string raw);
+
+		class InvalidInput : public std::exception
+		{
+			const char *what() const throw() {
+				return ("Invalid Date Input");
+			}
+		};
 };
 
 #endif

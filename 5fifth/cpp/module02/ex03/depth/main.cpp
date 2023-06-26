@@ -5,11 +5,16 @@ using namespace std;
 
 int main( void ) 
 {
-	Point a(2, 1);
-	// Point e(2, 1);
-	Point b(3, 1);
-	Point c(2.5f, 2);
-	Point tofind(2.36f,1.4f);
+	// Point a(2, 1);
+	// // Point e(2, 1);
+	// Point b(3, 1);
+	// Point c(2.5f, 2);
+	// Point tofind(2.36f,1.4f);
+
+	Point a(100, 100);
+	Point b(1, 1);
+	Point c(5, 5);
+	Point tofind(2, 2);
 
 	// Point d;
 

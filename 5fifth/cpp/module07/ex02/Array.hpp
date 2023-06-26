@@ -18,17 +18,16 @@ class Array
 
 		unsigned int size() const;
 
+		class OutOfBounds : public std::exception
+		{
+			virtual const char* what() const throw() { return ("Error: Index given is out of bounds!"); }
+		};
 
 	private:
 		unsigned int		stuff_size;
 		Type				*stuff;
 
 		Type	*copy_over(Type *ori, int ori_size);
-
-		class OutOfBounds : public std::exception
-		{
-			virtual const char* what() const throw() { return ("Error: Index given is out of bounds!"); }
-		};
 
 };
 

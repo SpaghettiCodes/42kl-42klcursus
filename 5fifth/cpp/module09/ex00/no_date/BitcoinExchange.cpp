@@ -7,8 +7,10 @@ BitCoinExchange::pair_type	BitCoinExchange::make_new_pair(std::string line_read)
 	str_iter	comma = line_read.begin() + line_read.find(',');
 	str_iter	end = line_read.end();
 
-	Date	date(std::string(start, comma), '-');
-	float	val = std::strtof(std::string(comma + 1, end).c_str(), NULL);
+	std::string	date = std::string(start, comma);
+	if (!date_check(date))
+		throw (BitCoinExchange::InvalidInput());
+	float		val = std::strtof(std::string(comma + 1, end).c_str(), NULL);
 
 	return (BitCoinExchange::pair_type(date, val));
 }
@@ -57,9 +59,11 @@ bool	BitCoinExchange::spewerror(std::string msg, std::string aspect)
 	return (false);
 }
 
-Date	BitCoinExchange::process_date(std::string date_chunk)
+bool		BitCoinExchange::date_check(std::string raw)
 {
-	return (Date(date_chunk, '-'));
+	raw.replace(raw.find('-'), 1, "");
+	raw.replace(raw.find('-'), 1, "");
+	return (raw.find_first_not_of("0123456789") == raw.npos);
 }
 
 bool	BitCoinExchange::digit_check(std::string raw)
@@ -72,6 +76,13 @@ bool	BitCoinExchange::digit_check(std::string raw)
 		raw.replace(raw.find('.'), 1, "");
 	ret = ret && (raw.find_first_not_of("0123456789") == raw.npos);
 	return (ret);
+}
+
+std::string	BitCoinExchange::process_date(std::string date_chunk)
+{
+	if (!date_check(date_chunk))
+		return (std::string(""));
+	return (std::string(date_chunk));
 }
 
 float	BitCoinExchange::process_value(std::string value_chunk)
@@ -105,20 +116,12 @@ void	BitCoinExchange::process_line(std::string line)
 	str_iter	begin = line.begin();
 	str_iter	sep = line.begin() + line.find('|');
 	str_iter	end = line.end();
-
-	// space before the |
-	Date	date;
 	
-	try {
-		date = process_date(std::string(begin, sep - 1));
-	}
-	catch (std::exception &e) {
-		spewerror("Bad input => ", std::string(begin, sep - 1));
+	std::string	date = process_date(std::string(begin, sep - 1));
+	if (date.size() == 0)
 		return ;
-	}
-
 	// space after the |
-	float	value = process_value(std::string(sep + 2, end));
+	float		value = process_value(std::string(sep + 2, end));
 	if (value == -1)
 		return ;
 
@@ -148,7 +151,7 @@ void	BitCoinExchange::make_calc(std::string in)
 }
 
 // map_type::iterator	rate = (find != data.end()) ? find : --data.lower_bound(date);
-void	BitCoinExchange::calculate(Date date, float value)
+void	BitCoinExchange::calculate(std::string date, float value)
 {
 	// The lower_bound() method in C++ is used to return an iterator pointing to the first element in the range
 	// which has a value not less than val.
@@ -156,12 +159,18 @@ void	BitCoinExchange::calculate(Date date, float value)
 	// function returns an iterator pointing to the next smallest
 	// number just greater than or equal to that number.
 
-	map_type::reverse_iterator	rate;
+	map_type::iterator	find = data.find(date);
+	map_type::iterator	rate;
 
-	rate = map_type::reverse_iterator(data.lower_bound(date));
-	if (rate == data.rend()) {
-		spewerror("Out of range : ", date.convt_string('-'));
-		return;
+	if (find != data.end())
+		rate = find;
+	else {
+		rate = data.lower_bound(date);
+		if (rate == data.begin()) {
+			spewerror("Out of range : ", date);
+			return;
+		}
+		--rate;
 	}
 
 	std::cout << date << " => " << value << " = ";
