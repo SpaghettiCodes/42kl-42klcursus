@@ -16,8 +16,7 @@ int main(int ac, char **av)
 		std::cout << "* LOUD AND UNBREARABLE FEEDBACK NOISE *" << std::endl;
 	else
 	{
-		int	i = 0;
-		while (++i < ac)
+		for (int i = 1; i < ac; ++i)
 			print.append(av[i]);
 		capitalize(print);
 		std::cout << print << std::endl;
