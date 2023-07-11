@@ -1,11 +1,6 @@
 #include "Harl.hpp"
 
 // who the hell is harl
-
-
-// error logging in c++ poggers no more printfs everywhere
-// will still use printf tho
-
 int main(int ac, char **av)
 {
 	Harl harl;

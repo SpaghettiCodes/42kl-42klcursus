@@ -92,24 +92,25 @@ void	PmergeMe::vector_runner()
 	print_vct(vec);
 	std::cout << std::endl;
 
-	vct_sort();
+	vct_sort(Group_Iter(vec.begin(), 1), Group_Iter(vec.end(), 1));
 }
 
 // merge insertion sort -> split - insert - merge - repeat
 void	PmergeMe::vct_sort(Group_Iter begin, Group_Iter end)
 {
 	bool	has_leftovers;
+	Group_Iter	loop_end;
 	// Group the elements of into n/2 pairs of elements, 
 	// arbitrarily, leaving one element unpaired 
 	// if there is an odd number of elements.
 
-	for (Group_Iter start = begin; start != end; start)
-	{
-		if ((start + 1) >= end) {
-			has_leftovers = 1;
-			break;
-		}
+	if ( begin.distance(end) % 2 )
+		loop_end = end - 1;
+	else
+		loop_end = end;
 
+	for (Group_Iter start = begin; start != loop_end; start)
+	{
 		// Perform n/2 comparisons, one per pair, 
 		// to determine the larger of the two elements
 		// in each pair.
@@ -118,17 +119,23 @@ void	PmergeMe::vct_sort(Group_Iter begin, Group_Iter end)
 			start.chunk_swap(start + 1);
 	}
 
+	// if only 2 values, return
+	if (begin.distance(end) == 2)
+		return ;
+
 	// Recursively sort n/2 larger elements from each pair,
 	// creating a sorted sequence of
 	// n/2 of the input elements, in ascending order.
 
-	// wtf how do i do this wts
+	vct_sort(Group_Iter(begin, begin.size() * 2), Group_Iter(loop_end, loop_end.size() * 2));
 
 	// Insert the remaining n/2 elements of N into S, one at a time, with a 
 	// specially chosen insertion ordering described below. Use binary search in subsequences of 
 	// S (as described below) to determine the position at which each element should be inserted
 
-	// ??? what
+
+
+	// the specially chosen insertion we will do ltr :thumbsup
 }
 
 void	PmergeMe::runner(int ac, char **av)

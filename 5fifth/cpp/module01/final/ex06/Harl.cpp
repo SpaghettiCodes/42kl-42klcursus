@@ -1,33 +1,18 @@
 #include "Harl.hpp"
 
 
-// typedef a function pointer to a function that returns void, takes no parameters, and is part of Harl:: class
 typedef void (Harl::*func_ptr)(void) ;
 
 void Harl::complain(std::string level)
 {
-	// them function pointer array
-	func_ptr functions[4] = {
-		&Harl::debug, 
-		&Harl::info, 
-		&Harl::warning, 
-		&Harl::error
-	};
-	std::string option[4] = {
-		"DEBUG",
-		"INFO",
-		"WARNING",
-		"ERROR"
-	};
+	func_ptr functions[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+	std::string option[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
 	int i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		if (!option[i].compare(level))
 		{
-			// to access a function pointer, use (*function[i])
-			// this-> is needed to... idk honestly
-			// if you dont use this-> a bunch of unhappy error pop up sooooooooooo
 			(this->*functions[i]) ();
 			break;
 		}

@@ -9,7 +9,9 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
-#include <chrono>
+// chrono is c++11 CRINGE
+// #include <chrono>
+#include <ctime>
 #include <algorithm>
 #include <exception>
 
@@ -25,9 +27,6 @@ class PmergeMe
 		typedef typename std::deque<int>		dqu;
 		typedef typename dqu::iterator			dqu_iter;
 
-		typedef std::chrono::_V2::system_clock::time_point		clock;
-		typedef std::chrono::microseconds						ms;
-
 		void	runner(int ac, char **av);
 		void	print_val();
 
@@ -40,6 +39,9 @@ class PmergeMe
 	
 		class	Group_Iter {
 			public:
+				
+				Group_Iter() : _size(0)
+				{ }
 
 				Group_Iter(vct_iter start, std::size_t size_) : iter(start), _size(size_)
 				{ }
@@ -67,8 +69,20 @@ class PmergeMe
 				bool	operator>(const Group_Iter &compare)
 				{ return (*(this->iter) > *(compare.iter)); }
 
+				bool	operator>=(const Group_Iter &compare)
+				{ return (*(this->iter) >= *(compare.iter)); }
+
+				void	operator=(const Group_Iter &from)
+				{
+					this->iter = from.iter;
+					this->_size = from._size;
+				}
+
 				Group_Iter	operator+(std::size_t num)
 				{ return (Group_Iter(iter + (num * _size), _size)); }
+
+				Group_Iter	operator-(std::size_t num)
+				{ return (Group_Iter(iter - (num * _size), _size)); }
 
 				std::size_t	size()
 				{ return (_size); }
@@ -77,6 +91,7 @@ class PmergeMe
 				{
 					vct_iter	one = iter;
 					vct_iter	two = iter_2.iter;
+
 					for (std::size_t i = 0; i < _size; ++i)	
 					{
 						std::iter_swap(one, two);
@@ -85,7 +100,12 @@ class PmergeMe
 					}
 				}
 
-				bool 	operator!=(const Group_Iter &compare)
+				std::size_t	distance(Group_Iter iter_2)
+				{
+					return ((iter_2.iter - this->iter) / _size);
+				}
+
+				bool 	operator!=(const Group_Iter &compare) 
 				{ return (this->iter != compare.iter); }
 
 			private:
@@ -100,7 +120,7 @@ class PmergeMe
 		void	print_sorted();
 	
 		void	vector_runner();
-		void	vct_sort(vct_iter begin, vct_iter end);
+		void	vct_sort(Group_Iter begin, Group_Iter end);
 
 		std::vector<int>	hard_copy;
 
