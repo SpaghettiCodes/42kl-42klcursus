@@ -20,8 +20,6 @@ int main(int ac, char **av)
 			zombie_hoard[i].annouce();
 			i++;
 		}
-		// this one function deletes all the memory allocated
 		delete []zombie_hoard;
 	}
-	// very cool
 }

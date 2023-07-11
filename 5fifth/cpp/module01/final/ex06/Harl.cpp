@@ -8,15 +8,13 @@ void Harl::complain(std::string level)
 	func_ptr functions[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
 	std::string option[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
 
-	int i = 0;
-	while (i < 5)
+	for (int i = 0; i < 4; ++i)
 	{
 		if (!option[i].compare(level))
 		{
 			(this->*functions[i]) ();
 			break;
 		}
-		i++;
 	}
 }
 

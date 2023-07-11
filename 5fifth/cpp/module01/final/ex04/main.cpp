@@ -46,7 +46,7 @@ int main(int ac, char **av)
 	std::string		replacewith = av[3];
 
 	infile.open(av[1], std::ios::in);
-	if (!infile)
+	if (infile.fail())
 	{
 		std::cerr << "File cant be opened" << std::endl;
 		return (-1);
