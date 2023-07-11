@@ -3,17 +3,33 @@
 #include <string>
 #include <stdlib.h>
 
+void	copy_to(std::ifstream &infile, std::ofstream &outfile)
+{; 
+	std::cerr << "Warning: Replacing Nothing" << std::endl;
+	for (std::string buff; getline(infile, buff); )
+		outfile << buff << "\n";
+	std::cout << "done!" << std::endl;
+	return ;
+}
+
 void	read_and_replace(std::ifstream &in, std::ofstream &out, std::string &toreplace, std::string &replacewith)
 {
 	std::string content;
 
+	if (!toreplace.length())
+	{
+		copy_to(in, out);
+		return ;
+	}
+
 	for (std::string buff; getline(in , buff); )
 		content.append(buff.append("\n"));
+	content = content.substr(0, content.length() - 1);
 
 	for (
 			std::size_t start = 0, found = content.find(toreplace, start);
 			start < content.length();
-			found = content.find(toreplace, start + 1)
+			found = content.find(toreplace, start)
 		)
 	{
 		if (found == std::string::npos)

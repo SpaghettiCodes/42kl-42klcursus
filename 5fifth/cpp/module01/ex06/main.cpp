@@ -4,19 +4,17 @@
 int main(int ac, char **av)
 {
 	Harl harl;
-	int	 option;
+	int	 option = 0;
 
-	option = 0;
 	if (ac == 1)
 		std::cout << "No parameter, default filter assumed" << std::endl;
 	else
 	{
 		std::string options[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
-		while (option < 4)
+		for (option = 0; option < 4; ++option)
 		{
 			if (!options[option].compare(av[1]))
 				break;
-			option++;
 		}
 	}
 	// https://stackoverflow.com/questions/45129741/gcc-7-wimplicit-fallthrough-warnings-and-portable-way-to-clear-them
