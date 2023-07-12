@@ -43,7 +43,7 @@ bool in_edge( Point const a, Point const b, Point const c, Point const point)
 bool bsp( Point const a, Point const b, Point const c, Point const point)
 {	
 	bool val;
-	std::cout << "In bsp" << std::endl;
+	std::cout << "Running BSP..." << std::endl;
 	if (invalid(a, b, c, point) || in_edge(a, b, c, point))
 		return 0;
 	find_point(a, b, c, point, val);
