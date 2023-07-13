@@ -3,7 +3,6 @@
 
 #include <string>
 #include <iostream>
-// what is a claptrap
 
 class ClapTrap
 {

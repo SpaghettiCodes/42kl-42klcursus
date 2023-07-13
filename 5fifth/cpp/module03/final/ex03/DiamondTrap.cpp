@@ -43,7 +43,7 @@ DiamondTrap	&DiamondTrap::operator=(const DiamondTrap &ori)
 
 DiamondTrap::~DiamondTrap()
 {
-	std::cout << DiamondTrap::name << " reverted back into its boring form" << std::endl;
+	std::cout << DiamondTrap::name << " was fired from being a DiamondTrap" << std::endl;
 }
 
 void DiamondTrap::whoAmI()

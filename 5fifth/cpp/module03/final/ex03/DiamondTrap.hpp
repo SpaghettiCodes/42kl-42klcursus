@@ -4,9 +4,6 @@
 # include "FragTrap.hpp"
 # include "ScavTrap.hpp"
 
-// multiple inheritance
-
-// thanks https://www.cprogramming.com/tutorial/multiple_inheritance.html very cool
 class DiamondTrap: public FragTrap, public ScavTrap
 {
 	public:
@@ -18,16 +15,16 @@ class DiamondTrap: public FragTrap, public ScavTrap
 
 		void whoAmI();
 
-		// special code to print out the stats of the diamond trap
-		void print_stats()
-		{
-			std::cout << std::endl;
-			std::cout << hitpoint << std::endl;
-			std::cout << erpoint << std::endl;
-			std::cout << atkdmg << std::endl;
-			std::cout << std::endl;
-		}
-		using ScavTrap::attack;
+		// // special code to print out the stats of the diamond trap
+		// void print_stats()
+		// {
+		// 	std::cout << std::endl;
+		// 	std::cout << hitpoint << std::endl;
+		// 	std::cout << erpoint << std::endl;
+		// 	std::cout << atkdmg << std::endl;
+		// 	std::cout << std::endl;
+		// }
+		// using ScavTrap::attack;
 
 	protected:
 		std::string	name;

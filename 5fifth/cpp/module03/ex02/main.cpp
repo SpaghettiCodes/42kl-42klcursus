@@ -1,6 +1,6 @@
 #include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
-#include "FlagTrap.hpp"
+#include "FragTrap.hpp"
 
 #include <iostream>
 
@@ -9,21 +9,21 @@ int main()
 	int turn;
 	turn = 0;
 
-	ScavTrap claptrap1("claptrap1");
-	ClapTrap claptrap2("claptrap2");
-	FlagTrap claptrap3("claptrap3");
+	ScavTrap claptrap1("ScavTrap1");
+	ClapTrap claptrap2("ClapTrap2");
+	FragTrap claptrap3("FragTrap3");
 
 	std::cout << "Turn " << turn << " : " ;
-	claptrap1.attack("claptrap2");
+	claptrap1.attack("ClapTrap2");
 	std::cout << "But it missed!" << std::endl;
-	claptrap3.attack("claptrap1");
-	std::cout << "uhhh idk anymore man" << std::endl;
+	claptrap3.attack("ScavTrap1");
+	claptrap1.takeDamage(30);
 	claptrap2.takeDamage(10);
 	claptrap3.takeDamage(69);
 	turn++;
 
 	std::cout << "Turn " << turn << " : " ;
-	claptrap2.attack("claptrap1");
+	claptrap2.attack("ScavTrap1");
 	claptrap1.takeDamage(10);
 	turn++;
 
@@ -40,12 +40,12 @@ int main()
 	}
 
 	std::cout << "Turn " << turn << " : " ;
-	claptrap1.attack("claptrap2");
+	claptrap1.attack("ClapTrap2");
 	std::cout << "But it missed!" << std::endl;
 	turn++;
 
 	std::cout << "Turn " << turn << " : " ;
-	claptrap1.attack("claptrap2");
+	claptrap1.attack("ClapTrap2");
 	claptrap2.takeDamage(20);
 	turn++;
 

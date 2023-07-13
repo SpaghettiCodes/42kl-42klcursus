@@ -1,19 +1,18 @@
 #include "ClapTrap.hpp"
-#include <iostream>
 
-ClapTrap::ClapTrap() : hitpoint(10), erpoint(10), atkdmg(10)
+ClapTrap::ClapTrap() : hitpoint(10), erpoint(10), atkdmg(0)
 {
 	std::cout << "Unnamed ClapTrap has arrived!" << std::endl;
-	this->name = "\"Unnamed\"";
+	this->name = "Unnamed";
 }
 
-ClapTrap::ClapTrap(std::string new_name) : hitpoint(10), erpoint(10), atkdmg(10)
+ClapTrap::ClapTrap(std::string name) : hitpoint(10), erpoint(10), atkdmg(0)
 {
-	name = new_name;
-	std::cout << name << " has arrived!" << std::endl;
+	this->name = name;
+	std::cout << this->name << " has arrived!" << std::endl;
 }
 
-ClapTrap::ClapTrap(ClapTrap &ori) : hitpoint(10), erpoint(10), atkdmg(10)
+ClapTrap::ClapTrap(ClapTrap &ori) : hitpoint(ori.hitpoint), erpoint(ori.erpoint), atkdmg(ori.atkdmg)
 {
 	this->name = ori.name;
 	std::cout << "A duplicate of " << this->name << " is created!" << std::endl;
@@ -25,7 +24,8 @@ ClapTrap &ClapTrap::operator=(ClapTrap &ori)
 	this->hitpoint = ori.hitpoint;
 	this->erpoint = ori.erpoint;
 	this->atkdmg = ori.atkdmg;
-	std::cout << "A duplicate of " << this->name << " is created!" << std::endl;
+
+	std::cout << "Duplicated " << this->name << std::endl;
 	return (*this);
 }
 

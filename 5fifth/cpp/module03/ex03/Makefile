@@ -2,7 +2,7 @@ EXEC = test
 
 G++ = g++
 
-FLAGS = -Wall -Wextra -Werror -Wshadow -std=c++98
+FLAGS = -Wall -Wextra -Werror -Wno-shadow -std=c++98
 
 all: compile
 

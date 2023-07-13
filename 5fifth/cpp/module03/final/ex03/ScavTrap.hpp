@@ -18,6 +18,8 @@ class ScavTrap: virtual public ClapTrap
 		int			hitpoint;
 		int			erpoint;
 		int			atkdmg;
+
+		bool		gatekeep;
 };
 
 #endif

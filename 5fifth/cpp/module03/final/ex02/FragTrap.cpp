@@ -3,9 +3,9 @@
 FragTrap::FragTrap()
 {
 	this->name = "Unnamed";
-	FragTrap::hitpoint = 100;
-	FragTrap::erpoint = 100;
-	FragTrap::atkdmg = 30;
+	hitpoint = 100;
+	erpoint = 100;
+	atkdmg = 30;
 
 	std::cout << "For some reason, " << this->name << " became a FragTrap" << std::endl;
 }
@@ -13,9 +13,9 @@ FragTrap::FragTrap()
 FragTrap::FragTrap(std::string name)
 {
 	this->name = name;
-	FragTrap::hitpoint = 100;
-	FragTrap::erpoint = 100;
-	FragTrap::atkdmg = 30;
+	hitpoint = 100;
+	erpoint = 100;
+	atkdmg = 30;
 	
 	std::cout << "For some reason, " << this->name << " became a FragTrap" << std::endl;
 }
@@ -29,9 +29,9 @@ FragTrap::FragTrap(const FragTrap &ori) : ClapTrap()
 FragTrap	&FragTrap::operator=(const FragTrap &ori)
 {
 	this->name = ori.name;
-	FragTrap::hitpoint = ori.hitpoint;
-	FragTrap::erpoint = ori.erpoint;
-	FragTrap::atkdmg = ori.atkdmg;
+	hitpoint = ori.hitpoint;
+	erpoint = ori.erpoint;
+	atkdmg = ori.atkdmg;
 
 	std::cout << "Duplicated " << this->name << std::endl;
 	return (*this);

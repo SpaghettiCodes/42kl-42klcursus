@@ -1,9 +1,12 @@
 #ifndef __SCAVTRAP_HPP__
 #define __SCAVTRAP_HPP__
 
+// ayo CYKA BYLAT
+
 #include "ClapTrap.hpp"
 
-class ScavTrap: virtual public ClapTrap
+// do i need a operator= assignment function?
+class ScavTrap: public ClapTrap
 {
 	public:
 		ScavTrap();
@@ -14,10 +17,8 @@ class ScavTrap: virtual public ClapTrap
 
 		void attack(const std::string &target);
 		void guardGate();
-	protected:
-		int			hitpoint;
-		int			erpoint;
-		int			atkdmg;
+	private:
+		bool	gatekeep;
 };
 
 #endif

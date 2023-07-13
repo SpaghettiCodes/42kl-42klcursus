@@ -1,5 +1,14 @@
 #include "ScavTrap.hpp"
-#include <iostream>
+
+ScavTrap::ScavTrap()
+{
+	this->name = "Unamed";
+	hitpoint = 100;
+	erpoint = 50;
+	atkdmg = 20;
+
+	std::cout << name << " upgraded to a ScavTrap" << std::endl;
+}
 
 // derived classes has no initialization list
 ScavTrap::ScavTrap(std::string name)
@@ -12,14 +21,21 @@ ScavTrap::ScavTrap(std::string name)
 	std::cout << this->name << " upgraded to a ScavTrap" << std::endl;
 }
 
-ScavTrap::ScavTrap()
+ScavTrap::ScavTrap(const ScavTrap &ori) : ClapTrap()
 {
-	this->name = "Unamed";
-	hitpoint = 100;
-	erpoint = 50;
-	atkdmg = 20;
+	(*this) = ori;
+	std::cout << "A duplicate of " << this->name << " is created!" << std::endl;
+}
 
-	std::cout << name << " upgraded to a ScavTrap" << std::endl;
+ScavTrap	&ScavTrap::operator=(const ScavTrap &ori)
+{
+	this->name = name;
+	this->hitpoint = ori.hitpoint;
+	this->erpoint = ori.erpoint;
+	this->atkdmg = ori.atkdmg;
+
+	std::cout << "Duplicated " << this->name << std::endl;
+	return (*this);
 }
 
 ScavTrap::~ScavTrap()
