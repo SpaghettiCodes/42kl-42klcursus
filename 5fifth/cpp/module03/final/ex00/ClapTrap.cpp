@@ -2,8 +2,8 @@
 
 ClapTrap::ClapTrap() : hitpoint(10), erpoint(10), atkdmg(0)
 {
-	std::cout << "Unnamed ClapTrap has arrived!" << std::endl;
 	this->name = "Unnamed";
+	std::cout << "Unnamed ClapTrap has arrived!" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name) : hitpoint(10), erpoint(10), atkdmg(0)
@@ -47,8 +47,14 @@ void ClapTrap::attack(const std::string &target)
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
-	// i have decided to allow negative healths
+	if (hitpoint <= 0)
+	{
+		std::cout << name << " is already dead" << std::endl;
+		return ;
+	}
 	hitpoint -= amount;
+	if (hitpoint < 0)
+		hitpoint = 0;
 	std::cout << name << " taken " << amount << " damage!" << std::endl;
 	if (hitpoint > 0)
 		std::cout << name << " health is now " << hitpoint << std::endl;

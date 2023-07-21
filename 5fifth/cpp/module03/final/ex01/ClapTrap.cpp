@@ -47,7 +47,14 @@ void ClapTrap::attack(const std::string &target)
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
-	// i have decided to allow negative healths
+	if (hitpoint <= 0)
+	{
+		std::cout << name << " is already dead" << std::endl;
+		return ;
+	}
+	hitpoint -= amount;
+	if (hitpoint < 0)
+		hitpoint = 0;
 	hitpoint -= amount;
 	std::cout << name << " taken " << amount << " damage!" << std::endl;
 	if (hitpoint > 0)
