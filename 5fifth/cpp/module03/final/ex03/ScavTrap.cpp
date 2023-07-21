@@ -7,6 +7,10 @@ ScavTrap::ScavTrap() : gatekeep(0)
 	ScavTrap::erpoint = 50;
 	ScavTrap::atkdmg = 20;
 
+	ClapTrap::hitpoint = ScavTrap::hitpoint;
+	ClapTrap::erpoint = ScavTrap::erpoint;
+	ClapTrap::atkdmg = ScavTrap::atkdmg;
+
 	std::cout << name << " upgraded to a ScavTrap" << std::endl;
 }
 
@@ -16,6 +20,10 @@ ScavTrap::ScavTrap(std::string name) : gatekeep(0)
 	ScavTrap::hitpoint = 100;
 	ScavTrap::erpoint = 50;
 	ScavTrap::atkdmg = 20;
+
+	ClapTrap::hitpoint = ScavTrap::hitpoint;
+	ClapTrap::erpoint = ScavTrap::erpoint;
+	ClapTrap::atkdmg = ScavTrap::atkdmg;
 
 	std::cout << this->name << " upgraded to a ScavTrap" << std::endl;
 }
@@ -32,6 +40,11 @@ ScavTrap	&ScavTrap::operator=(const ScavTrap &ori)
 	ScavTrap::hitpoint = ori.hitpoint;
 	ScavTrap::erpoint = ori.erpoint;
 	ScavTrap::atkdmg = ori.atkdmg;
+
+	ClapTrap::hitpoint = ScavTrap::hitpoint;
+	ClapTrap::erpoint = ScavTrap::erpoint;
+	ClapTrap::atkdmg = ScavTrap::atkdmg;
+
 	gatekeep = ori.gatekeep;
 
 	std::cout << "Duplicated " << this->name << std::endl;
@@ -52,9 +65,9 @@ void ScavTrap::attack(const std::string &target)
 	}
 	erpoint--;
 	if (gatekeep)
-		std::cout << name << " threw a gate at " << target << ", causing " << atkdmg << " points of damage" << std::endl;
+		std::cout << name << " threw a gate at " << target << ", causing " << ClapTrap::atkdmg << " points of damage" << std::endl;
 	else
-		std::cout << name << " scratched " << target << ", causing " << atkdmg << " points of damage" << std::endl;
+		std::cout << name << " scratched " << target << ", causing " << ClapTrap::atkdmg << " points of damage" << std::endl;
 }
 
 void ScavTrap::guardGate()

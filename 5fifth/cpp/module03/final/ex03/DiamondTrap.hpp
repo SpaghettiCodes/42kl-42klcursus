@@ -24,7 +24,7 @@ class DiamondTrap: public FragTrap, public ScavTrap
 		// 	std::cout << atkdmg << std::endl;
 		// 	std::cout << std::endl;
 		// }
-		// using ScavTrap::attack;
+		using ScavTrap::attack;
 
 	protected:
 		std::string	name;
