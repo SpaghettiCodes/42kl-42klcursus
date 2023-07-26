@@ -1,8 +1,7 @@
 #include "Cure.hpp"
 
-Cure::Cure() : AMateria()
+Cure::Cure() : AMateria("cure")
 {
-	this->materia_type = "cure";
 }
 
 Cure::Cure(Cure &ori) : AMateria()

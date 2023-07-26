@@ -4,7 +4,7 @@
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
 
-// i love getting fucked by my own test cases :)
+// // i love getting fucked by my own test cases :)
 // int main()
 // {
 // 	const Animal* meta = new Animal();

@@ -1,18 +1,18 @@
 #include "Character.hpp"
 #include "AMateria.hpp"
 
-Character::Character() : name("Unnamed"), invent_size(4), equipped(0)
+Character::Character() : name("Unnamed"), equipped(0)
 {
 	init_invet();
 }
 
-Character::Character(Character &ori) : invent_size(4), equipped(0)
+Character::Character(Character &ori) : equipped(0)
 {
 	init_invet();
 	*this = ori;
 }
 
-Character::Character(std::string new_name) : name(new_name), invent_size(4)
+Character::Character(std::string new_name) : name(new_name)
 {
 	init_invet();
 }
@@ -55,19 +55,18 @@ void Character::equip(AMateria *m)
 	std::cout << "No more inventory Spaces" << std::endl;
 }
 
-void Character::unequip(int idx)
+AMateria	*Character::unequip(int idx)
 {
-	// TODO: figure out how to delete the unequiped thing without deleting it
-	// i guess i can return the dropped item?
-	// maybemaybemaybe
+	AMateria	*ret;
 	if (idx >= invent_size || idx < 0 || !inventory[idx])
 	{
 		std::cout << "Nothing equipped there" << std::endl;
-		return ;
+		return (NULL);
 	}
-	delete inventory[idx];
+	ret = inventory[idx];
 	inventory[idx] = NULL;
 	equipped--;
+	return (ret);
 }
 
 void Character::use(int idx, ICharacter &target)

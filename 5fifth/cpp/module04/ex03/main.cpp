@@ -21,57 +21,65 @@ int main()
 	src->learnMateria(new Ice());
 	src->learnMateria(new Cure());
 
+	ICharacter* me = new Character("me");
+	ICharacter* bob = new Character("bob");
 	AMateria* tmp;
 
 	// 42 test
-	// ICharacter* me = new Character("me");
-	// ICharacter* bob = new Character("bob");
-	// tmp = src->createMateria("ice");
-	// me->equip(tmp);
-	// tmp = src->createMateria("cure");
-	// me->equip(tmp);
-	// me->use(0, *bob);
-	// me->use(1, *bob);
+	{
+		tmp = src->createMateria("ice");
+		me->equip(tmp);
+		tmp = src->createMateria("cure");
+		me->equip(tmp);
+		me->use(0, *bob);
+		me->use(1, *bob);
+	}
 
-	Character test("test");
-	tmp = src->createMateria("cure");
-	test.equip(tmp);
-	test.use(0, test);
-	std::cout << "Duplicating using = .." << std::endl;
-	Character test2 = test;
-	std::cout << "Duplicated" << std::endl;
-	test2.use(0, test2);
-	std::cout << "Duplicating using () .." << std::endl;
-	Character test3(test);
-	std::cout << "Duplicated" << std::endl;
-	test3.use(0, test2);
+	{
+		// Character test("test");
+		// tmp = src->createMateria("cure");
+		// test.equip(tmp);
+		// test.use(0, test);
+		// std::cout << "Duplicating using = .." << std::endl;
+		// Character test2 = test;
+		// std::cout << "Duplicated" << std::endl;
+		// test2.use(0, test2);
+		// std::cout << "Duplicating using () .." << std::endl;
+		// Character test3(test);
+		// std::cout << "Duplicated" << std::endl;
+		// test3.use(0, test2);
 
-	tmp = src->createMateria("ice");
-	test2.equip(tmp);
-	std::cout << "Copying using = ..." << std::endl;
-	test3 = test2;
-	std::cout << "Copied" << std::endl;
-	test3.use(1, test2);
+		// tmp = src->createMateria("ice");
+		// test2.equip(tmp);
+		// std::cout << "Copying using = ..." << std::endl;
+		// test3 = test2;
+		// std::cout << "Copied" << std::endl;
+		// test3.use(1, test2);
+	}
 
 	// // unaccessable indexes test
-	// me->use(69, *bob);
-	// me->use(-1, *bob);
-	// me->use(2, *bob);
 
-	// // new equpiment test
-	// tmp = src->createMateria("ice");
-	// me->equip(tmp);
-	// me->use(2, *bob);
+	{
+		// me->use(69, *bob);
+		// me->use(-1, *bob);
+		// me->use(2, *bob);
 
-	// std::cout << "Will now equip a not allocated Ice object (undefined behavior)" << std::endl;
-	// Ice test;
-	// me->equip(&test);
+		// // new equpiment test
+		// tmp = src->createMateria("ice");
+		// me->equip(tmp);
+		// me->use(2, *bob);
 
-	// MateriaSource test;
-	// test.learnMateria(new Ice());
-	// MateriaSource test2(test);
-	// delete bob;
-	// delete me;
+		// std::cout << "Will now equip a not allocated Ice object (undefined behavior)" << std::endl;
+		// Ice test;
+		// me->equip(&test);
+
+		// MateriaSource test;
+		// test.learnMateria(new Ice());
+		// MateriaSource test2(test);
+	}
+
+	delete bob;
+	delete me;
 	delete src;
 
 	return 0;

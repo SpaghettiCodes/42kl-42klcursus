@@ -31,5 +31,5 @@ std::string const &AMateria::getType() const
 
 void AMateria::use(ICharacter &target)
 {
-	std::cout << "An unkown Materia was used on " << target.getName() << std::endl;
+	std::cout << materia_type << " Materia was used on " << target.getName() << std::endl;
 }

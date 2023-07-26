@@ -14,9 +14,9 @@ class Character : public ICharacter
 		Character &operator=(Character &ori);
 
 		std::string const &getName() const;
-		void equip(AMateria* m);
-		void unequip(int idx);
-		void use(int idx, ICharacter& target);
+		void		equip(AMateria* m);
+		AMateria	*unequip(int idx);
+		void		use(int idx, ICharacter& target);
 
 	private :
 		void	init_invet();
@@ -25,7 +25,7 @@ class Character : public ICharacter
 
 		std::string name;
 		AMateria *inventory[4];
-		const int invent_size;
+		static const int invent_size = 4;
 		int		equipped;
 	protected :
 

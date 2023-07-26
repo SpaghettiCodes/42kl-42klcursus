@@ -9,7 +9,7 @@ class Cat : public Animal
 		Cat();
 		Cat(Cat &ori);
 		Cat &operator=(Cat &ori);
-		virtual ~Cat();
+		~Cat();
 
 		void makeSound() const;
 	private:

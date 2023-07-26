@@ -23,7 +23,7 @@ WrongAnimal::~WrongAnimal()
 
 void WrongAnimal::makeSound() const
 {
-	std::cout << "amongus" << std::endl;
+	std::cout << "WrongAnimal Made a Sound" << std::endl;
 }
 
 std::string WrongAnimal::getType() const

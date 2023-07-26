@@ -1,7 +1,7 @@
 #include "Character.hpp"
 #include "AMateria.hpp"
 
-Character::Character() : name("Unnamed"), equipped(0)
+Character::Character() : name("Unnamed"), equipped(0), dropped(NULL)
 {
 	init_invet();
 }
@@ -12,7 +12,7 @@ Character::Character(Character &ori) : equipped(0)
 	*this = ori;
 }
 
-Character::Character(std::string new_name) : name(new_name)
+Character::Character(std::string new_name) : name(new_name), equipped(0), dropped(NULL)
 {
 	init_invet();
 }
@@ -23,11 +23,14 @@ Character &Character::operator=(Character &ori)
 	clear_invent();
 	copy_invent(ori);
 	this->equipped = ori.equipped;
+	this->dropped = ori.dropped;
 	return (*this);
 }
 
 Character::~Character()
 {
+	if (dropped)
+		delete dropped;
 	clear_invent();
 }
 
@@ -55,18 +58,25 @@ void Character::equip(AMateria *m)
 	std::cout << "No more inventory Spaces" << std::endl;
 }
 
-AMateria	*Character::unequip(int idx)
+void	Character::unequip(int idx)
 {
-	AMateria	*ret;
 	if (idx >= invent_size || idx < 0 || !inventory[idx])
 	{
 		std::cout << "Nothing equipped there" << std::endl;
-		return (NULL);
+		return ;
 	}
-	ret = inventory[idx];
+	dropped = inventory[idx];
 	inventory[idx] = NULL;
 	equipped--;
-	return (ret);
+}
+
+AMateria	*Character::drop()
+{
+	AMateria	*store;
+
+	store = dropped;
+	dropped = NULL;
+	return (store);
 }
 
 void Character::use(int idx, ICharacter &target)
@@ -98,6 +108,8 @@ void Character::clear_invent()
 	}
 }
 
+// what
+// not like 2 character can share the same materia also
 void Character::copy_invent(Character &ori)
 {
 	for (int i = 0; i < invent_size; i++)

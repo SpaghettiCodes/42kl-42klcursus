@@ -15,7 +15,8 @@ class Character : public ICharacter
 
 		std::string const &getName() const;
 		void		equip(AMateria* m);
-		AMateria	*unequip(int idx);
+		void		unequip(int idx);
+		AMateria	*drop();
 		void		use(int idx, ICharacter& target);
 
 	private :
@@ -23,10 +24,11 @@ class Character : public ICharacter
 		void	clear_invent();
 		void	copy_invent(Character &ori);
 
-		std::string name;
-		AMateria *inventory[4];
-		static const int invent_size = 4;
-		int		equipped;
+		std::string			name;
+		AMateria			*inventory[4];
+		static const int	invent_size = 4;
+		int					equipped;
+		AMateria			*dropped;
 	protected :
 
 };

@@ -1,8 +1,7 @@
 #include "Ice.hpp"
 
-Ice::Ice() : AMateria()
+Ice::Ice() : AMateria("ice")
 {
-	this->materia_type = "ice";
 }
 
 Ice::Ice(Ice &ori) : AMateria()

@@ -5,11 +5,11 @@ Animal::Animal() : type("Unidentified")
 	std::cout << "Animal was made" << std::endl;
 }
 
-Animal::Animal(Animal &ori) : type(ori.type)
+Animal::Animal(const Animal &ori) : type(ori.type)
 {
 }
 
-Animal &Animal::operator=(Animal &ori)
+Animal &Animal::operator=(const Animal &ori)
 {
 	this->type = ori.type;
 	return (*this);
