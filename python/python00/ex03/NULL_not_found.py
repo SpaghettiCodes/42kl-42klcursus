@@ -1,3 +1,5 @@
+# TODO: REVAMP THIS SHIT
+
 def NULL_not_found(object: any) -> int:
 	if object:
 		# HOW IS NAN COUNTED AS NULL
