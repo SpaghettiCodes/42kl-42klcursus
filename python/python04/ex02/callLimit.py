@@ -90,7 +90,7 @@ is equivalent to
 
 function = decorator_factory(argument)(function)
 --> function = decorator(function)
---> function = wrapper(*functions's args, **function's kwargs)
+--> function = wrapper(*functions's args, **function's kwargs) <-- wrapper calls function inside
 
 """
 def callLimit(limit: int):

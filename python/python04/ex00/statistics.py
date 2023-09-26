@@ -1,23 +1,25 @@
 from math import sqrt
 
-## HAHA this is in python standard module BABY
-
 def mean(num_tab):
 	return sum(num_tab) / len(num_tab)
 
 def median(num_tab):
-	return num_tab[len(num_tab) // 2] if len(num_tab) % 2 else (num_tab[len(num_tab) // 2] + num_tab[(len(num_tab) // 2) + 1]) / 2
-
-def quartile(num_tab):
-	first_index = len(num_tab) // 4
-	second_index = len(num_tab) * 3 // 4
+	index = int((len(num_tab) + 1) * 1/2) - 1
 	if len(num_tab) % 2:
-		first_quartile = num_tab[first_index]
-		second_quartile = num_tab[second_index]
+		return (num_tab[index])
 	else:
-		first_quartile = mean([num_tab[first_index], num_tab[first_index + 1]])
-		second_quartile = mean([num_tab[second_index], num_tab[second_index + 1]])
-	return [float(first_quartile), float(second_quartile)]
+		return (num_tab[index] + num_tab[index + 1]) / 2
+
+# https://www.calculatorsoup.com/calculators/statistics/quartile-calculator.php
+# i forgot how quartile is calculated
+def quartile(num_tab):
+	if len(num_tab) % 2: ## odd
+		split = len(num_tab) // 2
+		lq, uq = median(num_tab[0:split]), median(num_tab[split+1:])
+	else: ## even
+		split = int((len(num_tab) / 2))
+		lq, uq = median(num_tab[0:split]), median(num_tab[split:])
+	return [lq, uq]
 
 def std(num_tab):
 	return sqrt(var(num_tab))
