@@ -18,8 +18,8 @@ def main():
     main_df = main_df.set_index('country')
     main_df.columns = main_df.columns.astype(int)
 
-    # country = 'Malaysia'
-    country = 'France'
+    country = 'Malaysia'
+    # country = 'France'
     data = main_df.loc[country]
 
     fig, ax = plt.subplots()

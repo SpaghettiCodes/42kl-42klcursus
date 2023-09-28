@@ -94,16 +94,16 @@ def main():
 
     years = filterYear(main_df.columns, 1800, 2050)
 
-    # country1_name = "Malaysia"
-    # country2_name = "South Korea"
+    country1_name = "Malaysia"
+    country2_name = "South Korea"
 
     # Small values
     # country1_name = "Trinidad and Tobago"
     # country2_name = "Qatar"
 
     # PDF
-    country1_name = "Belgium"
-    country2_name = "France"
+    # country1_name = "Belgium"
+    # country2_name = "France"
 
     country1_rawdata = main_df.loc[country1_name].get(years)
     country2_rawdata = main_df.loc[country2_name].get(years)
