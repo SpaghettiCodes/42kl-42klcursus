@@ -3,27 +3,36 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import pandas as pd
 
-from math import floor, ceil
 
-## https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html
 def main():
-	main_df: pd.DataFrame = load("life_expectancy_years.csv")
-	# country = 'Malaysia'
-	country = 'France'
-	data = main_df.loc[country]
+    """
+    main runner code with error handling
 
-	fig, ax = plt.subplots()
+    loads life expectancy years data from the csv file
+    selects a specific country
+    then displays a graph of life expectancy against year
+    """
+    main_df: pd.DataFrame = load("life_expectancy_years.csv")
+    if main_df is None:
+        return
+    # country = 'Malaysia'
+    country = 'France'
+    data = main_df.loc[country]
 
-	ax.set_title(f"{country} Life Expectancy Projections")
-	ax.set_ylabel('Life Expectancy')
-	ax.set_xlabel('Year')
+    fig, ax = plt.subplots()
 
-	ax.plot(data)
+    ax.set_title(f"{country} Life Expectancy Projections")
+    ax.set_ylabel('Life Expectancy')
+    ax.set_xlabel('Year')
 
-	tick_setter = ticker.MultipleLocator(40)
-	ax.xaxis.set_major_locator(tick_setter)
+    ax.plot(data)
 
-	plt.show()
+    # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html
+    tick_setter = ticker.MultipleLocator(40)
+    ax.xaxis.set_major_locator(tick_setter)
+
+    plt.show()
+
 
 if __name__ == "__main__":
-	main()
+    main()

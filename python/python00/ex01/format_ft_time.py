@@ -11,6 +11,6 @@ now = dt.datetime.now()
 # POSIX timestamp is the time since the epoch
 out = now.timestamp()
 
-print(f"Seconds since January 1, 1970: {out:,.4f} or {out:.2e} in scientific notation")
+print(
+    f"Seconds since January 1, 1970: {out:,.4f} or {out:.2e} in scientific notation")
 print(now.strftime("%b %d %Y"))
-# print(f"{now.month} {now.day} {now.year}")

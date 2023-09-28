@@ -11,3 +11,12 @@ v3 / 5
 print("---")
 v4 = calculator([1])
 v4 / 0
+print("---")
+v5 = calculator([])
+v5 + 1
+print("----")
+v6 = calculator(['hi'])
+v6 / 2
+print("---")
+v7 = calculator(["hehehe"])
+v7 + 2

@@ -1,36 +1,28 @@
-# TODO: REVAMP THIS SHIT
-
 def NULL_not_found(object: any) -> int:
-	if object:
-		# HOW IS NAN COUNTED AS NULL
-		# WTF
+	"""
+	Determines if an object is equivalent to NULL
+	Prints out a specific keyword (why is NaN Cheese), the value and the object's type
+	Prints out Type not Found if it isnt a NULL / Type not included (sad empty list sounds)
 
-		# WHY DOES NAN != NAN
-		# WTF
-		if isinstance(object, float) and object != object:
-			print(f"Cheese: {object} {type(object)}")
-			return 0
-		else:
-			print("Type not Found")
-			return 1
-			
-	varname = [var for var in globals().keys() if (isinstance(globals()[var], type(object))) and (object is globals()[var])]
-	varname = [var for var in varname if var.find('__') == -1]
-	print(f"{varname[0]}: {object} {type(object)}")
+	because somehow NaN is NULL now
+
+	:para,	| object : object to test
+
+	:return	| 0 if succesful (hah, get it, cause 0 is NULL as well), 1 if failed
+	"""
+	if object is None:
+		name = 'Nothing'
+	elif object != object:
+		name = 'Cheese'
+	elif object is False:
+		name = 'Fake'
+	elif object == '':
+		name = 'Empty'
+	elif object == 0:
+		name = 'Zero'
+	else:
+		print('Type not Found')
+		return 1
+
+	print(f"{name}: {object} {type(object)}")
 	return 0
-
-## test code
-## MUST be here in order for the stupid var name finder to work
-
-Nothing = None
-Garlic = float("NaN")
-Zero = 0
-Empty = ""
-Fake = False
-
-NULL_not_found(Nothing)
-NULL_not_found(Garlic)
-NULL_not_found(Zero)
-NULL_not_found(Empty)
-NULL_not_found(Fake)
-print(NULL_not_found("Brian"))

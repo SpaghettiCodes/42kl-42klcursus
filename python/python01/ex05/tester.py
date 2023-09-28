@@ -1,5 +1,5 @@
 from load_image import ft_load
-from pimp_image import *
+from pimp_image import ft_invert, ft_red, ft_blue, ft_green, ft_grey
 
 import matplotlib.pyplot as plt
 
