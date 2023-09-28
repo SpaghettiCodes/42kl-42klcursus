@@ -53,13 +53,14 @@ def main():
 
     data = cutSquare(data, (100, 450), (400, 400))
 
-    # pdf printing format doesnt, uh, show anything
-    # besides it a square, how the heck did they manage to even pull
-    # that freaking stunt?
     print("New Shape after slicing:", data.shape)
     print(data)
 
     data = transpose(data)
+
+    # the pdf method of printing shows NOTHING about the
+    # difference between normal and transposing
+    # sooo
     print("New Shape after Transpose:", data.shape)
     print(data)
 

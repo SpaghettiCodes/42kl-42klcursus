@@ -10,6 +10,11 @@ def cutSquare(data: np.ndarray, top_right: tuple[float],
     "Cuts" out a square from the image
     and return the new image with the new dimensions
 
+    zooming in results the "gb" channel from the RGB removed
+    i do not know why this is the case, ask the pdf
+    its completely possible to zoom in while keeping the entire
+    RGB
+
     @param  | data: data on the original image
             | top_right:    coordinates of the top right of the
             |               new image, in the old image
@@ -24,24 +29,6 @@ def cutSquare(data: np.ndarray, top_right: tuple[float],
     return data[x:x + diff_x:, y:y + diff_y:, 0]
 
 
-def transpose(data: np.ndarray):
-    """
-    Transposes the array
-
-    a (M x N) matrix, after transposing, will become (N x M)
-    the matrix is flipped over its diagonal, all
-    rows and column indices are switched
-
-    @param  | data: matrix to transpose
-
-    @return | transposed array
-    """
-    columns = data.shape[1]
-
-    ret = [data[::, x] for x in range(columns)]
-    return np.array(ret)
-
-
 def main():
     """
     main runner code with error handling
@@ -51,17 +38,14 @@ def main():
     if data is None:
         return
 
+    data_shape = data.shape
+    print(data.reshape(1, data_shape[0] * data_shape[1], data_shape[2]))
+
     data = cutSquare(data, (100, 450), (400, 400))
-
-    # pdf printing format doesnt, uh, show anything
-    # besides it a square, how the heck did they manage to even pull
-    # that freaking stunt?
     print("New Shape after slicing:", data.shape)
-    print(data)
 
-    data = transpose(data)
-    print("New Shape after Transpose:", data.shape)
-    print(data)
+    data_shape = data.shape
+    print(data.reshape(1, data_shape[0] * data_shape[1], 1))
 
     plt.imshow(data, cmap="gray")
     plt.show()

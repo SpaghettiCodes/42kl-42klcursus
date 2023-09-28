@@ -10,6 +10,10 @@ def cutSquare(data: np.ndarray, top_right: tuple[float],
     "Cuts" out a square from the image
     and return the new image with the new dimensions
 
+    for some reasons removes the gb channel from rgb
+    i shit you not, the image is somehow transformed to only R values
+    i have no idea why???? what??
+
     @param  | data: data on the original image
             | top_right:    coordinates of the top right of the
             |               new image, in the old image
@@ -32,22 +36,20 @@ def main():
     data = ft_load("animal.jpeg")
     if data is None:
         return
-    print(data)
+    # print(data)
 
     # this .reshape() allows you to achieve the
     # print format as shown in the pdf
-    # data_shape = data.shape
-    # print(data.reshape(1,data_shape[0] * data_shape[1],data_shape[2]))
+    data_shape = data.shape
+    print(data.reshape(1, data_shape[0] * data_shape[1], data_shape[2]))
 
     data = cutSquare(data, (100, 450), (400, 400))
     print("New Shape after slicing:", data.shape)
-    print(data)
+    # print(data)
 
-    # data_shape = data.shape
-    # print(data.reshape(1,data_shape[0] * data_shape[1],data_shape[2]))
+    data_shape = data.shape
+    print(data.reshape(1, data_shape[0] * data_shape[1], 1))
 
-    # We truncated the array so that it only has 1 Channel now
-    # Its only a (M x N) image
     # use cmap to make it gray instead
     plt.imshow(data, cmap="gray")
     plt.show()
