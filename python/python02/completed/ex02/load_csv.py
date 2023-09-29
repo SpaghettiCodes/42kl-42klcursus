@@ -5,8 +5,6 @@ def load(path: str) -> pd.DataFrame:
     """
     Loads a csv file content into a pandas DataFrame
 
-    sets country as the index for easier indexing
-
     @param  | path: path to csv file
     @return | the dataframe extracted
     """
