@@ -28,13 +28,16 @@ def slice_me(family: list, start: int, end: int) -> list:
 
 
 if __name__ == "__main__":
+    # works
+
     print(slice_me([1, 2, 3, 4, 5, 6], 1, 3))
 
     print(slice_me([1, 2, 3, 4, 5, 6], 1, -1))
 
     print("---error management---")
 
-    # fuck strings
+    # errors
+
     print(slice_me("abcdef", 1, 5))
 
     print(slice_me(1, 5, 10))
