@@ -1,4 +1,5 @@
 from ft_calculator import calculator
+
 v1 = calculator([0.0, 1.0, 2.0, 3.0, 4.0, 5.0])
 v1 + 5
 print("---")
@@ -14,9 +15,17 @@ v4 / 0
 print("---")
 v5 = calculator([])
 v5 + 1
-print("----")
+print("---")
 v6 = calculator(['hi'])
 v6 / 2
 print("---")
 v7 = calculator(["hehehe"])
 v7 + 2
+
+# from ft_calculator import calculator
+
+# v1 = calculator([0.0, 1.0, 2.0, 3.0])
+# v1 + 5
+# v1 * 5
+# v1 - 5
+# v1 / 5
