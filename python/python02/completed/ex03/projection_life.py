@@ -45,9 +45,9 @@ def main():
     year = 1900
 
     country_expectancy = expectancy_dataf.get(year)
-    country_expectancy.astype(float)
+    country_expectancy = country_expectancy.astype(float)
     country_gdp = gdp_dataf.get(year)
-    country_gdp.astype(float)
+    country_gdp = country_gdp.astype(float)
 
     fig, ax = plt.subplots()
 
