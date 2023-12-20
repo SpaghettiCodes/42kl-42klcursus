@@ -25,3 +25,16 @@ class calculator:
         """
         result = [float(V1[index] - V2[index]) for index in range(len(V1))]
         print(f"Sous Vector is : {result}")
+
+    @staticmethod
+    def testme() -> None:
+        print("hehe")
+
+if __name__ == "__main__":
+    # a = [5, 10, 2]
+    # b = [2, 4, 3]
+    # calculator.dotproduct(a, b)
+    # calculator.add_vec(a, b)
+    # calculator.sous_vec(a, b)
+    
+    calculator.testme()

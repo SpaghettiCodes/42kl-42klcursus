@@ -57,23 +57,33 @@ def ft_statistics(*args: any, **kwargs: any) -> None:
 
 
 if __name__ == "__main__":
-    ft_statistics(1, 42, 360, 11, 64, toto="mean",
-                  tutu="median", tata="quartile")
+    ft_statistics(42, 115, 30, 151, 6400, toto="mean", tutu="std", tata="quartile", titi="djdj")
     print("-----")
-    ft_statistics(5, 75, 450, 18, 597, 27474, 48575,
-                  hello="std", world="var")
+    ft_statistics(51, 735, 455, 8, 7, 74, 75, hello="median", world
+    ="var")
     print("-----")
-    ft_statistics(5, 75, 450, 18, 597, 27474, 48575,
-                  ejfhhe="heheh", ejdjdejn="kdekem")
+    ft_statistics(5, 75, 450, 18, 597, 27474, 48575, ejfhhe='fdff',
+    ejdjdejn="demiane")
     print("-----")
-    ft_statistics(toto="mean", tutu="median", tata="quartile")
+    ft_statistics(hello="std", world="median")
+
+    # ft_statistics(1, 42, 360, 11, 64, toto="mean",
+    #               tutu="median", tata="quartile")
+    # print("-----")
+    # ft_statistics(5, 75, 450, 18, 597, 27474, 48575,
+    #               hello="std", world="var")
+    # print("-----")
+    # ft_statistics(5, 75, 450, 18, 597, 27474, 48575,
+    #               ejfhhe="heheh", ejdjdejn="kdekem")
+    # print("-----")
+    # ft_statistics(toto="mean", tutu="median", tata="quartile")
 
     # quartile tester
-    print("--- testing quartile ---")
-    hehe = [0, 1, 2]
-    for x in range(3, 14):
-        hehe.append(x)
-        stuff = str(hehe).strip('[]')
-        print(stuff)
-        eval(f"ft_statistics( {stuff} , stuff=\"quartile\")")
-        print()
+    # print("--- testing quartile ---")
+    # hehe = [0, 1, 2]
+    # for x in range(3, 14):
+    #     hehe.append(x)
+    #     stuff = str(hehe).strip('[]')
+    #     print(stuff)
+    #     eval(f"ft_statistics( {stuff} , stuff=\"quartile\")")
+    #     print()

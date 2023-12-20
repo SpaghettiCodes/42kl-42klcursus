@@ -13,7 +13,7 @@ class Form
 		virtual ~Form();
 
 		// uhhhhhh
-		// Form &operator=(Form &ori);
+		Form &operator=(Form &ori);
 
 		std::string const	&getName();
 		int	const			&getreq_Sign();

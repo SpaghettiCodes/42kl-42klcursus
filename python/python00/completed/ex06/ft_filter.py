@@ -7,8 +7,7 @@ is true. If function is None, return the items that are true."""
         stuff = [value for value in iterable if value]
     else:
         stuff = [value for value in iterable if function(value)]
-    for values in stuff:
-        yield values
+    return stuff
 
 
 if __name__ == "__main__":

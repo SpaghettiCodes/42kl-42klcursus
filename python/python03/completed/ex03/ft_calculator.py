@@ -62,3 +62,13 @@ class calculator:
             print(f"ERROR! --- {e}")
         except AttributeError:
             print("ERROR! --- Unsupported Operand For Type")
+
+if __name__ == "__main__":
+    # v1 = calculator([0.0, 1.0, 2.0, 3.0])
+    # v1 + 5
+    # v1 * 5
+    # v1 - 5
+    # v1 / 5
+
+    v1 = calculator(['a', 'b', 'c', 'd'])
+    v1 / 2

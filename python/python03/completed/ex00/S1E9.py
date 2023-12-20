@@ -42,3 +42,16 @@ class Stark(Character):
                 | is_alive: sets alive status, True by default
         """
         super().__init__(first_name, is_alive)
+
+if __name__ == "__main__":
+    # Ned = Stark("Ned")
+    # print(Ned.__dict__)
+    # print(Ned.is_alive)
+    # Ned.die()
+    # print(Ned.is_alive)
+    # print(Ned.__doc__)
+    # print(Ned.__init__.__doc__)
+    # print(Ned.die.__doc__)
+
+    # will throw exception
+    Ned = Character("hehehe", "hehe")

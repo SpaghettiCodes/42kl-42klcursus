@@ -42,3 +42,21 @@ class King(Baratheon, Lannister):
         @return | hair of the King object
         """
         return self.hairs
+
+if __name__ == "__main__":
+    print(King.__mro__)
+
+    # from S1E9 import Character
+
+    # Joffrey = King("Joffrey")
+    # print(Joffrey.__dict__)
+    # print(Joffrey.__doc__)
+    # Joffrey.set_eyes("blue")
+    # Joffrey.set_hairs("light")
+    # print(Joffrey.__dict__)
+    # if (isinstance(Joffrey, King) and issubclass(King, Character) 
+    #     and issubclass(King, Lannister) and issubclass(King, Baratheon)):
+    #     print("OK")
+    # else:
+#         print("Something seems fishy, look at the code \
+# to see if the class king is inherited from the previous exercises")

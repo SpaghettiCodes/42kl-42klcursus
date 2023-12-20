@@ -24,10 +24,12 @@ Form::~Form()
 	std::cout << "Form deleted" << std::endl;
 }
 
-// Form &Form::operator=(Form &ori)
-// {
-// 	return (*this);
-// }
+Form &Form::operator=(Form &ori)
+{
+	// mfw everything is const
+	this->is_signed = ori.is_signed;
+	return (*this);
+}
 
 std::string const &Form::getName()
 {

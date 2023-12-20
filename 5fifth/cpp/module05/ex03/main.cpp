@@ -5,10 +5,9 @@
 #include "PresidentialPardonForm.hpp"
 #include "Intern.hpp"
 
-
-		// "presidential pardon",
-		// "robotomy request",
-		// "shrubbery creation"
+// "presidential pardon",
+// "robotomy request",
+// "shrubbery creation"
 
 int main()
 {

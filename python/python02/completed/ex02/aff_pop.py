@@ -31,7 +31,7 @@ def convertValue(x: str):
 
     @return | float value in terms of millions
     """
-    symbol_conversion = {'k': 1000, 'M': 1000000}
+    symbol_conversion = {'k': 1000, 'M': 1000000, 'B': 1000000000}
     symbol = x[-1]
 
     x = float(x.replace(symbol, "")) * symbol_conversion[symbol]
@@ -51,7 +51,7 @@ def convertReadable(x: float, placeholder):
 
     @return | string in human readable format
     """
-    symbol_conversion = {'M': 1000000, 'k': 1000}
+    symbol_conversion = {'B': 1000000000, 'M': 1000000, 'k': 1000}
 
     x = x * 1000000
     for symbol, value in symbol_conversion.items():
@@ -97,6 +97,10 @@ def main():
     country1_name = "Malaysia"
     country2_name = "South Korea"
 
+    # in my defence, i didnt know there was billions
+    # country1_name = 'China'
+    # country2_name = 'India'
+
     # Small values
     # country1_name = "Trinidad and Tobago"
     # country2_name = "Qatar"
@@ -122,6 +126,9 @@ def main():
 
     ax.xaxis.set_major_locator(ticker.MultipleLocator(40))
     ax.yaxis.set_major_locator(ticker.MultipleLocator(20))
+
+    # set this for billions
+    # ax.yaxis.set_major_locator(ticker.MultipleLocator(100))
     ax.yaxis.set_major_formatter(convertReadable)
 
     ax.legend(loc="lower right")
