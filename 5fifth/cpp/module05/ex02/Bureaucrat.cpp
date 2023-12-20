@@ -14,15 +14,9 @@ Bureaucrat::Bureaucrat(Bureaucrat const &ori): name(ori.name), grade(ori.grade)
 Bureaucrat::Bureaucrat(std::string new_name, int new_grade): name(new_name), grade(new_grade)
 {
 	if (grade < 1)
-	{
-		grade = 1;
 		throw Bureaucrat::GradeTooHighException();
-	}
 	else if (grade > 150)
-	{
-		grade = 150;
 		throw Bureaucrat::GradeTooLowException();
-	}
 	std::cout << "Bureaucrat is created" << std::endl;
 }
 
