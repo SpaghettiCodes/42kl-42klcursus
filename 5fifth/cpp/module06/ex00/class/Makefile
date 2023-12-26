@@ -1,4 +1,4 @@
-EXEC = test
+EXEC = convert
 
 G++ = g++
 
