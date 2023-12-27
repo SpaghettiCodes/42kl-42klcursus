@@ -15,6 +15,9 @@ Array<Type>::Array(Array<Type> const &ori) : stuff(NULL)
 template <typename Type>
 Array<Type> &Array<Type>::operator=(Array<Type> const &ori)
 {
+	if (&ori == this)
+		return (*this);
+
 	if (this->stuff)
 		delete []this->stuff;
 	this->stuff_size = ori.stuff_size;

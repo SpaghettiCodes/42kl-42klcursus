@@ -43,6 +43,7 @@
 template <typename X> 
 int afunction(X &a)
 {
+	(void) a;
 	return (2);
 }
 
@@ -63,7 +64,9 @@ int main()
 	int tab[] = {0, 1, 2, 3, 4};
 	int size = 5;
 
-	iter<int, void>(tab, size, printstuff);
-	iter(tab, size, multi_two);
+	// iter<int, void>(tab, size, printstuff);
+	// iter(tab, size, multi_two);
+
 	iter(tab, size, afunction<int>);
+	iter<int, void>(tab, size, printstuff);
 }
