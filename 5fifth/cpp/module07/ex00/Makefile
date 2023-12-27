@@ -1,13 +1,15 @@
+MAIN = main.cpp
+
 EXEC = test
 
 G++ = g++
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-all: compile
+all: $(EXEC)
 
-compile : 
-	$(G++) $(FLAGS) *.cpp -o $(EXEC)
+$(EXEC) : $(MAIN)
+	$(G++) $(FLAGS) $(MAIN) -o $(EXEC)
 
 a_san :
 	g++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address *.cpp -o test

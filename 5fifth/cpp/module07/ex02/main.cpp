@@ -100,6 +100,8 @@ int main()
 	}
 
 	Array <int>intray(SIZE);
+	std::cout << "In intray = ";
+	printarray(intray);
 
 	for (unsigned int i = 0; i < intray.size(); i++)
 		intray[i] = i;

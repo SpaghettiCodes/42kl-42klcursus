@@ -35,7 +35,7 @@ Type *Array<Type>::copy_over(Type *ori, int ori_size)
 	Type *ret;
 
 	// deep copy
-	ret = new Type[stuff_size];
+	ret = new Type[stuff_size]();
 	for (int i = 0; i < ori_size; i++)
 		ret[i] = ori[i];
 	return (ret);
@@ -67,7 +67,7 @@ Type const &Array<Type>::operator[](int const index) const
 template <typename Type>
 Array<Type>::Array(unsigned int size) : stuff_size(size)
 {
-	stuff = new Type[size];
+	stuff = new Type[size]();
 }
 
 template <typename Type>

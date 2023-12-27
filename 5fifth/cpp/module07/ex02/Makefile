@@ -6,9 +6,9 @@ G++ = g++
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-all: compile
+all: $(EXEC)
 
-compile : 
+$(EXEC) : $(MAIN)
 	$(G++) $(FLAGS) $(MAIN) -o $(EXEC)
 
 a_san :
