@@ -52,10 +52,12 @@
 int main()
 {
 	Span sp = Span(5);
-	int tab[5] = {INT_MIN, -2, -1, INT_MAX};
+	int tab[5] = {1, 0, 0};
 
 	sp.addNumber(1);
-	sp.addNumbers(tab, 4);
+	sp.addNumber(3);
+	sp.addNumber(5);
+	sp.addNumbers(tab, -1);
 
 	std::cout << "Stored Elements: " << sp.stored() << std::endl;
 	std::cout << sp.shortestSpan() << std::endl;
