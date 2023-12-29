@@ -12,6 +12,7 @@ class NotFound : public std::exception
 	}
 };
 
+// T is a container of integers
 template <class T>
 typename T::iterator easyfind(T container, int tofind)
 {
