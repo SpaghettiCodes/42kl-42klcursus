@@ -35,6 +35,15 @@ Span &Span::operator=(Span const &ori)
 	return (*this);
 }
 
+void	Span::addNumbers(int *tab, int tab_size)
+{
+	if ((tab_size + _stored) > _size)
+		throw MaxCapacity();
+
+	std::copy(tab, tab + tab_size, back_inserter(_tab));
+	_stored += tab_size;
+}
+
 void	Span::addNumber(int const to_add)
 {
 	if (_stored == _size)
@@ -50,7 +59,7 @@ unsigned int	paranoid_difference(int &x, int &y)
 	return ( (x > y) ? (x - y) : (y - x));
 }
 
-int	Span::shortestSpan()
+unsigned int	Span::shortestSpan()
 {
 	if (_stored <= 1)
 		throw Span::NotEnoughNum();
@@ -62,7 +71,7 @@ int	Span::shortestSpan()
 	// pdf example abit cacat
 	std::sort(copy.begin(), copy.end());
 
-	// completely unnecessary function :))))))
+	// get the difference between 2 valuesin the array
 	std::adjacent_difference(copy.begin(), copy.end(), back_inserter(diff), paranoid_difference);
 
 	// the first result from adjacent_difference will be equal to first element of the array
@@ -79,7 +88,7 @@ unsigned int	Span::longestSpan()
 
 	std::vector<int> copy(_tab);
 	std::sort(copy.begin(), copy.end());
-	return ((*(copy.end() - 1) - *(copy.begin())));
+	return ((*(copy.rbegin()) - *(copy.begin())));
 }
 
 unsigned int	Span::size()

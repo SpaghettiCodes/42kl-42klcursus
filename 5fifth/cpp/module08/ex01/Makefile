@@ -1,13 +1,25 @@
+MAIN = main.cpp Span.cpp
+
+OBJ = $(MAIN:.cpp=.o)
+
 EXEC = test
 
 G++ = g++
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-all: compile
+all: $(EXEC)
 
-compile : 
-	$(G++) $(FLAGS) *.cpp -o $(EXEC)
+%.o: %.cpp
+	g++ ${FLAGS} -c $< -o $@
 
-a_san :
-	g++ -Wall -Wextra -Werror -std=c++98 -fsanitize=address *.cpp -o test
+$(EXEC) : $(OBJ)
+	$(G++) $(OBJ) -o $(EXEC)
+
+clean:
+	rm -rf ${OBJ}
+
+fclean: clean
+	rm -rf ${EXEC}
+
+re: fclean all
