@@ -22,7 +22,7 @@ class MutantStack : public std::stack<TypeA, container>
 
 		MutantStack<TypeA, container>  &operator=(MutantStack<TypeA, container>  &ori) 
 		{
-			c = ori.c;
+			this->c = ori.c;
 		}
 
 		// https://en.cppreference.com/w/cpp/container/stack
@@ -35,6 +35,9 @@ class MutantStack : public std::stack<TypeA, container>
 		{
 			return (s::c.end());
 		}
+
+		// i dont THINK i need a const iterator?
+		// really not sure, not specified so immm not gonna put it?
 };
 
 #endif 

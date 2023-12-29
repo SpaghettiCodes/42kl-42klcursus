@@ -19,10 +19,36 @@ int main()
 	--it;
 	while (it != ite)
 	{
-		std::cout << *it << std::endl;
+		std::cout << *it << " ";
+		++it;
+	}
+	std::cout << std::endl;
+
+	MutantStack<int> test;
+
+	for (int x = 0; x < 10; ++x)
+	{
+		test.push(10);
+	}
+
+	it = test.begin();
+	ite = test.end();
+
+	int	i = 0;
+	while (it != ite)
+	{
+		*(it) = (i * 2);
+		++i;
 		++it;
 	}
 
-	std::stack<int> s(mstack);
+	it = test.begin();
+	while (it != ite)
+	{
+		std::cout << " " << *(it);
+		++it;
+	}
+	std::cout << std::endl;
+
 	return 0;
 }
