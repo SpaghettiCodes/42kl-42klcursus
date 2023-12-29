@@ -35,7 +35,7 @@ Span &Span::operator=(Span const &ori)
 	return (*this);
 }
 
-void	Span::addNumbers(int *tab, int tab_size)
+void	Span::addNumbers(int *tab, unsigned int tab_size)
 {
 	if ((tab_size + _stored) > _size)
 		throw MaxCapacity();

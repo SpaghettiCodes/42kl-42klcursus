@@ -18,7 +18,7 @@ class Span
 		Span			&operator=(Span const &ori);
 
 		void			addNumber(int const to_add);
-		void			addNumbers(int *tab, int tab_size);
+		void			addNumbers(int *tab, unsigned int tab_size);
 
 		unsigned int	shortestSpan();
 		unsigned int	longestSpan();
