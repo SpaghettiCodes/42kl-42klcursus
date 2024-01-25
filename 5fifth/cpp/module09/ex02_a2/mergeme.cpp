@@ -151,6 +151,7 @@ void insert_element(std::vector<int> &to_insert, std::vector<int> &main, size_t 
 	
 	std::vector<int>::iterator	inserter;
 
+	// TODO: Jocabthal numbers
 	for (
 		size_t	i = 0, index_val;
 		i < no_group;
