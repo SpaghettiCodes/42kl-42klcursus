@@ -19,6 +19,11 @@ int	jacobsthal_num_gen()
 	return jn;
 }
 
+int jacobsthal_num_gen(int n)
+{
+	return ((pow(2, n) - pow(-1, n)) / 3);
+}
+
 // int	binary_search(	std::vector<int> &in, 
 // 						size_t group_size, 
 // 						size_t which, 
@@ -146,27 +151,32 @@ int	binary_search(	std::vector<int> &main,
 
 void insert_element(std::vector<int> &to_insert, std::vector<int> &main, size_t group_size)
 {
-	size_t	no_group = to_insert.size() / group_size;
-	size_t	main_group_count;
+	size_t	insert_no_group = to_insert.size() / group_size;
+	size_t	group_remaining = insert_no_group;
+	size_t	main_no_group;
 	
 	std::vector<int>::iterator	inserter;
 
-	// TODO: Jocabthal numbers
-	for (
-		size_t	i = 0, index_val;
-		i < no_group;
-		++i
-	)
+	int		j_num = 2;
+	size_t	cur_jacobsthal_number = jacobsthal_num_gen(j_num);
+	size_t	prev_jacobsthal_number = jacobsthal_num_gen(j_num);
+	int		i = 1;
+	size_t	insert_position;
+
+	while (group_remaining)
 	{
-		std::vector<int>::iterator chunk_start = to_insert.begin() + (i * group_size);
+		// std::cout << "J num = " << prev_jacobsthal_number << std::endl;
+		// std::cout << "i = " << (i) << std::endl;
+
+		std::vector<int>::iterator chunk_start = to_insert.begin() + ((i - 1) * group_size);
 		std::vector<int>::iterator chunk_end = chunk_start + group_size;
+	
+		main_no_group = main.size() / group_size;
 
-		main_group_count = main.size() / group_size;
+		insert_position = binary_search(main, chunk_start, group_size, 0, main_no_group);
 
-		index_val = binary_search(main, chunk_start, group_size, 0, main_group_count);
-
-		inserter = main.begin() + (index_val * group_size);
-		if (index_val >= main_group_count)
+		inserter = main.begin() + (insert_position * group_size);
+		if (insert_position >= main_no_group)
 			inserter = main.end();
 
 		// std::cout << "Inserting at " << (index_val * group_size) << std::endl;
@@ -177,28 +187,38 @@ void insert_element(std::vector<int> &to_insert, std::vector<int> &main, size_t 
 			chunk_start,
 			chunk_end
 		);
+		--group_remaining;
 
 		// std::cout << "Inserted an element --- " << *(chunk_start) << std::endl;
 		// for (auto start = main.begin(); start != main.end(); ++start)
 		// 	std::cout << *(start) << " ";
 		// std::cout << std::endl;
 
-		// ++main_count;
+		--i;
+		if (i <= prev_jacobsthal_number)
+		{
+			j_num++;
+			prev_jacobsthal_number = cur_jacobsthal_number;
+			cur_jacobsthal_number = jacobsthal_num_gen(j_num);
+			if (cur_jacobsthal_number > insert_no_group)
+				cur_jacobsthal_number = insert_no_group;
+
+			// std::cout << "new j_num = " << cur_jacobsthal_number << std::endl;
+
+			i = cur_jacobsthal_number;
+		}
+		/* code */
 	}
 }
 
-
-int jacobsthal_num_gen(int n)
-{
-	return ((pow(2, n) - pow(-1, n)) / 3);
-}
 
 void	ford_johnson(std::vector<int> &in, size_t group_size)
 {
 	std::size_t	subgroup_size = group_size / 2;
 
 	std::size_t	num_of_groups = (in.size() / group_size);
-	bool		is_odd = in.size() % group_size;
+
+	std::size_t	stranggler_count = in.size() % group_size;
 
 	std::size_t	num_of_subgroups = num_of_groups * 2;
 	std::size_t	last_elem_loc = (group_size / 2) - 1;
@@ -208,15 +228,15 @@ void	ford_johnson(std::vector<int> &in, size_t group_size)
 	std::size_t	first_elem;
 	std::size_t	second_elem;
 
-	std::size_t i = 0;
+	std::size_t	i = 0;
 
-	std::vector<int>	to_insert;
+	std::vector<int>			to_insert;
 
 	if (!(num_of_groups))
 		return;
 
 	// put the odd values at the insert array 
-	if (is_odd)
+	if (stranggler_count)
 	{
 		to_insert.insert(
 			to_insert.end(),
@@ -257,19 +277,23 @@ void	ford_johnson(std::vector<int> &in, size_t group_size)
 	// std::cout << "In main list: ";
 	// for (auto start = in.begin(); start != in.end(); ++start)
 	// 	std::cout << *(start) << " ";
-	// std::cout << std::endl << std::endl;
+	// std::cout << std::endl;
 
+	// std::cout << "In insert list: ";
+	// for (auto start = to_insert.begin(); start != to_insert.end(); ++start)
+	// 	std::cout << *(start) << " ";
+	// std::cout << std::endl;
 
 	// seperate the sorted seqeuence of larger elements
 	// rest in peace space complexity
 	for (
-		std::vector<int>::iterator start = in.begin(); // skip the first one
-		start < in.end();
+		std::vector<int>::iterator start = in.begin() + group_size; // skip the first one
+		start + 1 < in.end();
 		start += subgroup_size
 	)
 	{
 		to_insert.insert(
-			to_insert.end(),
+			to_insert.end() - stranggler_count,
 			start,
 			start + subgroup_size
 		);
@@ -333,6 +357,8 @@ int main()
 	test({88,8,16,79,51,93,74,43,68,69,4,53,45,60,98,13,77,75,76,18,34,66,59,39,67,37,26,35,25,12,63,97,20,65,50,21,33,61,40,31,32,55,11,95,6,83,81,48,1,17,28,80,96,87,23,30,72,90,91,57,71,89,58,99,3,47,41,49,7,29,54,38,94,22,78,42,52,44,15,85,10,19,56,73,92,86,24,46,62,14,9,5,70,64,27,100,84,2,82,36});
 
 	test({74,88,98,3,96,77,81,24,46,99,31,35,25,29,76,26,90,62,70,45,80,5,97,72,44,91,28,59,16,36,1,12,75,71,30,92,55,100,66,39,82,18,27,7,17,43,15,51,65,68,8,9,2,89,21,93,19,11,79,37,87,6,56,57,42,10,64,4,34,83,49,60,22,41,73,48,54,50,33,84,85,40,78,13,53,32,61,47,20,52,86,67,94,14,38,23,58,63,69,95});
+
+	test({4,1,6,2,5,3,7});
 
 	test({8,4,1,6,2,5,3,7});
 
