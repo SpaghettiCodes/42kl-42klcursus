@@ -26,3 +26,5 @@ fclean : clean
 	rm -rf $(NAME)
 
 re : fclean all
+
+.PHONEY: all a_san clean fclean re

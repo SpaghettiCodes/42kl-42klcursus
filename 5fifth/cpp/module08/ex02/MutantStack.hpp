@@ -28,12 +28,12 @@ class MutantStack : public std::stack<TypeA, container>
 		// https://en.cppreference.com/w/cpp/container/stack
 		iterator begin()
 		{
-			return (s::c.begin());
+			return (this->c.begin());
 		}
 
 		iterator end()
 		{
-			return (s::c.end());
+			return (this->c.end());
 		}
 
 		// i dont THINK i need a const iterator?

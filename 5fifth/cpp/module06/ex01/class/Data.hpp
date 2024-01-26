@@ -3,10 +3,21 @@
 
 #include <string>
 
+// struct Data
+// {
+// 	int			data;
+// 	std::string	message;
+// };
+
 struct Data
 {
-	int			data;
-	std::string	message;
+	char stuff[4];
+};
+
+struct jsld
+{
+	int x;
+	char y;
 };
 
 #endif

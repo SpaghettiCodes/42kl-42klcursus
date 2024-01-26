@@ -117,9 +117,12 @@ static int	pseudo_lit(std::string &input)
 
 static int	parse_input(std::string &input, int pseudo)
 {
+	if (!input.length())
+		return ERROR;
+
 	if (pseudo)
 		return pseudo;
-	else if (input.length() == 1 && isalpha(input[0]))
+	else if (input.length() == 1 && !isdigit(input[0]))
 		return CHAR;
 	else if (!onlynumeric(input))
 		return ERROR;

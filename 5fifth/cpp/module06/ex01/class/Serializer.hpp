@@ -15,6 +15,7 @@ class Serializer
 	Serializer(Serializer &other); // dont need you
 
 	Serializer &operator=(Serializer &other); // dont need you
+	~Serializer();
 };
 
 #endif

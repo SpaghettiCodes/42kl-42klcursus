@@ -47,6 +47,8 @@ int main()
 	try
 	{
 		Bureaucrat test3("test3", 10);	
+
+		std::cout << test3 << std::endl;
 	}
 	catch (std::exception &e)
 	{

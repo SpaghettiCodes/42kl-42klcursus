@@ -11,13 +11,12 @@ Bureaucrat::Bureaucrat(Bureaucrat const &ori): name(ori.name), grade(ori.grade)
 	std::cout << "Bureaucrat is copied" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(std::string new_name, int new_grade): name(new_name)
+Bureaucrat::Bureaucrat(std::string new_name, int new_grade): name(new_name), grade(new_grade)
 {
 	if (grade < 1)
 		throw Bureaucrat::GradeTooHighException();
 	else if (grade > 150)
 		throw Bureaucrat::GradeTooLowException();
-	this->grade = new_grade;
 	std::cout << "Bureaucrat is created" << std::endl;
 }
 

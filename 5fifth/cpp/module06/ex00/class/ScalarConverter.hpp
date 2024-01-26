@@ -27,6 +27,8 @@ class ScalarConverter
 	ScalarConverter();
 	ScalarConverter(ScalarConverter &other); // do i REALLY need this?
 	ScalarConverter &operator=(ScalarConverter &other); // we SERIOUSLY dont need this
+
+	~ScalarConverter();
 };
 
 #endif
