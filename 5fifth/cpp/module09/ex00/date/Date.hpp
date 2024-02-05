@@ -7,13 +7,6 @@
 #include <iomanip>
 #include <sstream>
 
-
-// you know the good thing about having a date class is 
-// - cleaner
-// - easy to manage
-// - expendable
-
-// unfortunately imlazy
 class Date
 {
 	public:

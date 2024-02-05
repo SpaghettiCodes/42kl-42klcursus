@@ -165,12 +165,11 @@ void	BitCoinExchange::calculate(std::string date, float value)
 	if (find != data.end())
 		rate = find;
 	else {
-		rate = data.lower_bound(date);
-		if (rate == data.begin()) {
+		map_type::reverse_iterator rate(data.lower_bound(date));
+		if (rate == data.rend()) {
 			spewerror("Out of range : ", date);
 			return;
 		}
-		--rate;
 	}
 
 	std::cout << date << " => " << value << " = ";
