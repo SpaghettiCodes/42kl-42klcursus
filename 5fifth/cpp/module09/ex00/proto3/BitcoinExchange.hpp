@@ -9,11 +9,13 @@
 # include <iostream>
 # include <string>
 # include <iomanip>
+# include <exception>
 
 // decide to stick to Date class since i feel better
 class Date
 {
 	public:
+		Date();
 		Date(std::size_t year, std::size_t month, std::size_t day);
 		Date(std::string date, char sep);
 		Date(bool error);
@@ -54,7 +56,7 @@ class BitCoinExchange
 
 	private:
 
-		pair_type	make_new_pair(std::string in);
+		bool		check_csv_line(std::string line, Date &save_date, float &save_value);
 
 		bool		process_line(std::string line);
 		Date		process_date(std::string date_chunk);

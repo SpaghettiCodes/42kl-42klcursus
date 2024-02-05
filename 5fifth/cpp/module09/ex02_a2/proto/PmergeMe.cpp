@@ -1,9 +1,8 @@
 # include "PmergeMe.hpp"
-# include <math.h>
+# include <cmath>
 # include <string>
-# include <iostream>
 # include <algorithm>
-# include <sys/time.h>
+# include <iomanip>
 
 static double
 to_microsec(timeval *to_convert)
@@ -87,30 +86,33 @@ void	PmergeMe::vector_runner()
 	timeval	end;
 
 	std::cout << "Transferring Data" << std::endl;
-
-	// pov you forgot your ft_containers
-
-	// reserve ALLOCATES MEMORY FOR THE VECTOR
-	// resize ALLOWS YOU TO JAM IN MORE VARIABLE IN THE VECTOR
+	gettimeofday(&start, NULL);
 	vec.reserve(hard_copy.size());
 	vec.resize(hard_copy.size());
 
 	std::copy(hard_copy.begin(), hard_copy.end(), vec.begin());
-
+	gettimeofday(&end, NULL);
+	timeval_subtract(&time_vec_store, &end, &start);
 	std::cout << "Transfer done!" << std::endl;
-	std::cout << "Is vector sorted: " << (std::is_sorted(vec.begin(), vec.end()) ? "Yes" : "No") << std::endl;
+
+	bool	is_sorted = isSorted(vec);
+	std::cout << "Is vector sorted: " << (is_sorted ? "Yes" : "No") << std::endl;
+
+	if (is_sorted)
+	{
+		std::cout << "List is already sorted! Exiting now..." << std::endl;
+		return ;
+	}
+
 	std::cout << "Sorting now ..." << std::endl;
 	gettimeofday(&start, NULL);
 	ford_johnson(vec);
 	gettimeofday(&end, NULL);
-	std::cout << "Algorithm Completed!" << std::endl;
-	std::cout << "Is vector sorted: " << (std::is_sorted(vec.begin(), vec.end()) ? "Yes" : "No") << std::endl;
+	std::cout << "Ford-Johnson Algorithm Completed!" << std::endl;
+	std::cout << "Is vector sorted: " << (isSorted(vec) ? "Yes" : "No") << std::endl;
 	std::cout << "Is vector correct: " << ((vec == vector_sorted_copy) ? "Yes" : "No") << std::endl;
 
-	timeval_subtract(&time_vec, &end, &start);
-	std::cout << "Time taken in microseconds: " << to_microsec(&time_vec) << " µs" << std::endl;
-	std::cout << "Time taken in milliseconds: " << to_microsec(&time_vec) / 1000 << " ms" << std::endl;
-	std::cout << "Time taken in seconds: " << to_microsec(&time_vec) / 1000000 << " s" << std::endl;
+	timeval_subtract(&time_vec_sort, &end, &start);
 }
 
 void	PmergeMe::list_runner()
@@ -119,29 +121,32 @@ void	PmergeMe::list_runner()
 	timeval	end;
 
 	std::cout << "Transferring Data" << std::endl;
-
-	// pov you forgot your ft_containers
-
-	// reserve ALLOCATES MEMORY FOR THE VECTOR
-	// resize ALLOWS YOU TO JAM IN MORE VARIABLE IN THE VECTOR
+	gettimeofday(&start, NULL);
 	lst.resize(hard_copy.size());
 
 	std::copy(hard_copy.begin(), hard_copy.end(), lst.begin());
-
+	gettimeofday(&end, NULL);
+	timeval_subtract(&time_list_store, &end, &start);
 	std::cout << "Transfer done!" << std::endl;
-	std::cout << "Is list sorted: " << (std::is_sorted(lst.begin(), lst.end()) ? "Yes" : "No") << std::endl;
+
+	bool	is_sorted = isSorted(lst);
+	std::cout << "Is list sorted: " << (is_sorted ? "Yes" : "No") << std::endl;
+
+	if (is_sorted)
+	{
+		std::cout << "List is already sorted! Exiting now..." << std::endl;
+		return ;
+	}
+
 	std::cout << "Sorting now ..." << std::endl;
 	gettimeofday(&start, NULL);
 	ford_johnson(lst);
 	gettimeofday(&end, NULL);
-	std::cout << "Algorithm Completed!" << std::endl;
-	std::cout << "Is list sorted: " << (std::is_sorted(lst.begin(), lst.end()) ? "Yes" : "No") << std::endl;
+	std::cout << "Ford-Johnson Algorithm Completed!" << std::endl;
+	std::cout << "Is list sorted: " << (isSorted(lst) ? "Yes" : "No") << std::endl;
 	std::cout << "Is list correct: " << ((lst == list_sorted_copy) ? "Yes" : "No") << std::endl;
 
-	timeval_subtract(&time_list, &end, &start);
-	std::cout << "Time taken in microseconds: " << to_microsec(&time_list) << " µs" << std::endl;
-	std::cout << "Time taken in milliseconds: " << to_microsec(&time_list) / 1000 << " ms" << std::endl;
-	std::cout << "Time taken in seconds: " << to_microsec(&time_list) / 1000000 << " s" << std::endl;
+	timeval_subtract(&time_list_sort, &end, &start);
 }
 
 void	PmergeMe::run()
@@ -150,7 +155,7 @@ void	PmergeMe::run()
 	std::cout << "Unsorted values = ";
 	print_container(hard_copy);
 
-	std::cout << "Sorted Values = ";
+	std::cout << " --- Sorted Values --- " << std::endl;
 	print_sorted();
 
 	std::cout << std::endl;
@@ -160,6 +165,40 @@ void	PmergeMe::run()
 	std::cout << std::endl;
 	std::cout << "--- List ---" << std::endl;
 	list_runner();
+	std::cout << std::endl;
+	print_time();
+}
+
+std::ostream	&operator<<(std::ostream &out, timeval &to_print)
+{
+	out << std::fixed << std::setprecision(0) << "Time taken in microseconds: " << to_microsec(&to_print) << " µs" << std::endl;
+	out << std::setprecision(6) << "Time taken in milliseconds: " << to_microsec(&to_print) / 1000 << " ms" << std::endl;
+	out << "Time taken in seconds: " << to_microsec(&to_print) / 1000000 << " s";
+	out << std::resetiosflags(std::_S_floatfield);
+	return (out);
+}
+
+void	PmergeMe::print_time()
+{
+	std::cout << "Nerd statistics" << std::endl;
+	std::cout << "---------------" << std::endl;
+	std::cout << "Time to process " << hard_copy.size() << " elements" << std::endl;
+
+	std::cout << "--- std::vector ---" << std::endl;
+	std::cout << time_vec_store << std::endl;
+
+	std::cout << "--- std::list ---" << std::endl;
+	std::cout << time_list_store << std::endl;
+	std::cout << "------------" << std::endl << std::endl;
+
+	std::cout << "Time to sort " << hard_copy.size() << " elements" << std::endl;
+
+	std::cout << "--- std::vector ---" << std::endl;
+	std::cout << time_vec_sort << std::endl;
+
+	std::cout << "--- std::list ---" << std::endl;
+	std::cout << time_list_sort << std::endl;
+	std::cout << "------------" << std::endl << std::endl;
 }
 
 /* Jacobsthal Number */
@@ -322,11 +361,13 @@ size_t	PmergeMe::vector_intgroup::getSize()
 
 void	PmergeMe::vector_inArrayInsert(std::vector<int> &in, PmergeMe::vector_intgroup which, PmergeMe::vector_intgroup where)
 {
-	PmergeMe::vector_intgroup neg_ones(in.insert(
-		where.getStart(),
-		where.getSize(),
-		-1
-	), where.getSize());
+	in.insert(
+			where.getStart(),
+			where.getSize(),
+			-1
+	);
+
+	PmergeMe::vector_intgroup neg_ones(where);
 
 	if (where < which)
 		++which;
@@ -562,7 +603,7 @@ PmergeMe::list_intgroup::list_iter	PmergeMe::list_intgroup::getEnd()
 // get distance of 2 iterator
 size_t	PmergeMe::list_intgroup::distance(list_intgroup &other)
 {
-	size_t	ptr_distance;
+	int	ptr_distance;
 	ptr_distance = std::distance(ptr, other.ptr);
 
 	return ((ptr_distance < 0 ? -1 * ptr_distance : ptr_distance) / groupsize);
@@ -584,7 +625,7 @@ PmergeMe::list_intgroup	PmergeMe::list_inArrayInsert(std::list<int> &in, list_in
 		which.getEnd()
 	);
 
-	std::list<int>::iterator one_last = in.erase(
+	in.erase(
 		which.getStart(),
 		which.getEnd()
 	);

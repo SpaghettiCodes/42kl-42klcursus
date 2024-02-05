@@ -1,5 +1,6 @@
 # include "BitcoinExchange.hpp"
 # include <algorithm>
+# include <sstream>
 
 static
 std::string	strstrip(std::string &base, char to_strip)
@@ -16,6 +17,13 @@ std::string	strstrip(std::string &base, char to_strip)
 		end = base.length();
 
 	return base.substr(start, (end - start));
+}
+
+Date::Date() : error_flag(false)
+{
+	value[0] = 0;
+	value[1] = 0;
+	value[2] = 0;
 }
 
 Date::Date(std::size_t year, std::size_t month, std::size_t day) : error_flag(false)
@@ -43,9 +51,9 @@ Date::Date(std::string date, char sep) : error_flag(false)
 
 	try
 	{
-		value[0] = std::stoi(std::string(begin, first));
-		value[1] = std::stoi(std::string(first + 1, second));
-		value[2] = std::stoi(std::string(second + 1, end));
+		value[0] = std::atoi(std::string(begin, first).c_str());
+		value[1] = std::atoi(std::string(first + 1, second).c_str());
+		value[2] = std::atoi(std::string(second + 1, end).c_str());
 	}
 	catch(const std::exception& e)
 	{
@@ -126,16 +134,39 @@ bool	Date::operator<=(const Date &other) const
 	return (*(this) < other);
 }
 
-BitCoinExchange::pair_type	BitCoinExchange::make_new_pair(std::string line_read)
+bool	BitCoinExchange::check_csv_line(std::string line, Date &save_date, float &save_value)
 {
-	str_iter	start = line_read.begin();
-	str_iter	comma = line_read.begin() + line_read.find(',');
-	str_iter	end = line_read.end();
+	if (line.find(',') == std::string::npos) {
+		spewerror("Bad csv data", line);
+		return false;
+	}
 
-	Date	date(std::string(start, comma), '-');
-	float	val = std::stof(std::string(comma + 1, end));
+	str_iter	start = line.begin();
+	str_iter	comma = line.begin() + line.find(',');
+	str_iter	end = line.end();
 
-	return (BitCoinExchange::pair_type(date, val));
+	std::string	strdate = std::string(start, comma);
+	Date		date(strdate, '-');
+
+	if (date.getError()) {
+		spewerror("Invalid Date", strdate);
+		return false;
+	}
+
+	std::string	strfloat = std::string(comma + 1, end);
+	float		val;
+
+	try {
+		val = std::atof(strfloat.c_str());
+	}
+	catch(const std::exception& e) {
+		spewerror("Invalid Value", strfloat);
+		return false;
+	}
+
+	save_date = date;
+	save_value = val;
+	return (true);
 }
 
 bool	BitCoinExchange::generate_dictionary()
@@ -150,11 +181,20 @@ bool	BitCoinExchange::generate_dictionary()
 		return (false);
 	}
 
-	for (std::string line; std::getline(file, line); ++i)
+	Date	date;
+	float	value;
+	for (std::string line; std::getline(file, line);)
 	{
 		if (i == 0)
+		{
+			++i;
 			continue;
-		data.insert(make_new_pair(line));
+		}
+		if (check_csv_line(line, date, value))
+		{
+			data.insert(pair_type(date, value));
+			++i;
+		}
 	}
 	std::cout << "Dictionary Generated! " << i << " Entries Generated!\n" << std::endl;
 	return (true);
@@ -182,7 +222,7 @@ float	BitCoinExchange::process_value(std::string strfloat)
 	}
 
 	try {
-		val = std::stof(strfloat);
+		val = std::atof(strfloat.c_str());
 	}
 	catch (const std::exception& e) {
 		spewerror("bad input", strfloat);
@@ -231,7 +271,7 @@ void	BitCoinExchange::make_calc(std::string in)
 	std::ifstream in_file;
 	int		i = 0;
 
-	in_file.open(in, std::ifstream::in);
+	in_file.open(in.c_str(), std::ifstream::in);
 	if (!in_file)
 	{
 		spewerror("Invalid File Name!", in);

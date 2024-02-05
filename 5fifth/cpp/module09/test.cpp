@@ -6,7 +6,7 @@ int main()
 {
 	typedef	std::string str_t;
 	str_t myvector;
-	
+
 	myvector.push_back('a');
 	myvector.push_back('b');
 	myvector.push_back('c');

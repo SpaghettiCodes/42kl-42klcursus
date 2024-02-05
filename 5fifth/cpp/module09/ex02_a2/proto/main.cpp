@@ -12,8 +12,7 @@ int main(int ac, char **av)
 		stuff.run();
 	}
 	catch (std::exception &e) {
-		std::cerr << "Error whoops" << std::endl;
-		std::cerr << e.what() << std::endl;
+		std::cerr << "Error: " << e.what() << std::endl;
 		return (69);
 	}
 }

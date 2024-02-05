@@ -1,24 +1,27 @@
-SOURCE = RPN.cpp main.cpp
+SRC = main.cpp RPN.cpp
 
-HEAD = RPN.hpp
+HEADER = RPN.hpp
 
-CPP = g++
+OBJ = $(SRC:.cpp=.o)
 
-CFLAGS = -Wall -Wextra -Werror
+EXEC = RPN
 
-NAME = RPN
+G++ = g++
 
-all: $(NAME)
+FLAGS = -Wall -Wextra -Werror -std=c++98
 
-$(NAME) : $(HEAD) $(SOURCE)
-	@$(CPP) $(CFLAGS) $(SOURCE) -o $(NAME)
-	@echo $(NAME) program compiled
+all: $(EXEC)
 
-clean :
-	@echo "theres nothing to clean!"
+%.o: %.cpp $(HEADER)
+	g++ ${FLAGS} -c $< -o $@
 
-fclean:
-	@rm $(NAME)
-	@echo $(RPN) "program removed"
+$(EXEC) : $(OBJ)
+	$(G++) $(OBJ) -o $(EXEC)
+
+clean:
+	rm -rf ${OBJ}
+
+fclean: clean
+	rm -rf ${EXEC}
 
 re: fclean all

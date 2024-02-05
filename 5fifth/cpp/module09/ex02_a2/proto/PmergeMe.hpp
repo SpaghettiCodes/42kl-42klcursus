@@ -4,18 +4,19 @@
 # include <vector>
 # include <list>
 # include <cstdio>
-# include <sys/time.h>
+# include <sys/time.h> // gettimeofday is in sys/time.h, and we cant use chrono (c++11)
 # include <iostream>
 
 class PmergeMe
 {
 	public:
-		PmergeMe();
 		PmergeMe(int ac, char **av);
 
 		void	run();
 
 	private:
+		PmergeMe(); // class is not meant to be ran w/o ac av
+
 		class	NotAPositiveDigit : public std::exception {
 			const char *what() const throw() {
 				return ("Not a valid Positive Integer");
@@ -26,19 +27,16 @@ class PmergeMe
 		void	get_values(int ac, char **av);
 
 		template <typename Container>
-		void	print_container(Container container)
-		{
-			typename Container::iterator	start;
-			for (start = container.begin(); start != container.end(); ++start)
-				std::cout << *(start) << " ";
-			std::cout << std::endl;
-		}
+		void	print_container(Container &container);
 
-		void	print_vct(std::vector<int> stuff);
+		template <typename Container>
+		bool	isSorted(Container &container);
+
 		void	print_sorted();
 	
 		void	vector_runner();
 		void	list_runner();
+		void	print_time();
 
 		/* Jacobsthal Number */
 		int		jacobsthal_num_gen(int n);
@@ -129,21 +127,57 @@ class PmergeMe
 		void			list_ford_john_runner(std::list<int> &in, list_intgroup begin, list_intgroup end);
 		void			ford_johnson(std::list<int> &in);
 
-		/* Cool Variables */
+		/* Variables */
 
+		/* Stores av values */
 		std::vector<int>	hard_copy;
 
+		/* Copy of the stored av values that are sorted */
+		/* Used to check if sorting algorithm sorted the values properly */
 		std::vector<int>	vector_sorted_copy;
 		std::list<int>		list_sorted_copy;
 
+		/* Containers where algorithm will be applied on */
 		std::vector<int>	vec;
 		std::list<int>		lst;
 
-		timeval				time_vec;
-		timeval				time_list;
+		/* Store time result */
+		timeval				time_vec_store;
+		timeval				time_list_store;
 
+		timeval				time_vec_sort;
+		timeval				time_list_sort;
+
+		/* Stores ac av */
 		int					ac;
 		char				**av;
 };
+
+template <typename Container>
+void	PmergeMe::print_container(Container &container)
+{
+	typename Container::iterator	start;
+	for (start = container.begin(); start != container.end(); ++start)
+		std::cout << *(start) << " ";
+	std::cout << std::endl;
+}
+
+template <typename Container>
+bool	PmergeMe::isSorted(Container &container)
+{
+	typename Container::iterator	start;
+	typename Container::iterator	stop = --container.end();
+	typename Container::iterator	next;
+	for (start = container.begin(); start != stop; ++start)
+	{
+		next = start;
+		++next;
+		if (*start > *next)
+			return false;
+	} 
+	return true;
+}
+
+std::ostream	&operator<<(std::ostream &out, timeval &to_print);
 
 # endif
