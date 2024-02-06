@@ -351,7 +351,7 @@ void	BitCoinExchange::calculate(Date date, float value)
 // https://stackoverflow.com/questions/12802536/c-multiple-definitions-of-operator
 std::ostream &operator<<(std::ostream &out, const Date &ref)
 {
-	out << std::setprecision(0);
+	out << std::fixed << std::setprecision(0);
 	out << std::setfill('0') << std::setw(4) << ref.getYear() << "-";
 	out << std::setfill('0') << std::setw(2) << ref.getMonth() << "-";
 	out << std::setfill('0') << std::setw(2) << ref.getDay();
