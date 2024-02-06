@@ -14,7 +14,8 @@ int main(int ac, char **av)
 		std::cerr << "More than one parameter given! Will only process the first!" << std::endl;
 
 	std::cout << "Getting data from data.csv..." << std::endl;
-	calculator.generate_dictionary();
+	if (!calculator.generate_dictionary())
+		return (2);
 	std::cout << "Done!\n" << std::endl;
 	calculator.make_calc(av[1]);
 }
