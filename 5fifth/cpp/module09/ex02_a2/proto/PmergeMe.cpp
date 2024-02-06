@@ -99,7 +99,7 @@ void	PmergeMe::vector_runner()
 
 	if (is_sorted)
 	{
-		std::cout << "List is already sorted! Exiting now..." << std::endl;
+		std::cout << "Vector is already sorted! Exiting now..." << std::endl;
 		return ;
 	}
 
