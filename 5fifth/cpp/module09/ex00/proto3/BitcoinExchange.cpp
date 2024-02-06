@@ -286,7 +286,7 @@ bool	BitCoinExchange::process_line(std::string line)
 	str_iter	end = line.end();
 
 	if (begin == sep)
-		return spewerror("Date not given", line);
+		return spewerror("Date not given", "");
 
 	// space before the |
 	Date	date = process_date(std::string(begin, sep));
