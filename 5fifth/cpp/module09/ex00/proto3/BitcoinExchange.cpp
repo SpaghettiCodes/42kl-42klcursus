@@ -93,6 +93,9 @@ Date::Date(std::string date, char sep) : error_flag(false)
 	{
 		error_flag = true;
 	}
+
+	if ((value[1] < 1 || value[1] > 13) && (value[2] < 1 || value[2] > 31))
+		error_flag = true;
 };
 
 Date::~Date()
