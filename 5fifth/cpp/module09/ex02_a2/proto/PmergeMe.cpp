@@ -716,7 +716,7 @@ void	PmergeMe::list_ford_john_runner(std::list<int> &in, list_intgroup begin, li
 	// mm refreshing head again
 	begin = list_intgroup(in.begin(), begin.getSize());
 	list_sortUnsortedValues(in, begin, end);
-
+	begin = list_intgroup(in.begin(), begin.getSize());
 	if (has_strangler)
 	{
 		list_intgroup to_add = std::lower_bound(begin, end, *(end));
