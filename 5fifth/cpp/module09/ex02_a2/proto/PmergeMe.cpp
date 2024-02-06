@@ -4,42 +4,41 @@
 # include <algorithm>
 # include <iomanip>
 
-static double
-to_microsec(timeval *to_convert)
+static void	reset_time(timeval &time)
+{
+	time.tv_sec = 0;
+	time.tv_usec = 0;
+}
+
+static double to_microsec(timeval *to_convert)
 {
 	return ((to_convert->tv_sec * 1000000) + to_convert->tv_usec);
 }
 
-static int
-timeval_subtract (struct timeval *result, struct timeval *x, struct timeval *y)
+static void timeval_subtract (struct timeval *result, struct timeval *x, struct timeval *y)
 {
-  /* Perform the carry for the later subtraction by updating y. */
-  if (x->tv_usec < y->tv_usec) {
-    int nsec = (y->tv_usec - x->tv_usec) / 1000000 + 1;
-    y->tv_usec -= 1000000 * nsec;
-    y->tv_sec += nsec;
-  }
-  if (x->tv_usec - y->tv_usec > 1000000) {
-    int nsec = (x->tv_usec - y->tv_usec) / 1000000;
-    y->tv_usec += 1000000 * nsec;
-    y->tv_sec -= nsec;
-  }
+	double x_val = to_microsec(x);
+	double y_val = to_microsec(y);
+	double result_us = x_val - y_val;
 
-  /* Compute the time remaining to wait.
-     tv_usec is certainly positive. */
-  result->tv_sec = x->tv_sec - y->tv_sec;
-  result->tv_usec = x->tv_usec - y->tv_usec;
-
-  /* Return 1 if result is negative. */
-  return x->tv_sec < y->tv_sec;
+	result->tv_sec = result_us / 1000000;
+	result->tv_usec = static_cast<unsigned long>(result_us) % 1000000;
 }
 
 PmergeMe::PmergeMe() : ac(0)
 {
+	reset_time(time_list_sort);
+	reset_time(time_list_store);
+	reset_time(time_vec_sort);
+	reset_time(time_vec_store);
 }
 
 PmergeMe::PmergeMe(int ac, char **av) : ac(ac), av(av)
 {
+	reset_time(time_list_sort);
+	reset_time(time_list_store);
+	reset_time(time_vec_sort);
+	reset_time(time_vec_store);
 }
 
 void	PmergeMe::print_sorted()
@@ -73,7 +72,7 @@ void	PmergeMe::get_values(int ac, char **av)
 	for (int i = 1; i < ac; ++i)
 	{
 		if (!is_numeric(av[i]))
-			throw (PmergeMe::NotAPositiveDigit());
+			throw (std::logic_error("not a valid positive integer"));
 
 		val = std::atoi(av[i]);
 		hard_copy.push_back(val);
@@ -172,8 +171,8 @@ void	PmergeMe::run()
 std::ostream	&operator<<(std::ostream &out, timeval &to_print)
 {
 	out << std::fixed << std::setprecision(0) << "Time taken in microseconds: " << to_microsec(&to_print) << " µs" << std::endl;
-	out << std::setprecision(6) << "Time taken in milliseconds: " << to_microsec(&to_print) / 1000 << " ms" << std::endl;
-	out << "Time taken in seconds: " << to_microsec(&to_print) / 1000000 << " s";
+	out << std::setprecision(3) << "Time taken in milliseconds: " << to_microsec(&to_print) / 1000 << " ms" << std::endl;
+	out << std::setprecision(6) << "Time taken in seconds: " << to_microsec(&to_print) / 1000000 << " s";
 	out << std::resetiosflags(std::_S_floatfield);
 	return (out);
 }

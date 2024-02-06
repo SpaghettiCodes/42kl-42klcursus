@@ -17,12 +17,6 @@ class PmergeMe
 	private:
 		PmergeMe(); // class is not meant to be ran w/o ac av
 
-		class	NotAPositiveDigit : public std::exception {
-			const char *what() const throw() {
-				return ("Not a valid Positive Integer");
-			}
-		};
-
 		bool	is_numeric(char *stuff);
 		void	get_values(int ac, char **av);
 
