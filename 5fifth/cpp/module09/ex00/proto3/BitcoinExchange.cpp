@@ -3,6 +3,30 @@
 # include <sstream>
 
 static
+bool	is_numeric(std::string &check)
+{
+	bool	has_dot = false;
+
+	if (!check.length())
+		return false;
+	for (std::string::iterator	start = check.begin(); start < check.end(); ++start)
+	{
+		if ((*start == '+' || *start == '-') && (start == check.begin()))
+			continue;
+		else if ((*start) == '.' && !has_dot)
+		{
+			has_dot = true;
+			continue;
+		}
+		else if (std::isdigit(*start))
+			continue;
+		else
+			return false;
+	}
+	return true;
+}
+
+static
 std::string	strstrip(std::string &base, char to_strip)
 {
 	if (!base.length())
@@ -38,7 +62,7 @@ Date::Date(std::string date, char sep) : error_flag(false)
 {
 	date = strstrip(date, ' ');
 
-	if (std::count(date.begin(), date.end(), '-') > 2)
+	if (std::count(date.begin(), date.end(), '-') != 2)
 	{
 		error_flag = true;
 		return ;
@@ -49,11 +73,21 @@ Date::Date(std::string date, char sep) : error_flag(false)
 	std::string::iterator	first = begin + date.find(sep);
 	std::string::iterator	second = begin + date.find_last_of(sep);
 
+	std::string				year = std::string(begin, first);
+	std::string				month = std::string(first + 1, second);
+	std::string				day = std::string(second + 1, end);
+
+	if (!is_numeric(year) || !is_numeric(month) || !is_numeric(day))
+	{
+		error_flag = true;
+		return ;
+	}
+
 	try
 	{
-		value[0] = std::atoi(std::string(begin, first).c_str());
-		value[1] = std::atoi(std::string(first + 1, second).c_str());
-		value[2] = std::atoi(std::string(second + 1, end).c_str());
+		value[0] = std::atoi(year.c_str());
+		value[1] = std::atoi(month.c_str());
+		value[2] = std::atoi(day.c_str());
 	}
 	catch(const std::exception& e)
 	{
@@ -171,7 +205,6 @@ bool	BitCoinExchange::check_csv_line(std::string line, Date &save_date, float &s
 
 bool	BitCoinExchange::generate_dictionary()
 {
-	int				i = 0;
 	std::ifstream	file;
 
 	file.open("data.csv", std::fstream::in);
@@ -183,20 +216,14 @@ bool	BitCoinExchange::generate_dictionary()
 
 	Date	date;
 	float	value;
-	for (std::string line; std::getline(file, line);)
+	int		i = 0;
+	for (std::string line; std::getline(file, line); ++i)
 	{
-		if (i == 0)
-		{
-			++i;
+		if (!line.length() || i == 0)
 			continue;
-		}
 		if (check_csv_line(line, date, value))
-		{
 			data.insert(pair_type(date, value));
-			++i;
-		}
 	}
-	std::cout << "Dictionary Generated! " << i << " Entries Generated!\n" << std::endl;
 	return (true);
 }
 
@@ -221,11 +248,17 @@ float	BitCoinExchange::process_value(std::string strfloat)
 		return (-1);
 	}
 
+	if (!is_numeric(strfloat))
+	{
+		spewerror("Bad input", strfloat);
+		return (-1);
+	}
+
 	try {
 		val = std::atof(strfloat.c_str());
 	}
 	catch (const std::exception& e) {
-		spewerror("bad input", strfloat);
+		spewerror("Bad input", strfloat);
 		return (-1);
 	}
 	
@@ -282,9 +315,10 @@ void	BitCoinExchange::make_calc(std::string in)
 	{
 		if (!i)
 			continue;
+		if (!line.length())
+			continue;
 		process_line(line);
 	}
-	std::cout << "\n" << (i - 1) << " Entries generated!" << std::endl;
 }
 
 void	BitCoinExchange::calculate(Date date, float value)

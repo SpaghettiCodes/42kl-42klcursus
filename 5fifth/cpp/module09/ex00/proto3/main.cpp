@@ -13,6 +13,8 @@ int main(int ac, char **av)
 	else if (ac > 2)
 		std::cerr << "More than one parameter given! Will only process the first!" << std::endl;
 
+	std::cout << "Getting data from data.csv..." << std::endl;
 	calculator.generate_dictionary();
+	std::cout << "Done!\n" << std::endl;
 	calculator.make_calc(av[1]);
 }

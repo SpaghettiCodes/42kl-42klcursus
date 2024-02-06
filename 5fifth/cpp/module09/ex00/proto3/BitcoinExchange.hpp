@@ -55,7 +55,6 @@ class BitCoinExchange
 		map_type	data;
 
 	private:
-
 		bool		check_csv_line(std::string line, Date &save_date, float &save_value);
 
 		bool		process_line(std::string line);
