@@ -8,5 +8,11 @@ int main(int ac, char **av)
 	if (ac < 2)
 		return (2);
 	input = av[1];
-	reverse_polish.run(input);
+	try {
+		reverse_polish.run(input);
+	}
+	catch(const std::exception& e) {
+		std::cerr << e.what() << '\n';
+	}
+	
 }

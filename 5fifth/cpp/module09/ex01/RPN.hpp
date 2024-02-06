@@ -3,10 +3,11 @@
 # ifndef RPN_HPP
 # define RPN_HPP
 
-#include <stack>
-#include <cctype>
-#include <string>
-#include <iostream>
+# include <stack>
+# include <cctype>
+# include <string>
+# include <iostream>
+# include <exception>
 
 class RPN
 {
@@ -16,17 +17,15 @@ class RPN
 		~RPN();
 
 		void	run(std::string input);
-		int		ret_value();
 
 	private:
-		// thou shalnt use stack (and deque) in future projects
 		std::stack<int>	numbers;
 
-		// token processing
+		void	print_answer();
+
 		bool	get_input(std::string input);
 		bool	process_token(char in);
 
-		// operands
 		bool	operand(char input);
 		bool	partofoperand(char input);
 
@@ -37,7 +36,6 @@ class RPN
 		bool	division(int scndval);
 		bool	multi(int scndval);
 
-		// angry error messages
 		bool 	spewerror(std::string msg);
 };
 
