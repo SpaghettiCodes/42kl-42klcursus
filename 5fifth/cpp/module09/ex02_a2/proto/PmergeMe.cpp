@@ -173,7 +173,6 @@ std::ostream	&operator<<(std::ostream &out, timeval &to_print)
 	out << std::fixed << std::setprecision(0) << "Time taken in microseconds: " << to_microsec(&to_print) << " µs" << std::endl;
 	out << std::setprecision(3) << "Time taken in milliseconds: " << to_microsec(&to_print) / 1000 << " ms" << std::endl;
 	out << std::setprecision(6) << "Time taken in seconds: " << to_microsec(&to_print) / 1000000 << " s";
-	out << std::resetiosflags(std::_S_floatfield);
 	return (out);
 }
 

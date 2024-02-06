@@ -344,7 +344,7 @@ void	BitCoinExchange::calculate(Date date, float value)
 
 	std::cout << date << " => " << std::fixed << std::setprecision(2) << value << " = ";
 	std::cout << value * rate << std::endl;
-	std::cout << std::resetiosflags(std::_S_floatfield) << std::setprecision(6);
+	std::cout << std::setprecision(6);
 }
 
 // what the hell is a one definition rule???
