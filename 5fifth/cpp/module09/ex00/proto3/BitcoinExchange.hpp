@@ -11,7 +11,6 @@
 # include <iomanip>
 # include <exception>
 
-// decide to stick to Date class since i feel better
 class Date
 {
 	public:
@@ -40,7 +39,6 @@ class Date
 
 std::ostream &operator<<(std::ostream &out, const Date &ref);
 
-// mf this is just a parser fest :(((
 class BitCoinExchange
 {
 	public:
@@ -50,9 +48,6 @@ class BitCoinExchange
 
 		bool	generate_dictionary();
 		void	make_calc(std::string file);
-
-		//temp
-		map_type	data;
 
 	private:
 		bool		check_csv_line(std::string line, Date &save_date, float &save_value);
@@ -65,6 +60,8 @@ class BitCoinExchange
 		bool		spewerror(std::string msg, std::string aspect);
 
 		bool		date_check(const char *raw);
+
+		map_type	data;
 };
 
 #endif
