@@ -382,7 +382,7 @@ void	PmergeMe::vector_inArrayInsert(std::vector<int> &in, PmergeMe::vector_intgr
 	);
 }
 
-void	PmergeMe::vector_sortUnsortedValues(std::vector<int> &in, PmergeMe::vector_intgroup begin, PmergeMe::vector_intgroup end)
+void	PmergeMe::vector_sortUnsortedValues(std::vector<int> &in, PmergeMe::vector_intgroup &begin, PmergeMe::vector_intgroup &end)
 {
 	size_t	sorted_vals = 2;
 	size_t	num_of_groups = begin.distance(end);
@@ -631,7 +631,7 @@ PmergeMe::list_intgroup	PmergeMe::list_inArrayInsert(std::list<int> &in, list_in
 	return return_group;
 };
 
-void	PmergeMe::list_sortUnsortedValues(std::list<int> &in, list_intgroup begin, list_intgroup end)
+void	PmergeMe::list_sortUnsortedValues(std::list<int> &in, list_intgroup &begin, list_intgroup &end)
 {
 	size_t				num_of_groups = begin.distance(end);
 	size_t				count;
@@ -716,7 +716,6 @@ void	PmergeMe::list_ford_john_runner(std::list<int> &in, list_intgroup begin, li
 	// mm refreshing head again
 	begin = list_intgroup(in.begin(), begin.getSize());
 	list_sortUnsortedValues(in, begin, end);
-	begin = list_intgroup(in.begin(), begin.getSize());
 	if (has_strangler)
 	{
 		list_intgroup to_add = std::lower_bound(begin, end, *(end));

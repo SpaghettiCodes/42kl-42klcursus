@@ -76,7 +76,7 @@ class PmergeMe
 		};
 
 		void	vector_inArrayInsert(std::vector<int> &in, vector_intgroup which, vector_intgroup where);
-		void	vector_sortUnsortedValues(std::vector<int> &in, vector_intgroup begin, vector_intgroup end);
+		void	vector_sortUnsortedValues(std::vector<int> &in, vector_intgroup &begin, vector_intgroup &end);
 		void	vector_ford_john_runner(std::vector<int> &in, vector_intgroup begin, vector_intgroup end);
 		void	ford_johnson(std::vector<int> &in);
 
@@ -117,7 +117,7 @@ class PmergeMe
 		};
 
 		list_intgroup	list_inArrayInsert(std::list<int> &in, list_intgroup which, list_intgroup where);
-		void			list_sortUnsortedValues(std::list<int> &in, list_intgroup begin, list_intgroup end);
+		void			list_sortUnsortedValues(std::list<int> &in, list_intgroup &begin, list_intgroup &end);
 		void			list_ford_john_runner(std::list<int> &in, list_intgroup begin, list_intgroup end);
 		void			ford_johnson(std::list<int> &in);
 
