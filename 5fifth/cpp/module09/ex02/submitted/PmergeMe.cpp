@@ -110,6 +110,8 @@ void	PmergeMe::vector_runner()
 	std::cout << "Ford-Johnson Algorithm Completed!" << std::endl;
 	std::cout << "Is vector sorted: " << (isSorted(vec) ? "Yes" : "No") << std::endl;
 	std::cout << "Is vector correct: " << ((vec == vector_sorted_copy) ? "Yes" : "No") << std::endl;
+	std::cout << "Vector contents: ";
+	print_container(vec);
 
 	timeval_subtract(&time_vec_sort, &end, &start);
 }
@@ -144,6 +146,8 @@ void	PmergeMe::list_runner()
 	std::cout << "Ford-Johnson Algorithm Completed!" << std::endl;
 	std::cout << "Is list sorted: " << (isSorted(lst) ? "Yes" : "No") << std::endl;
 	std::cout << "Is list correct: " << ((lst == list_sorted_copy) ? "Yes" : "No") << std::endl;
+	std::cout << "List Contents: ";
+	print_container(lst);
 
 	timeval_subtract(&time_list_sort, &end, &start);
 }
